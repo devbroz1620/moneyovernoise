@@ -1,13 +1,16 @@
-
+import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import MainLayout from '@/components/layout/MainLayout';
 import { PageHeader } from '@/components/shared/PageHeader';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { Loader2, RefreshCcw } from 'lucide-react';
+import { getArticleBySlug, refreshArticlesCache } from '@/services/notionService';
+import { NotionArticle } from '@/types/notion';
 
-// Sample article data - would come from a real API or CMS
-const articles = {
+// Sample article data to use as fallback
+const fallbackArticles = {
   'what-is-an-etf': {
     title: 'What is an ETF?',
     category: 'Beginner',
@@ -348,7 +351,112 @@ const articles = {
 
 const LearnArticle = () => {
   const { slug = '' } = useParams<{ slug: string }>();
-  const article = articles[slug as keyof typeof articles];
+  const [article, setArticle] = useState<NotionArticle | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [refreshing, setRefreshing] = useState(false);
+
+  useEffect(() => {
+    const fetchArticle = async () => {
+      setLoading(true);
+      try {
+        const fetchedArticle = await getArticleBySlug(slug);
+        
+        if (fetchedArticle) {
+          setArticle(fetchedArticle);
+          setError(null);
+        } else {
+          // Try to get from fallback if available
+          const fallbackArticle = fallbackArticles[slug as keyof typeof fallbackArticles];
+          if (fallbackArticle) {
+            setArticle({
+              id: slug,
+              title: fallbackArticle.title,
+              slug,
+              description: fallbackArticle.description || '',
+              readingTime: fallbackArticle.readingTime,
+              category: fallbackArticle.category as any,
+              tags: fallbackArticle.tags || [],
+              image: fallbackArticle.image,
+              content: fallbackArticle.content,
+              relatedArticles: fallbackArticle.relatedArticles || [],
+              nextArticle: fallbackArticle.nextArticle,
+            });
+            setError('Using local fallback data. Connect to Notion for latest content.');
+          } else {
+            setError('Article not found.');
+          }
+        }
+      } catch (err) {
+        console.error('Error fetching article:', err);
+        setError('Failed to load article. Please try again later.');
+        
+        // Try to get from fallback if available
+        const fallbackArticle = fallbackArticles[slug as keyof typeof fallbackArticles];
+        if (fallbackArticle) {
+          setArticle({
+            id: slug,
+            title: fallbackArticle.title,
+            slug,
+            description: fallbackArticle.description || '',
+            readingTime: fallbackArticle.readingTime,
+            category: fallbackArticle.category as any,
+            tags: fallbackArticle.tags || [],
+            image: fallbackArticle.image,
+            content: fallbackArticle.content,
+            relatedArticles: fallbackArticle.relatedArticles || [],
+            nextArticle: fallbackArticle.nextArticle,
+          });
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchArticle();
+  }, [slug]);
+
+  const handleRefresh = async () => {
+    setRefreshing(true);
+    try {
+      refreshArticlesCache();
+      const refreshedArticle = await getArticleBySlug(slug);
+      if (refreshedArticle) {
+        setArticle(refreshedArticle);
+        setError(null);
+      }
+    } catch (err) {
+      console.error('Error refreshing article:', err);
+    } finally {
+      setRefreshing(false);
+    }
+  };
+
+  const getCategoryColor = (category: string) => {
+    switch (category) {
+      case 'Beginner':
+        return 'bg-green-50 border-green-200 text-green-700';
+      case 'Intermediate':
+        return 'bg-blue-50 border-blue-200 text-blue-700';
+      case 'Advanced':
+        return 'bg-purple-50 border-purple-200 text-purple-700';
+      default:
+        return 'bg-gray-50 border-gray-200 text-gray-700';
+    }
+  };
+  
+  if (loading) {
+    return (
+      <MainLayout>
+        <div className="container py-8">
+          <div className="flex justify-center items-center py-20">
+            <Loader2 className="h-8 w-8 animate-spin text-primary" />
+            <span className="ml-2 text-lg">Loading article...</span>
+          </div>
+        </div>
+      </MainLayout>
+    );
+  }
   
   if (!article) {
     return (
@@ -367,22 +475,34 @@ const LearnArticle = () => {
     );
   }
   
-  const getCategoryColor = (category: string) => {
-    switch (category) {
-      case 'Beginner':
-        return 'bg-green-50 border-green-200 text-green-700';
-      case 'Intermediate':
-        return 'bg-blue-50 border-blue-200 text-blue-700';
-      case 'Advanced':
-        return 'bg-purple-50 border-purple-200 text-purple-700';
-      default:
-        return 'bg-gray-50 border-gray-200 text-gray-700';
-    }
-  };
-  
   return (
     <MainLayout>
       <div className="container py-8">
+        {error && (
+          <div className="bg-amber-50 border border-amber-200 p-3 rounded-md text-amber-800 mb-6 flex items-center justify-between">
+            <div>{error}</div>
+            <Button 
+              onClick={handleRefresh} 
+              variant="outline" 
+              size="sm" 
+              className="text-xs"
+              disabled={refreshing}
+            >
+              {refreshing ? (
+                <>
+                  <Loader2 className="mr-2 h-3 w-3 animate-spin" />
+                  Refreshing...
+                </>
+              ) : (
+                <>
+                  <RefreshCcw className="mr-2 h-3 w-3" />
+                  Refresh Content
+                </>
+              )}
+            </Button>
+          </div>
+        )}
+        
         <PageHeader
           title={article.title}
           breadcrumbs={[
@@ -419,39 +539,45 @@ const LearnArticle = () => {
           
           {/* Sidebar */}
           <div className="space-y-6">
-            <Card>
-              <CardContent className="pt-6">
-                <h3 className="text-lg font-medium mb-4">Related Articles</h3>
-                <div className="space-y-4">
-                  {article.relatedArticles.map((relatedSlug) => {
-                    const relatedArticle = articles[relatedSlug as keyof typeof articles];
-                    return (
-                      <Link 
-                        key={relatedSlug} 
-                        to={`/learn/etfs/${relatedSlug}`}
-                        className="flex items-start gap-3 group"
-                      >
-                        <div className="w-16 h-16 rounded overflow-hidden flex-shrink-0">
-                          <img
-                            src={relatedArticle.image}
-                            alt={relatedArticle.title}
-                            className="w-full h-full object-cover"
-                          />
-                        </div>
-                        <div>
-                          <h4 className="font-medium group-hover:text-primary transition-colors">
-                            {relatedArticle.title}
-                          </h4>
-                          <span className="text-xs text-muted-foreground">
-                            {relatedArticle.readingTime} read
-                          </span>
-                        </div>
-                      </Link>
-                    );
-                  })}
-                </div>
-              </CardContent>
-            </Card>
+            {article.relatedArticles.length > 0 && (
+              <Card>
+                <CardContent className="pt-6">
+                  <h3 className="text-lg font-medium mb-4">Related Articles</h3>
+                  <div className="space-y-4">
+                    {article.relatedArticles.map((relatedSlug) => {
+                      // For now, we're using the fallback data for related articles
+                      // In a full implementation, you would want to fetch this data from Notion
+                      const relatedArticle = fallbackArticles[relatedSlug as keyof typeof fallbackArticles];
+                      if (!relatedArticle) return null;
+                      
+                      return (
+                        <Link 
+                          key={relatedSlug} 
+                          to={`/learn/etfs/${relatedSlug}`}
+                          className="flex items-start gap-3 group"
+                        >
+                          <div className="w-16 h-16 rounded overflow-hidden flex-shrink-0">
+                            <img
+                              src={relatedArticle.image}
+                              alt={relatedArticle.title}
+                              className="w-full h-full object-cover"
+                            />
+                          </div>
+                          <div>
+                            <h4 className="font-medium group-hover:text-primary transition-colors">
+                              {relatedArticle.title}
+                            </h4>
+                            <span className="text-xs text-muted-foreground">
+                              {relatedArticle.readingTime} read
+                            </span>
+                          </div>
+                        </Link>
+                      );
+                    })}
+                  </div>
+                </CardContent>
+              </Card>
+            )}
             
             {article.nextArticle && (
               <Card>
