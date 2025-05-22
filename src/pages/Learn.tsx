@@ -9,8 +9,10 @@ import { getArticles } from '@/services/notionService';
 import { Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
-const articles = [
+// Demo articles data to use as fallback
+const demoArticles: NotionArticle[] = [
   {
+    id: '1',
     title: "What is an ETF?",
     slug: "what-is-an-etf",
     description: "An introduction to Exchange Traded Funds and how they work.",
@@ -18,8 +20,15 @@ const articles = [
     category: "Beginner",
     tags: ["Basics", "Introduction"],
     image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800",
+    content: "",
+    relatedArticles: ["thematic", "liquidity-volatility"],
+    nextArticle: {
+      title: "Thematic ETFs: Investing in Trends",
+      slug: "thematic",
+    },
   },
   {
+    id: '2',
     title: "Thematic ETFs: Investing in Trends",
     slug: "thematic",
     description: "How to invest in specific market themes and trends using ETFs.",
@@ -27,8 +36,15 @@ const articles = [
     category: "Intermediate",
     tags: ["Thematic", "Sector"],
     image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=800",
+    content: "",
+    relatedArticles: ["what-is-an-etf", "liquidity-volatility"],
+    nextArticle: {
+      title: "Understanding Liquidity & Volatility",
+      slug: "liquidity-volatility",
+    },
   },
   {
+    id: '3',
     title: "Understanding Liquidity & Volatility",
     slug: "liquidity-volatility",
     description: "Learn how liquidity and volatility impact ETF performance and trading.",
@@ -36,8 +52,15 @@ const articles = [
     category: "Intermediate",
     tags: ["Analysis", "Trading"],
     image: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=800",
+    content: "",
+    relatedArticles: ["what-is-an-etf", "thematic"],
+    nextArticle: {
+      title: "Asset Allocation with ETFs",
+      slug: "asset-allocation",
+    },
   },
   {
+    id: '4',
     title: "Asset Allocation with ETFs",
     slug: "asset-allocation",
     description: "How to build a diversified portfolio using different ETF classes.",
@@ -45,6 +68,9 @@ const articles = [
     category: "Advanced",
     tags: ["Strategy", "Portfolio"],
     image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800",
+    content: "",
+    relatedArticles: ["thematic", "liquidity-volatility"],
+    nextArticle: null,
   },
 ];
 
@@ -150,52 +176,5 @@ const Learn = () => {
     </MainLayout>
   );
 };
-
-// Demo articles data to use as fallback
-const demoArticles = [
-  {
-    id: '1',
-    title: "What is an ETF?",
-    slug: "what-is-an-etf",
-    description: "An introduction to Exchange Traded Funds and how they work.",
-    readingTime: "5 min",
-    category: "Beginner",
-    tags: ["Basics", "Introduction"],
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800",
-    content: "",
-    relatedArticles: ["thematic", "liquidity-volatility"],
-    nextArticle: {
-      title: "Thematic ETFs: Investing in Trends",
-      slug: "thematic",
-    },
-  },
-  {
-    title: "Thematic ETFs: Investing in Trends",
-    slug: "thematic",
-    description: "How to invest in specific market themes and trends using ETFs.",
-    readingTime: "7 min",
-    category: "Intermediate",
-    tags: ["Thematic", "Sector"],
-    image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=800",
-  },
-  {
-    title: "Understanding Liquidity & Volatility",
-    slug: "liquidity-volatility",
-    description: "Learn how liquidity and volatility impact ETF performance and trading.",
-    readingTime: "8 min",
-    category: "Intermediate",
-    tags: ["Analysis", "Trading"],
-    image: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=800",
-  },
-  {
-    title: "Asset Allocation with ETFs",
-    slug: "asset-allocation",
-    description: "How to build a diversified portfolio using different ETF classes.",
-    readingTime: "10 min",
-    category: "Advanced",
-    tags: ["Strategy", "Portfolio"],
-    image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800",
-  },
-];
 
 export default Learn;

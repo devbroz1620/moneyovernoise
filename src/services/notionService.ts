@@ -73,13 +73,22 @@ const transformNotionPage = async (page: any): Promise<NotionArticle> => {
     };
   }
   
+  // Ensure category is one of the allowed values
+  const categoryValue = properties.Category.select.name;
+  const validCategory = 
+    categoryValue === 'Beginner' || 
+    categoryValue === 'Intermediate' || 
+    categoryValue === 'Advanced' 
+      ? categoryValue as 'Beginner' | 'Intermediate' | 'Advanced'
+      : 'Beginner'; // Default to Beginner if not valid
+  
   return {
     id: page.id,
     title: properties.Title.title[0].plain_text,
     slug: properties.Slug.rich_text[0].plain_text,
     description: properties.Description.rich_text[0].plain_text,
     readingTime: properties.ReadingTime.rich_text[0].plain_text,
-    category: properties.Category.select.name,
+    category: validCategory,
     tags: extractTags(properties.Tags.multi_select),
     image: properties.Image.url,
     content: contentHtml,

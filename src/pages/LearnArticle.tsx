@@ -10,11 +10,15 @@ import { getArticleBySlug, refreshArticlesCache } from '@/services/notionService
 import { NotionArticle } from '@/types/notion';
 
 // Sample article data to use as fallback
-const fallbackArticles = {
+const fallbackArticles: Record<string, NotionArticle> = {
   'what-is-an-etf': {
+    id: 'what-is-an-etf',
     title: 'What is an ETF?',
-    category: 'Beginner',
+    slug: 'what-is-an-etf',
+    description: 'An introduction to Exchange Traded Funds and how they work.',
     readingTime: '5 min',
+    category: 'Beginner',
+    tags: ['Basics', 'Introduction'],
     image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800',
     content: `
       <h2>Understanding Exchange Traded Funds</h2>
@@ -45,63 +49,21 @@ const fallbackArticles = {
         <li><strong>Debt ETFs:</strong> Invest in fixed-income securities</li>
         <li><strong>International ETFs:</strong> Provide exposure to global markets</li>
       </ul>
-      
-      <h3>ETFs vs. Mutual Funds</h3>
-      <p>While both ETFs and mutual funds offer diversified investment options, they differ in several ways:</p>
-      
-      <table>
-        <tr>
-          <th>Feature</th>
-          <th>ETFs</th>
-          <th>Mutual Funds</th>
-        </tr>
-        <tr>
-          <td>Trading</td>
-          <td>Throughout trading day</td>
-          <td>Once per day after market close</td>
-        </tr>
-        <tr>
-          <td>Pricing</td>
-          <td>Market price (can differ slightly from NAV)</td>
-          <td>NAV (calculated after market close)</td>
-        </tr>
-        <tr>
-          <td>Minimum Investment</td>
-          <td>Price of one share</td>
-          <td>Specified by fund (often higher)</td>
-        </tr>
-        <tr>
-          <td>Expense Ratios</td>
-          <td>Generally lower</td>
-          <td>Generally higher</td>
-        </tr>
-        <tr>
-          <td>Tax Efficiency</td>
-          <td>Higher (fewer capital gains)</td>
-          <td>Lower (more capital gains distributions)</td>
-        </tr>
-      </table>
-      
-      <h3>Getting Started with ETFs</h3>
-      <p>To start investing in ETFs in India, you'll need:</p>
-      <ol>
-        <li>A demat and trading account with a broker</li>
-        <li>Understanding of which ETF matches your investment goals</li>
-        <li>Knowledge of trading mechanics (market orders, limit orders)</li>
-      </ol>
-      
-      <p>ETFs have democratized investing by offering instant diversification, lower costs, and greater flexibility compared to traditional investment vehicles.</p>
     `,
+    relatedArticles: ['thematic', 'liquidity-volatility'],
     nextArticle: {
       title: 'Thematic ETFs: Investing in Trends',
       slug: 'thematic',
     },
-    relatedArticles: ['thematic', 'liquidity-volatility'],
   },
   'thematic': {
+    id: 'thematic',
     title: 'Thematic ETFs: Investing in Trends',
-    category: 'Intermediate',
+    slug: 'thematic',
+    description: 'How to invest in specific market themes and trends using ETFs.',
     readingTime: '7 min',
+    category: 'Intermediate',
+    tags: ['Thematic', 'Sector'],
     image: 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=800',
     content: `
       <h2>Investing in Market Themes and Trends</h2>
@@ -113,58 +75,21 @@ const fallbackArticles = {
       <p>Thematic investing allows you to put your money behind your convictions about future trends and technological developments. It's a way to invest in the future while maintaining the benefits of diversification.</p>
       
       <p>These ETFs typically include companies across multiple traditional sectors and market capitalizations that share a common theme. For example, a "Future Mobility" thematic ETF might include automakers, battery manufacturers, semiconductor companies, and software providers all involved in the electric and autonomous vehicle revolution.</p>
-      
-      <h3>Popular Thematic ETF Categories in India</h3>
-      <ul>
-        <li><strong>Technology:</strong> AI, cloud computing, cybersecurity</li>
-        <li><strong>Healthcare:</strong> Genomics, telehealth, medical devices</li>
-        <li><strong>ESG:</strong> Environmental, social, and governance focused companies</li>
-        <li><strong>Consumption:</strong> E-commerce, digital payments, consumer services</li>
-        <li><strong>Infrastructure:</strong> Smart cities, digital infrastructure</li>
-      </ul>
-      
-      <h3>Advantages of Thematic ETFs</h3>
-      <ul>
-        <li><strong>Targeted exposure:</strong> Access to specific themes or trends</li>
-        <li><strong>Simplicity:</strong> One-stop access to a basket of relevant companies</li>
-        <li><strong>Diversification within a theme:</strong> Spreading risk across multiple companies in the same theme</li>
-        <li><strong>Innovation:</strong> Access to emerging technologies and business models</li>
-      </ul>
-      
-      <h3>Risks and Considerations</h3>
-      <p>While thematic ETFs offer exciting opportunities, they come with specific risks:</p>
-      <ul>
-        <li><strong>Higher volatility:</strong> Concentrated exposure can lead to greater price swings</li>
-        <li><strong>Higher expense ratios:</strong> Specialized research and active management often result in higher fees</li>
-        <li><strong>Thematic overlap:</strong> Multiple themed ETFs may contain the same underlying stocks</li>
-        <li><strong>Theme durability:</strong> Some trends may be short-lived or fail to materialize as expected</li>
-        <li><strong>Timing risk:</strong> Entering a theme after significant price appreciation</li>
-      </ul>
-      
-      <h3>Evaluating Thematic ETFs</h3>
-      <p>Before investing in a thematic ETF, consider:</p>
-      <ol>
-        <li><strong>The investment thesis:</strong> Is the theme likely to grow over time?</li>
-        <li><strong>ETF construction:</strong> How are stocks selected and weighted?</li>
-        <li><strong>Holdings:</strong> Do the actual holdings truly represent the stated theme?</li>
-        <li><strong>Expense ratio:</strong> How much are you paying for exposure to this theme?</li>
-        <li><strong>Liquidity:</strong> How easily can you buy and sell shares?</li>
-        <li><strong>AUM:</strong> Is the fund large enough to survive and avoid closure?</li>
-      </ol>
-      
-      <h3>Portfolio Integration</h3>
-      <p>Most financial advisors suggest using thematic ETFs as "satellite" holdings around a core portfolio of broad market ETFs. A common approach is to allocate 10-20% of a portfolio to thematic investments while maintaining the majority in diversified index ETFs.</p>
     `,
+    relatedArticles: ['what-is-an-etf', 'liquidity-volatility'],
     nextArticle: {
       title: 'Understanding Liquidity & Volatility',
       slug: 'liquidity-volatility',
     },
-    relatedArticles: ['what-is-an-etf', 'liquidity-volatility'],
   },
   'liquidity-volatility': {
+    id: 'liquidity-volatility',
     title: 'Understanding Liquidity & Volatility',
-    category: 'Intermediate',
+    slug: 'liquidity-volatility',
+    description: 'Learn how liquidity and volatility impact ETF performance and trading.',
     readingTime: '8 min',
+    category: 'Intermediate',
+    tags: ['Analysis', 'Trading'],
     image: 'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=800',
     content: `
       <h2>ETF Liquidity and Volatility Explained</h2>
@@ -177,75 +102,21 @@ const fallbackArticles = {
         <li><strong>Primary liquidity:</strong> The liquidity of the underlying securities the ETF holds</li>
         <li><strong>Secondary liquidity:</strong> The trading volume of the ETF itself on the exchange</li>
       </ol>
-      
-      <p>This dual liquidity structure means that even ETFs with low trading volumes can be highly liquid if their underlying holdings are liquid. The creation-redemption process by Authorized Participants (APs) ensures that ETF prices remain close to their Net Asset Value (NAV).</p>
-      
-      <h3>Key Liquidity Metrics for ETFs</h3>
-      <ul>
-        <li><strong>Average daily trading volume:</strong> The average number of ETF units traded daily</li>
-        <li><strong>Bid-ask spread:</strong> The difference between the highest buy price and lowest sell price</li>
-        <li><strong>Creation unit size:</strong> The minimum block of ETF units that APs can create or redeem</li>
-        <li><strong>Underlying asset liquidity:</strong> How easily the ETF's holdings can be bought or sold</li>
-      </ul>
-      
-      <h3>ETF Volatility</h3>
-      <p>Volatility measures the degree to which an ETF's price fluctuates over time. Higher volatility indicates larger price swings and potentially higher risk.</p>
-      
-      <h4>Factors Affecting ETF Volatility:</h4>
-      <ul>
-        <li><strong>Underlying asset volatility:</strong> The inherent volatility of the securities in the ETF</li>
-        <li><strong>Market conditions:</strong> Overall market sentiment and economic factors</li>
-        <li><strong>Sector or theme concentration:</strong> Focused ETFs tend to be more volatile than broad market ETFs</li>
-        <li><strong>Tracking methodology:</strong> Full replication vs. sampling approaches</li>
-        <li><strong>Fund structure:</strong> Physical ETFs vs. synthetic ETFs</li>
-      </ul>
-      
-      <h3>Measuring Volatility</h3>
-      <p>Common volatility metrics include:</p>
-      <ul>
-        <li><strong>Standard deviation:</strong> Measures dispersion of returns around the average</li>
-        <li><strong>Beta:</strong> Measures an ETF's sensitivity to market movements</li>
-        <li><strong>Maximum drawdown:</strong> The largest peak-to-trough decline</li>
-        <li><strong>Average true range (ATR):</strong> Average price range over a specified period</li>
-      </ul>
-      
-      <h3>Liquidity and Volatility in the Indian ETF Market</h3>
-      <p>The Indian ETF market has some unique characteristics:</p>
-      <ul>
-        <li>Lower average trading volumes compared to developed markets</li>
-        <li>Wider bid-ask spreads, especially for thematic or sector ETFs</li>
-        <li>Concentration in index ETFs (Nifty 50, Sensex)</li>
-        <li>Growing institutional participation improving liquidity</li>
-      </ul>
-      
-      <h3>Practical Tips for Indian ETF Investors</h3>
-      <ol>
-        <li><strong>Use limit orders:</strong> Particularly for less liquid ETFs to control execution prices</li>
-        <li><strong>Trade during market hours:</strong> Avoid trading near market open or close when spreads may be wider</li>
-        <li><strong>Check premiums/discounts to NAV:</strong> Large deviations could indicate liquidity issues</li>
-        <li><strong>Compare total costs:</strong> Consider both expense ratio and trading costs</li>
-        <li><strong>Be cautious with stop-loss orders:</strong> They can trigger during temporary price swings</li>
-      </ol>
-      
-      <h3>Managing ETF Volatility in Your Portfolio</h3>
-      <ul>
-        <li>Diversify across asset classes and geographies</li>
-        <li>Consider volatility when determining position sizes</li>
-        <li>Match investment horizon with ETF characteristics</li>
-        <li>Rebalance periodically to maintain target allocations</li>
-        <li>Use dollar-cost averaging for volatile ETFs</li>
-      </ul>
     `,
+    relatedArticles: ['what-is-an-etf', 'thematic'],
     nextArticle: {
       title: 'Asset Allocation with ETFs',
       slug: 'asset-allocation',
     },
-    relatedArticles: ['what-is-an-etf', 'thematic'],
   },
   'asset-allocation': {
+    id: 'asset-allocation',
     title: 'Asset Allocation with ETFs',
-    category: 'Advanced',
+    slug: 'asset-allocation',
+    description: 'How to build a diversified portfolio using different ETF classes.',
     readingTime: '10 min',
+    category: 'Advanced',
+    tags: ['Strategy', 'Portfolio'],
     image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800',
     content: `
       <h2>Building a Diversified Portfolio with ETFs</h2>
@@ -259,93 +130,9 @@ const fallbackArticles = {
         <li>Risk tolerance (conservative, moderate, aggressive)</li>
         <li>Liquidity needs (how quickly you might need to access funds)</li>
       </ul>
-      
-      <h3>Core ETF Asset Classes for Indian Investors</h3>
-      
-      <h4>1. Equity ETFs</h4>
-      <p>Stock ETFs should typically form the growth engine of most long-term portfolios.</p>
-      <ul>
-        <li><strong>Broad Market:</strong> Nifty 50, Nifty 100, Sensex ETFs provide exposure to large Indian companies</li>
-        <li><strong>Mid/Small Cap:</strong> Nifty Midcap 150, Nifty Smallcap 250 ETFs offer higher growth potential with higher risk</li>
-        <li><strong>Factor-based:</strong> Quality, Value, Momentum ETFs target specific investment factors</li>
-        <li><strong>International:</strong> US, Developed Markets, or Emerging Markets ETFs provide global diversification</li>
-      </ul>
-      
-      <h4>2. Fixed Income ETFs</h4>
-      <p>Bond ETFs provide stability, income, and diversification benefits.</p>
-      <ul>
-        <li><strong>Government Securities:</strong> Sovereign bonds with highest safety</li>
-        <li><strong>Corporate Bonds:</strong> Higher yields with moderate credit risk</li>
-        <li><strong>PSU Bonds:</strong> Quasi-government securities with good yields</li>
-        <li><strong>Money Market:</strong> Short-term, high liquidity instruments</li>
-      </ul>
-      
-      <h4>3. Gold ETFs</h4>
-      <p>Gold serves as a hedge against inflation and currency depreciation while providing portfolio diversification.</p>
-      
-      <h4>4. Other Alternative ETFs</h4>
-      <ul>
-        <li><strong>Real Estate (REITs):</strong> Property exposure without direct ownership</li>
-        <li><strong>International Commodities:</strong> Access global commodity markets</li>
-      </ul>
-      
-      <h3>Sample ETF Allocation Models for Indian Investors</h3>
-      
-      <h4>Conservative Allocation (Lower Risk)</h4>
-      <ul>
-        <li>40% Equity ETFs (30% Large Cap, 5% Mid/Small Cap, 5% International)</li>
-        <li>50% Fixed Income ETFs (25% Govt Securities, 25% Corporate/PSU Bonds)</li>
-        <li>10% Gold ETFs</li>
-      </ul>
-      
-      <h4>Moderate Allocation (Balanced Risk)</h4>
-      <ul>
-        <li>60% Equity ETFs (40% Large Cap, 10% Mid/Small Cap, 10% International)</li>
-        <li>30% Fixed Income ETFs (15% Govt Securities, 15% Corporate/PSU Bonds)</li>
-        <li>10% Gold ETFs</li>
-      </ul>
-      
-      <h4>Aggressive Allocation (Higher Risk)</h4>
-      <ul>
-        <li>80% Equity ETFs (40% Large Cap, 25% Mid/Small Cap, 15% International)</li>
-        <li>15% Fixed Income ETFs</li>
-        <li>5% Gold ETFs</li>
-      </ul>
-      
-      <h3>Implementation Strategies</h3>
-      
-      <h4>1. Core-Satellite Approach</h4>
-      <p>Build a portfolio with:</p>
-      <ul>
-        <li><strong>Core holdings (70-80%):</strong> Broad-based index ETFs for stable exposure</li>
-        <li><strong>Satellite positions (20-30%):</strong> Thematic or sector ETFs for targeted opportunities</li>
-      </ul>
-      
-      <h4>2. Risk Parity</h4>
-      <p>Allocate assets based on their risk contribution rather than rupee amounts. This typically results in more allocation to bonds and less to equities than traditional models.</p>
-      
-      <h4>3. Age-Based Allocation</h4>
-      <p>A simple rule: Subtract your age from 100 to determine your equity allocation percentage. For example, a 30-year-old would have 70% in equities, while a 60-year-old would have 40% in equities.</p>
-      
-      <h3>Rebalancing Your ETF Portfolio</h3>
-      <p>As market movements cause your asset allocation to drift from targets, periodic rebalancing is essential:</p>
-      <ul>
-        <li><strong>Calendar rebalancing:</strong> Review quarterly, semi-annually, or annually</li>
-        <li><strong>Threshold rebalancing:</strong> Rebalance when allocations drift beyond predetermined percentage points (e.g., ±5%)</li>
-        <li><strong>Tax-efficient rebalancing:</strong> Utilize new investments to restore target allocations instead of selling existing positions</li>
-      </ul>
-      
-      <h3>Reviewing and Adjusting Your Allocation</h3>
-      <p>Your asset allocation should evolve with changing circumstances:</p>
-      <ul>
-        <li>Shift to more conservative allocations as you approach financial goals</li>
-        <li>Adjust based on significant life changes (marriage, children, retirement)</li>
-        <li>Consider macroeconomic environments (high inflation might warrant more TIPS or gold)</li>
-        <li>Review new ETF offerings that might provide better implementation options</li>
-      </ul>
     `,
-    nextArticle: null,
     relatedArticles: ['thematic', 'liquidity-volatility'],
+    nextArticle: null,
   }
 };
 
@@ -367,21 +154,9 @@ const LearnArticle = () => {
           setError(null);
         } else {
           // Try to get from fallback if available
-          const fallbackArticle = fallbackArticles[slug as keyof typeof fallbackArticles];
+          const fallbackArticle = fallbackArticles[slug];
           if (fallbackArticle) {
-            setArticle({
-              id: slug,
-              title: fallbackArticle.title,
-              slug,
-              description: fallbackArticle.description || '',
-              readingTime: fallbackArticle.readingTime,
-              category: fallbackArticle.category as any,
-              tags: fallbackArticle.tags || [],
-              image: fallbackArticle.image,
-              content: fallbackArticle.content,
-              relatedArticles: fallbackArticle.relatedArticles || [],
-              nextArticle: fallbackArticle.nextArticle,
-            });
+            setArticle(fallbackArticle);
             setError('Using local fallback data. Connect to Notion for latest content.');
           } else {
             setError('Article not found.');
@@ -392,21 +167,9 @@ const LearnArticle = () => {
         setError('Failed to load article. Please try again later.');
         
         // Try to get from fallback if available
-        const fallbackArticle = fallbackArticles[slug as keyof typeof fallbackArticles];
+        const fallbackArticle = fallbackArticles[slug];
         if (fallbackArticle) {
-          setArticle({
-            id: slug,
-            title: fallbackArticle.title,
-            slug,
-            description: fallbackArticle.description || '',
-            readingTime: fallbackArticle.readingTime,
-            category: fallbackArticle.category as any,
-            tags: fallbackArticle.tags || [],
-            image: fallbackArticle.image,
-            content: fallbackArticle.content,
-            relatedArticles: fallbackArticle.relatedArticles || [],
-            nextArticle: fallbackArticle.nextArticle,
-          });
+          setArticle(fallbackArticle);
         }
       } finally {
         setLoading(false);
@@ -547,7 +310,7 @@ const LearnArticle = () => {
                     {article.relatedArticles.map((relatedSlug) => {
                       // For now, we're using the fallback data for related articles
                       // In a full implementation, you would want to fetch this data from Notion
-                      const relatedArticle = fallbackArticles[relatedSlug as keyof typeof fallbackArticles];
+                      const relatedArticle = fallbackArticles[relatedSlug];
                       if (!relatedArticle) return null;
                       
                       return (
