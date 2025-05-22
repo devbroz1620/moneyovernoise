@@ -384,6 +384,7 @@ const LearnArticle = () => {
     <MainLayout>
       <div className="container py-8">
         <PageHeader
+          title={article.title}
           breadcrumbs={[
             { href: "/", label: "Home" },
             { href: "/learn", label: "Learn" },
