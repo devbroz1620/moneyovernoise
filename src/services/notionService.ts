@@ -1,8 +1,12 @@
 
 import { Client } from "@notionhq/client";
 import { marked } from "marked";
-import { NotionArticle, NotionDatabaseResponse } from "@/types/notion";
-import { BlockObjectResponse, PageObjectResponse } from "@notionhq/client/build/src/api-endpoints";
+import { NotionArticle, NotionConnectionStatus, NotionDatabaseResponse } from "@/types/notion";
+import { 
+  BlockObjectResponse, 
+  GetDatabaseResponse, 
+  PageObjectResponse 
+} from "@notionhq/client/build/src/api-endpoints";
 
 // Use the integration ID provided by the user
 const NOTION_API_KEY = "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";
@@ -136,7 +140,7 @@ export const getArticles = async (): Promise<NotionArticle[]> => {
     
     // Test connection to Notion API first
     try {
-      await notion.users.me();
+      await notion.users.me({});
       console.log('Successfully connected to Notion API');
     } catch (error: any) {
       console.error('Error connecting to Notion API:', error.message || error);
@@ -245,14 +249,10 @@ export const getArticleBySlug = async (slug: string): Promise<NotionArticle | nu
 };
 
 // Test connection to Notion API - can be called to verify setup
-export const testNotionConnection = async (): Promise<{
-  success: boolean;
-  message: string;
-  details?: any;
-}> => {
+export const testNotionConnection = async (): Promise<NotionConnectionStatus> => {
   try {
     // Test API key by getting current user info
-    const userResponse = await notion.users.me();
+    const userResponse = await notion.users.me({});
     console.log('Notion API connection successful');
     console.log('Connected as user:', userResponse.name);
     
@@ -263,16 +263,23 @@ export const testNotionConnection = async (): Promise<{
       });
       
       console.log('Successfully accessed database');
-      console.log('Database title:', databaseResponse.title?.[0]?.plain_text || 'Untitled');
+      
+      // Handle the title property safely
+      let databaseTitle = 'Untitled';
+      if ('title' in databaseResponse && Array.isArray(databaseResponse.title) && databaseResponse.title.length > 0) {
+        databaseTitle = databaseResponse.title[0].plain_text || 'Untitled';
+      }
+      
+      console.log('Database title:', databaseTitle);
       
       return {
         success: true,
-        message: `Connected successfully as ${userResponse.name}. Database "${databaseResponse.title?.[0]?.plain_text || 'Untitled'}" is accessible.`,
+        message: `Connected successfully as ${userResponse.name}. Database is accessible.`,
         details: {
           user: userResponse,
           database: {
             id: databaseResponse.id,
-            title: databaseResponse.title?.[0]?.plain_text || 'Untitled',
+            title: databaseTitle,
           },
         },
       };

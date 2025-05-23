@@ -1,5 +1,11 @@
 
-import { BlockObjectResponse, ListBlockChildrenResponse, PageObjectResponse, QueryDatabaseResponse } from "@notionhq/client/build/src/api-endpoints";
+import { 
+  BlockObjectResponse, 
+  ListBlockChildrenResponse, 
+  PageObjectResponse, 
+  QueryDatabaseResponse, 
+  UserObjectResponse
+} from "@notionhq/client/build/src/api-endpoints";
 
 export interface NotionArticle {
   id: string;

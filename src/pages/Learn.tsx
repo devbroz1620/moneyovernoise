@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import MainLayout from '@/components/layout/MainLayout';
@@ -8,6 +9,7 @@ import { NotionArticle } from '@/types/notion';
 import { getArticles } from '@/services/notionService';
 import { Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import NotionConnectionTest from '@/components/shared/NotionConnectionTest';
 
 // Demo articles data to use as fallback
 const demoArticles: NotionArticle[] = [
@@ -78,19 +80,22 @@ const Learn = () => {
   const [articles, setArticles] = useState<NotionArticle[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [showConnectionTest, setShowConnectionTest] = useState(false);
 
   useEffect(() => {
     const fetchArticles = async () => {
       setLoading(true);
       try {
         const fetchedArticles = await getArticles();
-        setArticles(fetchedArticles);
+        setArticles(fetchedArticles.length > 0 ? fetchedArticles : demoArticles);
         setError(null);
       } catch (err) {
         console.error('Error fetching articles:', err);
         setError('Failed to load articles. Please try again later.');
         // Fall back to demo data if API fails
         setArticles(demoArticles);
+        // Show connection test if there's an error
+        setShowConnectionTest(true);
       } finally {
         setLoading(false);
       }
@@ -124,17 +129,25 @@ const Learn = () => {
           ]}
         />
 
+        {showConnectionTest && (
+          <div className="mb-8">
+            <NotionConnectionTest />
+          </div>
+        )}
+
+        {error && !showConnectionTest && (
+          <div className="bg-amber-50 border border-amber-200 p-4 rounded-md text-amber-800 mb-6 flex justify-between items-center">
+            <div>{error}</div>
+            <Button onClick={() => setShowConnectionTest(true)} variant="outline" size="sm">
+              Test Connection
+            </Button>
+          </div>
+        )}
+
         {loading ? (
           <div className="flex justify-center items-center py-20">
             <Loader2 className="h-8 w-8 animate-spin text-primary" />
             <span className="ml-2 text-lg">Loading articles...</span>
-          </div>
-        ) : error ? (
-          <div className="bg-red-50 border border-red-200 p-4 rounded-md text-red-800 mb-6">
-            {error}
-            <div className="mt-4">
-              <Button onClick={() => window.location.reload()} variant="outline">Try Again</Button>
-            </div>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
