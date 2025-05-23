@@ -38,3 +38,9 @@ export interface NotionRichText {
     color: string;
   };
 }
+
+export interface NotionConnectionStatus {
+  success: boolean;
+  message: string;
+  details?: any;
+}
