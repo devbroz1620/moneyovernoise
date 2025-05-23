@@ -1,21 +1,28 @@
 
 import { Client } from "@notionhq/client";
 import { marked } from "marked";
-import { NotionArticle, NotionConnectionStatus, NotionDatabaseResponse } from "@/types/notion";
+import { NotionArticle, NotionConnectionStatus, NotionDatabaseResponse, NotionConfig } from "@/types/notion";
 import { 
   BlockObjectResponse, 
-  GetDatabaseResponse, 
   PageObjectResponse 
 } from "@notionhq/client/build/src/api-endpoints";
 
-// Use the integration ID provided by the user
+// Notion configuration
 const NOTION_API_KEY = "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";
-// Extract database ID from the URL (last part after the dash)
 const NOTION_DATABASE_ID = "1fb2f5df76a781dea415eb98d1b1fea9";
+const NOTION_VERSION = "2022-06-28";
+
+// Export config for diagnostic purposes
+export const getNotionConfig = (): NotionConfig => ({
+  apiKey: NOTION_API_KEY,
+  databaseId: NOTION_DATABASE_ID,
+  version: NOTION_VERSION
+});
 
 // Initialize the Notion client
 const notion = new Client({
   auth: NOTION_API_KEY,
+  notionVersion: NOTION_VERSION,
 });
 
 // Cache for articles to minimize API calls
@@ -23,26 +30,47 @@ let articlesCache: NotionArticle[] | null = null;
 let lastFetchTime: number = 0;
 const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
 
+// Helper to detect CORS errors
+const isCorsError = (error: any): boolean => {
+  if (!error) return false;
+  return (
+    error.message?.includes('CORS') ||
+    error.message?.includes('Failed to fetch') ||
+    error.name === 'TypeError'
+  );
+};
+
 // Convert Notion rich text to HTML using marked
 const convertRichTextToHtml = (richText: any[]): string => {
-  // This is a simplified version, you might need to handle more Notion block types
-  const markdown = richText.map(text => text.plain_text).join('');
-  return marked.parse(markdown) as string; // Cast to string since marked.parse returns string | Promise<string>
+  if (!richText || !Array.isArray(richText)) return '';
+  const markdown = richText.map(text => text?.plain_text || '').join('');
+  return marked.parse(markdown) as string;
 };
 
 const extractTags = (multiSelect: any[]): string[] => {
-  return multiSelect.map(option => option.name);
+  if (!multiSelect || !Array.isArray(multiSelect)) return [];
+  return multiSelect.map(option => option?.name || '').filter(Boolean);
 };
 
 // Transform Notion page data into our application's article format
 const transformNotionPage = async (page: PageObjectResponse): Promise<NotionArticle> => {
   try {
+    if (!page || !page.properties) {
+      throw new Error("Invalid page object received from Notion API");
+    }
+    
     const properties = page.properties as any;
     
     // Get the content blocks
-    const blocks = await notion.blocks.children.list({
-      block_id: page.id,
-    });
+    let blocks;
+    try {
+      blocks = await notion.blocks.children.list({
+        block_id: page.id,
+      });
+    } catch (error: any) {
+      console.error('Error fetching blocks for page:', page.id, error);
+      blocks = { results: [] };
+    }
     
     // Convert blocks to HTML (simplified version)
     let contentHtml = '';
@@ -115,7 +143,7 @@ const transformNotionPage = async (page: PageObjectResponse): Promise<NotionArti
       category: validCategory,
       tags: properties.Tags?.multi_select ? extractTags(properties.Tags.multi_select) : [],
       image: properties.Image?.url || 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800',
-      content: contentHtml,
+      content: contentHtml || '<p>No content available</p>',
       relatedArticles,
       nextArticle,
     };
@@ -140,17 +168,22 @@ export const getArticles = async (): Promise<NotionArticle[]> => {
     
     // Test connection to Notion API first
     try {
-      await notion.users.me({});
+      const user = await notion.users.me({});
       console.log('Successfully connected to Notion API');
+      console.log(`Connected as user: ${user.name || 'Unknown'}`);
     } catch (error: any) {
       console.error('Error connecting to Notion API:', error.message || error);
+      
+      let errorMessage = 'Failed to connect to Notion API';
       if (error.code === 'unauthorized') {
-        console.error('Authorization error: Please check your Notion API key and permissions');
+        errorMessage = 'Authorization error: Please check your Notion API key and permissions';
+      } else if (error.message?.includes('rate_limited')) {
+        errorMessage = 'Rate limited by Notion API. Please try again later.';
+      } else if (isCorsError(error)) {
+        errorMessage = 'CORS error: The browser blocked the request to Notion API';
       }
-      if (error.message?.includes('rate_limited')) {
-        console.error('Rate limited by Notion API. Please try again later.');
-      }
-      throw error;
+      
+      throw new Error(errorMessage);
     }
     
     // Query the database
@@ -185,9 +218,12 @@ export const getArticles = async (): Promise<NotionArticle[]> => {
       return articles;
     } catch (error: any) {
       console.error('Error querying Notion database:', error.message || error);
+      
       if (error.code === 'object_not_found') {
         console.error(`Database with ID ${NOTION_DATABASE_ID} not found or no access`);
+        throw new Error(`Database not found or no access. Please check your database ID and permissions.`);
       }
+      
       throw error;
     }
   } catch (error: any) {
@@ -252,9 +288,22 @@ export const getArticleBySlug = async (slug: string): Promise<NotionArticle | nu
 export const testNotionConnection = async (): Promise<NotionConnectionStatus> => {
   try {
     // Test API key by getting current user info
-    const userResponse = await notion.users.me({});
-    console.log('Notion API connection successful');
-    console.log('Connected as user:', userResponse.name);
+    let userResponse;
+    try {
+      userResponse = await notion.users.me({});
+      console.log('Notion API connection successful');
+      console.log('Connected as user:', userResponse.name);
+    } catch (error: any) {
+      console.error('Notion API connection error:', error);
+      
+      return {
+        success: false,
+        message: `Connection failed: ${error.message || error}`,
+        details: { error },
+        corsError: isCorsError(error),
+        statusCode: error.status || 0
+      };
+    }
     
     // Test database access
     try {
@@ -272,16 +321,26 @@ export const testNotionConnection = async (): Promise<NotionConnectionStatus> =>
       
       console.log('Database title:', databaseTitle);
       
+      // Try to fetch a sample of pages to verify content access
+      const pagesResponse = await notion.databases.query({
+        database_id: NOTION_DATABASE_ID,
+        page_size: 1,
+      });
+      
+      const hasPages = pagesResponse.results.length > 0;
+      
       return {
         success: true,
-        message: `Connected successfully as ${userResponse.name}. Database is accessible.`,
+        message: `Connected successfully as ${userResponse.name}. Database "${databaseTitle}" is accessible with ${pagesResponse.results.length} pages.`,
         details: {
           user: userResponse,
           database: {
             id: databaseResponse.id,
             title: databaseTitle,
+            hasPages
           },
         },
+        statusCode: 200
       };
     } catch (error: any) {
       console.error('Database access error:', error);
@@ -289,6 +348,8 @@ export const testNotionConnection = async (): Promise<NotionConnectionStatus> =>
         success: false,
         message: `API key valid, but database access failed: ${error.message || error}`,
         details: { error },
+        corsError: isCorsError(error),
+        statusCode: error.status || 0
       };
     }
   } catch (error: any) {
@@ -297,6 +358,8 @@ export const testNotionConnection = async (): Promise<NotionConnectionStatus> =>
       success: false,
       message: `Connection failed: ${error.message || error}`,
       details: { error },
+      corsError: isCorsError(error),
+      statusCode: error.status || 0
     };
   }
 };

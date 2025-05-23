@@ -49,4 +49,12 @@ export interface NotionConnectionStatus {
   success: boolean;
   message: string;
   details?: any;
+  statusCode?: number;
+  corsError?: boolean;
+}
+
+export interface NotionConfig {
+  apiKey: string;
+  databaseId: string;
+  version: string;
 }
