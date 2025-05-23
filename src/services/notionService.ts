@@ -2,10 +2,12 @@
 import { Client } from "@notionhq/client";
 import { marked } from "marked";
 import { NotionArticle, NotionDatabaseResponse } from "@/types/notion";
+import { BlockObjectResponse, PageObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 
-// This should be stored as an environment variable in a production environment
-const NOTION_API_KEY = "your-notion-api-key"; // Replace with your actual API key
-const NOTION_DATABASE_ID = "your-database-id"; // Replace with your database ID
+// Use the integration ID provided by the user
+const NOTION_API_KEY = "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";
+// Extract database ID from the URL (last part after the dash)
+const NOTION_DATABASE_ID = "1fb2f5df76a781dea415eb98d1b1fea9";
 
 // Initialize the Notion client
 const notion = new Client({
@@ -21,7 +23,7 @@ const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
 const convertRichTextToHtml = (richText: any[]): string => {
   // This is a simplified version, you might need to handle more Notion block types
   const markdown = richText.map(text => text.plain_text).join('');
-  return marked.parse(markdown);
+  return marked.parse(markdown) as string; // Cast to string since marked.parse returns string | Promise<string>
 };
 
 const extractTags = (multiSelect: any[]): string[] => {
@@ -29,8 +31,8 @@ const extractTags = (multiSelect: any[]): string[] => {
 };
 
 // Transform Notion page data into our application's article format
-const transformNotionPage = async (page: any): Promise<NotionArticle> => {
-  const properties = page.properties;
+const transformNotionPage = async (page: PageObjectResponse): Promise<NotionArticle> => {
+  const properties = page.properties as any;
   
   // Get the content blocks
   const blocks = await notion.blocks.children.list({
@@ -40,16 +42,19 @@ const transformNotionPage = async (page: any): Promise<NotionArticle> => {
   // Convert blocks to HTML (simplified version)
   let contentHtml = '';
   for (const block of blocks.results) {
-    if (block.type === 'paragraph' && block.paragraph?.rich_text) {
-      contentHtml += `<p>${block.paragraph.rich_text.map((text: any) => text.plain_text).join('')}</p>`;
-    } else if (block.type === 'heading_1' && block.heading_1?.rich_text) {
-      contentHtml += `<h1>${block.heading_1.rich_text.map((text: any) => text.plain_text).join('')}</h1>`;
-    } else if (block.type === 'heading_2' && block.heading_2?.rich_text) {
-      contentHtml += `<h2>${block.heading_2.rich_text.map((text: any) => text.plain_text).join('')}</h2>`;
-    } else if (block.type === 'heading_3' && block.heading_3?.rich_text) {
-      contentHtml += `<h3>${block.heading_3.rich_text.map((text: any) => text.plain_text).join('')}</h3>`;
-    } else if (block.type === 'bulleted_list_item' && block.bulleted_list_item?.rich_text) {
-      contentHtml += `<li>${block.bulleted_list_item.rich_text.map((text: any) => text.plain_text).join('')}</li>`;
+    // Cast block to BlockObjectResponse to access type property
+    const typedBlock = block as BlockObjectResponse;
+    
+    if (typedBlock.type === 'paragraph' && typedBlock.paragraph?.rich_text) {
+      contentHtml += `<p>${typedBlock.paragraph.rich_text.map((text: any) => text.plain_text).join('')}</p>`;
+    } else if (typedBlock.type === 'heading_1' && typedBlock.heading_1?.rich_text) {
+      contentHtml += `<h1>${typedBlock.heading_1.rich_text.map((text: any) => text.plain_text).join('')}</h1>`;
+    } else if (typedBlock.type === 'heading_2' && typedBlock.heading_2?.rich_text) {
+      contentHtml += `<h2>${typedBlock.heading_2.rich_text.map((text: any) => text.plain_text).join('')}</h2>`;
+    } else if (typedBlock.type === 'heading_3' && typedBlock.heading_3?.rich_text) {
+      contentHtml += `<h3>${typedBlock.heading_3.rich_text.map((text: any) => text.plain_text).join('')}</h3>`;
+    } else if (typedBlock.type === 'bulleted_list_item' && typedBlock.bulleted_list_item?.rich_text) {
+      contentHtml += `<li>${typedBlock.bulleted_list_item.rich_text.map((text: any) => text.plain_text).join('')}</li>`;
     }
     // Add more block types as needed
   }
@@ -60,21 +65,35 @@ const transformNotionPage = async (page: any): Promise<NotionArticle> => {
   
   if (properties.RelatedArticles?.relation) {
     for (const related of properties.RelatedArticles.relation) {
-      const relatedPage = await notion.pages.retrieve({ page_id: related.id });
-      relatedArticles.push(relatedPage.properties.Slug.rich_text[0].plain_text);
+      try {
+        const relatedPage = await notion.pages.retrieve({ page_id: related.id });
+        const relatedProperties = (relatedPage as PageObjectResponse).properties as any;
+        if (relatedProperties.Slug?.rich_text?.[0]) {
+          relatedArticles.push(relatedProperties.Slug.rich_text[0].plain_text);
+        }
+      } catch (error) {
+        console.error('Error retrieving related article:', error);
+      }
     }
   }
   
   if (properties.NextArticle?.relation && properties.NextArticle.relation.length > 0) {
-    const nextPage = await notion.pages.retrieve({ page_id: properties.NextArticle.relation[0].id });
-    nextArticle = {
-      title: nextPage.properties.Title.title[0].plain_text,
-      slug: nextPage.properties.Slug.rich_text[0].plain_text,
-    };
+    try {
+      const nextPage = await notion.pages.retrieve({ page_id: properties.NextArticle.relation[0].id });
+      const nextProperties = (nextPage as PageObjectResponse).properties as any;
+      if (nextProperties.Title?.title?.[0] && nextProperties.Slug?.rich_text?.[0]) {
+        nextArticle = {
+          title: nextProperties.Title.title[0].plain_text,
+          slug: nextProperties.Slug.rich_text[0].plain_text,
+        };
+      }
+    } catch (error) {
+      console.error('Error retrieving next article:', error);
+    }
   }
   
   // Ensure category is one of the allowed values
-  const categoryValue = properties.Category.select.name;
+  const categoryValue = properties.Category?.select?.name || 'Beginner';
   const validCategory = 
     categoryValue === 'Beginner' || 
     categoryValue === 'Intermediate' || 
@@ -84,13 +103,13 @@ const transformNotionPage = async (page: any): Promise<NotionArticle> => {
   
   return {
     id: page.id,
-    title: properties.Title.title[0].plain_text,
-    slug: properties.Slug.rich_text[0].plain_text,
-    description: properties.Description.rich_text[0].plain_text,
-    readingTime: properties.ReadingTime.rich_text[0].plain_text,
+    title: properties.Title?.title?.[0]?.plain_text || 'Untitled',
+    slug: properties.Slug?.rich_text?.[0]?.plain_text || page.id,
+    description: properties.Description?.rich_text?.[0]?.plain_text || '',
+    readingTime: properties.ReadingTime?.rich_text?.[0]?.plain_text || '5 min',
     category: validCategory,
-    tags: extractTags(properties.Tags.multi_select),
-    image: properties.Image.url,
+    tags: properties.Tags?.multi_select ? extractTags(properties.Tags.multi_select) : [],
+    image: properties.Image?.url || 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800',
     content: contentHtml,
     relatedArticles,
     nextArticle,
@@ -119,14 +138,19 @@ export const getArticles = async (): Promise<NotionArticle[]> => {
     
     const articles: NotionArticle[] = [];
     for (const page of response.results) {
-      const article = await transformNotionPage(page);
-      articles.push(article);
+      try {
+        const article = await transformNotionPage(page as PageObjectResponse);
+        articles.push(article);
+      } catch (error) {
+        console.error('Error transforming page:', error);
+      }
     }
     
     // Update cache
     articlesCache = articles;
     lastFetchTime = currentTime;
     
+    console.log(`Fetched ${articles.length} articles from Notion`);
     return articles;
   } catch (error) {
     console.error('Error fetching articles from Notion:', error);
@@ -160,7 +184,7 @@ export const getArticleBySlug = async (slug: string): Promise<NotionArticle | nu
       return null;
     }
     
-    return await transformNotionPage(response.results[0]);
+    return await transformNotionPage(response.results[0] as PageObjectResponse);
   } catch (error) {
     console.error(`Error fetching article with slug "${slug}" from Notion:`, error);
     return null;
