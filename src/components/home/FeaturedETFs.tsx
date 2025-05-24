@@ -4,6 +4,8 @@ import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { TrendingUp, Shield, Zap } from 'lucide-react';
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface FeaturedETF {
   name: string;
@@ -63,6 +65,61 @@ const getCategoryStyle = (category: string) => {
 };
 
 const FeaturedETFs = () => {
+  const isMobile = useIsMobile();
+
+  const ETFCard = ({ etf }: { etf: FeaturedETF }) => {
+    const IconComponent = etf.icon;
+    return (
+      <Card className="group hover:shadow-lg transition-all duration-300 border-0 shadow-md hover:shadow-xl h-full">
+        <CardHeader className="pb-4">
+          <div className="flex items-start justify-between mb-3">
+            <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
+              <IconComponent className="h-5 w-5 text-primary" />
+            </div>
+            <Badge variant="outline" className={getCategoryStyle(etf.category)}>
+              {etf.category}
+            </Badge>
+          </div>
+          <CardTitle className="text-xl font-bold mb-2 group-hover:text-primary transition-colors">
+            {etf.name}
+          </CardTitle>
+          <div className="text-sm text-muted-foreground font-mono">
+            {etf.ticker}
+          </div>
+          <p className="text-sm text-muted-foreground leading-relaxed mt-2">
+            {etf.description}
+          </p>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="grid grid-cols-2 gap-3">
+            <div className="space-y-1">
+              <p className="text-xs text-muted-foreground font-medium">AUM</p>
+              <p className="font-semibold text-sm">{etf.aum}</p>
+            </div>
+            <div className="space-y-1">
+              <p className="text-xs text-muted-foreground font-medium">Expense Ratio</p>
+              <p className="font-semibold text-sm">{etf.expenseRatio}</p>
+            </div>
+          </div>
+          
+          <div className="space-y-2">
+            <p className="text-xs text-muted-foreground font-medium">Ideal For</p>
+            <p className="text-sm font-medium text-foreground">{etf.idealFor}</p>
+          </div>
+
+          <Button 
+            asChild 
+            className="w-full mt-4 group-hover:shadow-md transition-all"
+          >
+            <Link to={`/list/etfs/${etf.ticker}`}>
+              Explore ETF
+            </Link>
+          </Button>
+        </CardContent>
+      </Card>
+    );
+  };
+
   return (
     <section className="container py-12 md:py-16">
       <div className="flex items-baseline justify-between mb-8">
@@ -75,60 +132,25 @@ const FeaturedETFs = () => {
         </Link>
       </div>
       
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {featuredETFs.map((etf) => {
-          const IconComponent = etf.icon;
-          return (
-            <Card key={etf.ticker} className="group hover:shadow-lg transition-all duration-300 border-0 shadow-md hover:shadow-xl">
-              <CardHeader className="pb-4">
-                <div className="flex items-start justify-between mb-3">
-                  <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
-                    <IconComponent className="h-5 w-5 text-primary" />
-                  </div>
-                  <Badge variant="outline" className={getCategoryStyle(etf.category)}>
-                    {etf.category}
-                  </Badge>
-                </div>
-                <CardTitle className="text-xl font-bold mb-2 group-hover:text-primary transition-colors">
-                  {etf.name}
-                </CardTitle>
-                <div className="text-sm text-muted-foreground font-mono">
-                  {etf.ticker}
-                </div>
-                <p className="text-sm text-muted-foreground leading-relaxed mt-2">
-                  {etf.description}
-                </p>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="space-y-1">
-                    <p className="text-xs text-muted-foreground font-medium">AUM</p>
-                    <p className="font-semibold text-sm">{etf.aum}</p>
-                  </div>
-                  <div className="space-y-1">
-                    <p className="text-xs text-muted-foreground font-medium">Expense Ratio</p>
-                    <p className="font-semibold text-sm">{etf.expenseRatio}</p>
-                  </div>
-                </div>
-                
-                <div className="space-y-2">
-                  <p className="text-xs text-muted-foreground font-medium">Ideal For</p>
-                  <p className="text-sm font-medium text-foreground">{etf.idealFor}</p>
-                </div>
-
-                <Button 
-                  asChild 
-                  className="w-full mt-4 group-hover:shadow-md transition-all"
-                >
-                  <Link to={`/list/etfs/${etf.ticker}`}>
-                    Explore ETF
-                  </Link>
-                </Button>
-              </CardContent>
-            </Card>
-          );
-        })}
-      </div>
+      {isMobile ? (
+        <Carousel className="w-full">
+          <CarouselContent className="-ml-2 md:-ml-4">
+            {featuredETFs.map((etf) => (
+              <CarouselItem key={etf.ticker} className="pl-2 md:pl-4 basis-4/5">
+                <ETFCard etf={etf} />
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselPrevious />
+          <CarouselNext />
+        </Carousel>
+      ) : (
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {featuredETFs.map((etf) => (
+            <ETFCard key={etf.ticker} etf={etf} />
+          ))}
+        </div>
+      )}
     </section>
   );
 };

@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import { MessageCircle, X, Send } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 
@@ -89,7 +90,7 @@ const AIChatbot = () => {
       {/* Chat Window */}
       {isOpen && (
         <Card className="fixed bottom-6 right-6 w-96 h-[500px] shadow-2xl z-50 flex flex-col">
-          <CardHeader className="pb-3 border-b">
+          <CardHeader className="pb-3 border-b flex-shrink-0">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-2">
                 <div className="p-2 bg-primary/10 rounded-lg">
@@ -114,30 +115,32 @@ const AIChatbot = () => {
             </div>
           </CardHeader>
 
-          <CardContent className="flex-1 flex flex-col p-0">
-            {/* Messages */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-4">
-              {messages.map((message) => (
-                <div
-                  key={message.id}
-                  className={`flex ${message.isUser ? 'justify-end' : 'justify-start'}`}
-                >
+          <CardContent className="flex-1 flex flex-col p-0 overflow-hidden">
+            {/* Messages with ScrollArea */}
+            <ScrollArea className="flex-1 p-4">
+              <div className="space-y-4">
+                {messages.map((message) => (
                   <div
-                    className={`max-w-[80%] p-3 rounded-lg text-sm ${
-                      message.isUser
-                        ? 'bg-primary text-primary-foreground'
-                        : 'bg-muted'
-                    }`}
+                    key={message.id}
+                    className={`flex ${message.isUser ? 'justify-end' : 'justify-start'}`}
                   >
-                    <div className="whitespace-pre-wrap">{message.content}</div>
+                    <div
+                      className={`max-w-[80%] p-3 rounded-lg text-sm ${
+                        message.isUser
+                          ? 'bg-primary text-primary-foreground'
+                          : 'bg-muted'
+                      }`}
+                    >
+                      <div className="whitespace-pre-wrap">{message.content}</div>
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            </ScrollArea>
 
             {/* Suggested Questions */}
             {messages.length <= 1 && (
-              <div className="p-4 border-t bg-muted/30">
+              <div className="p-4 border-t bg-muted/30 flex-shrink-0">
                 <p className="text-xs text-muted-foreground mb-2">Try asking:</p>
                 <div className="space-y-2">
                   {suggestedQuestions.map((question, index) => (
@@ -156,7 +159,7 @@ const AIChatbot = () => {
             )}
 
             {/* Input */}
-            <div className="p-4 border-t">
+            <div className="p-4 border-t flex-shrink-0">
               <div className="flex space-x-2">
                 <input
                   type="text"

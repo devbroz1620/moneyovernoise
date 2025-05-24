@@ -4,6 +4,8 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Play, Clock, Bookmark } from 'lucide-react';
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface VideoInsight {
   id: string;
@@ -90,6 +92,7 @@ const categories = [
 
 const VideoInsights = () => {
   const [selectedCategory, setSelectedCategory] = useState('All');
+  const isMobile = useIsMobile();
 
   const filteredVideos = selectedCategory === 'All' 
     ? videoInsights 
@@ -98,6 +101,64 @@ const VideoInsights = () => {
   const handleVideoClick = (youtubeUrl: string) => {
     window.open(youtubeUrl, '_blank');
   };
+
+  const VideoCard = ({ video }: { video: VideoInsight }) => (
+    <Card className="group overflow-hidden hover:shadow-lg transition-all duration-300 cursor-pointer h-full">
+      <div className="relative" onClick={() => handleVideoClick(video.youtubeUrl)}>
+        <img 
+          src={video.thumbnailUrl} 
+          alt={video.title}
+          className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+        />
+        
+        {/* Duration Badge */}
+        <div className="absolute bottom-2 right-2 bg-black/80 text-white px-2 py-1 rounded text-xs flex items-center gap-1">
+          <Clock className="h-3 w-3" />
+          {video.duration}
+        </div>
+
+        {/* Play Button Overlay */}
+        <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+          <div className="bg-primary text-white rounded-full p-3 transform scale-0 group-hover:scale-100 transition-transform duration-300">
+            <Play className="h-6 w-6 ml-1" fill="currentColor" />
+          </div>
+        </div>
+      </div>
+
+      <CardContent className="p-4">
+        <h3 className="font-semibold text-lg mb-2 line-clamp-2 group-hover:text-primary transition-colors">
+          {video.title}
+        </h3>
+        
+        <p className="text-sm text-muted-foreground mb-3">
+          by {video.creator}
+        </p>
+
+        <div className="flex flex-wrap gap-1 mb-4">
+          {video.tags.map((tag) => (
+            <Badge key={tag} variant="outline" className="text-xs">
+              {tag}
+            </Badge>
+          ))}
+        </div>
+
+        <div className="flex items-center justify-between">
+          <Button 
+            size="sm" 
+            onClick={() => handleVideoClick(video.youtubeUrl)}
+            className="flex items-center gap-1"
+          >
+            <Play className="h-3 w-3" />
+            Watch
+          </Button>
+          
+          <Button size="sm" variant="ghost">
+            <Bookmark className="h-4 w-4" />
+          </Button>
+        </div>
+      </CardContent>
+    </Card>
+  );
 
   return (
     <section className="container py-12 md:py-16">
@@ -124,65 +185,25 @@ const VideoInsights = () => {
       </div>
 
       {/* Video Grid */}
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {filteredVideos.map((video) => (
-          <Card key={video.id} className="group overflow-hidden hover:shadow-lg transition-all duration-300 cursor-pointer">
-            <div className="relative" onClick={() => handleVideoClick(video.youtubeUrl)}>
-              <img 
-                src={video.thumbnailUrl} 
-                alt={video.title}
-                className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
-              />
-              
-              {/* Duration Badge */}
-              <div className="absolute bottom-2 right-2 bg-black/80 text-white px-2 py-1 rounded text-xs flex items-center gap-1">
-                <Clock className="h-3 w-3" />
-                {video.duration}
-              </div>
-
-              {/* Play Button Overlay */}
-              <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                <div className="bg-primary text-white rounded-full p-3 transform scale-0 group-hover:scale-100 transition-transform duration-300">
-                  <Play className="h-6 w-6 ml-1" fill="currentColor" />
-                </div>
-              </div>
-            </div>
-
-            <CardContent className="p-4">
-              <h3 className="font-semibold text-lg mb-2 line-clamp-2 group-hover:text-primary transition-colors">
-                {video.title}
-              </h3>
-              
-              <p className="text-sm text-muted-foreground mb-3">
-                by {video.creator}
-              </p>
-
-              <div className="flex flex-wrap gap-1 mb-4">
-                {video.tags.map((tag) => (
-                  <Badge key={tag} variant="outline" className="text-xs">
-                    {tag}
-                  </Badge>
-                ))}
-              </div>
-
-              <div className="flex items-center justify-between">
-                <Button 
-                  size="sm" 
-                  onClick={() => handleVideoClick(video.youtubeUrl)}
-                  className="flex items-center gap-1"
-                >
-                  <Play className="h-3 w-3" />
-                  Watch
-                </Button>
-                
-                <Button size="sm" variant="ghost">
-                  <Bookmark className="h-4 w-4" />
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+      {isMobile ? (
+        <Carousel className="w-full">
+          <CarouselContent className="-ml-2 md:-ml-4">
+            {filteredVideos.slice(0, 6).map((video) => (
+              <CarouselItem key={video.id} className="pl-2 md:pl-4 basis-4/5">
+                <VideoCard video={video} />
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselPrevious />
+          <CarouselNext />
+        </Carousel>
+      ) : (
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {filteredVideos.map((video) => (
+            <VideoCard key={video.id} video={video} />
+          ))}
+        </div>
+      )}
 
       {filteredVideos.length === 0 && (
         <div className="text-center py-8">
