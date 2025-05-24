@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import MainLayout from '@/components/layout/MainLayout';
@@ -185,7 +184,7 @@ const Learn = () => {
         )}
 
         {error && !showConnectionTest && (
-          <Alert variant="warning" className="mb-6">
+          <Alert variant="destructive" className="mb-6">
             <AlertCircle className="h-4 w-4" />
             <AlertTitle>Content Issue</AlertTitle>
             <AlertDescription className="flex justify-between items-center">
