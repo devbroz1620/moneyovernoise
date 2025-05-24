@@ -1,16 +1,13 @@
-import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import MainLayout from '@/components/layout/MainLayout';
 import { PageHeader } from '@/components/shared/PageHeader';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Loader2, RefreshCcw } from 'lucide-react';
-import { getArticleBySlug, refreshArticlesCache } from '@/services/notionService';
 import { NotionArticle } from '@/types/notion';
 
-// Sample article data to use as fallback
-const fallbackArticles: Record<string, NotionArticle> = {
+// Local articles data
+const articles: Record<string, NotionArticle> = {
   'what-is-an-etf': {
     id: 'what-is-an-etf',
     title: 'What is an ETF?',
@@ -50,10 +47,53 @@ const fallbackArticles: Record<string, NotionArticle> = {
         <li><strong>International ETFs:</strong> Provide exposure to global markets</li>
       </ul>
     `,
-    relatedArticles: ['thematic', 'liquidity-volatility'],
+    relatedArticles: ['thematic', 'liquidity-volatility', 'why-etfs-are-great-for-beginners'],
     nextArticle: {
-      title: 'Thematic ETFs: Investing in Trends',
-      slug: 'thematic',
+      title: 'Why ETFs are Great for Beginners',
+      slug: 'why-etfs-are-great-for-beginners',
+    },
+  },
+  'why-etfs-are-great-for-beginners': {
+    id: 'why-etfs-are-great-for-beginners',
+    title: 'Why ETFs are Great for Beginners',
+    slug: 'why-etfs-are-great-for-beginners',
+    description: 'Explore why Exchange Traded Funds are ideal for new investors stepping into the world of stock markets.',
+    readingTime: '5 min',
+    category: 'Beginner',
+    tags: ['Beginners', 'Strategy', 'Diversification'],
+    image: 'https://images.unsplash.com/photo-1556742400-b5c4ae9d8b39?w=800',
+    content: `
+      <h2>Why Beginners Should Consider ETFs</h2>
+      <p>Getting started in the stock market can feel overwhelming — with thousands of stocks, market jargon, and fear of losses. Exchange Traded Funds (ETFs) offer a simple and low-risk entry point for beginners who want to learn by doing without betting on a single stock.</p>
+
+      <p>ETFs combine the best of both worlds: diversification like mutual funds and flexibility like stocks. With a small amount of money, you can get exposure to a wide basket of assets, reducing your risk.</p>
+
+      <h3>Benefits of ETFs for Beginners</h3>
+      <ul>
+        <li><strong>Easy Diversification:</strong> Buying one ETF can give exposure to 50–100+ companies across sectors or an index like Nifty 50.</li>
+        <li><strong>Low Minimum Investment:</strong> Most ETFs on Indian exchanges can be purchased for under ₹100 — making it beginner-friendly.</li>
+        <li><strong>No Lock-ins:</strong> Unlike ELSS or some mutual funds, you can exit anytime during market hours.</li>
+        <li><strong>Low Expense Ratios:</strong> ETFs generally charge lower annual fees than actively managed mutual funds.</li>
+        <li><strong>Transparency:</strong> You always know what's inside the ETF since holdings are disclosed daily.</li>
+      </ul>
+
+      <h3>Example: Instead of Picking a Stock, Pick the Market</h3>
+      <p>Let's say you want to invest in Indian large-cap companies but don't know which stock to choose. A Nifty 50 ETF lets you invest in all top 50 companies in one shot. If the overall index grows, so does your investment.</p>
+
+      <h3>How to Start with ETFs</h3>
+      <ol>
+        <li>Open a demat account with any stock broker.</li>
+        <li>Search for ETFs like 'NiftyBees', 'BankBees', 'ICICI Sensex ETF', etc.</li>
+        <li>Place a buy order just like you would for a stock.</li>
+        <li>Track performance through your broker's app or a tool like MoneyOverNoise.</li>
+      </ol>
+
+      <p>For beginners, ETFs offer a safe, structured, and educational way to build wealth — one step at a time.</p>
+    `,
+    relatedArticles: ["what-is-an-etf", "thematic"],
+    nextArticle: {
+      title: "Thematic ETFs: Investing in Trends",
+      slug: "thematic",
     },
   },
   'thematic': {
@@ -76,7 +116,7 @@ const fallbackArticles: Record<string, NotionArticle> = {
       
       <p>These ETFs typically include companies across multiple traditional sectors and market capitalizations that share a common theme. For example, a "Future Mobility" thematic ETF might include automakers, battery manufacturers, semiconductor companies, and software providers all involved in the electric and autonomous vehicle revolution.</p>
     `,
-    relatedArticles: ['what-is-an-etf', 'liquidity-volatility'],
+    relatedArticles: ['what-is-an-etf', 'liquidity-volatility', 'why-etfs-are-great-for-beginners'],
     nextArticle: {
       title: 'Understanding Liquidity & Volatility',
       slug: 'liquidity-volatility',
@@ -138,62 +178,7 @@ const fallbackArticles: Record<string, NotionArticle> = {
 
 const LearnArticle = () => {
   const { slug = '' } = useParams<{ slug: string }>();
-  const [article, setArticle] = useState<NotionArticle | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [refreshing, setRefreshing] = useState(false);
-
-  useEffect(() => {
-    const fetchArticle = async () => {
-      setLoading(true);
-      try {
-        const fetchedArticle = await getArticleBySlug(slug);
-        
-        if (fetchedArticle) {
-          setArticle(fetchedArticle);
-          setError(null);
-        } else {
-          // Try to get from fallback if available
-          const fallbackArticle = fallbackArticles[slug];
-          if (fallbackArticle) {
-            setArticle(fallbackArticle);
-            setError('Using local fallback data. Connect to Notion for latest content.');
-          } else {
-            setError('Article not found.');
-          }
-        }
-      } catch (err) {
-        console.error('Error fetching article:', err);
-        setError('Failed to load article. Please try again later.');
-        
-        // Try to get from fallback if available
-        const fallbackArticle = fallbackArticles[slug];
-        if (fallbackArticle) {
-          setArticle(fallbackArticle);
-        }
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchArticle();
-  }, [slug]);
-
-  const handleRefresh = async () => {
-    setRefreshing(true);
-    try {
-      refreshArticlesCache();
-      const refreshedArticle = await getArticleBySlug(slug);
-      if (refreshedArticle) {
-        setArticle(refreshedArticle);
-        setError(null);
-      }
-    } catch (err) {
-      console.error('Error refreshing article:', err);
-    } finally {
-      setRefreshing(false);
-    }
-  };
+  const article = articles[slug];
 
   const getCategoryColor = (category: string) => {
     switch (category) {
@@ -207,19 +192,6 @@ const LearnArticle = () => {
         return 'bg-gray-50 border-gray-200 text-gray-700';
     }
   };
-  
-  if (loading) {
-    return (
-      <MainLayout>
-        <div className="container py-8">
-          <div className="flex justify-center items-center py-20">
-            <Loader2 className="h-8 w-8 animate-spin text-primary" />
-            <span className="ml-2 text-lg">Loading article...</span>
-          </div>
-        </div>
-      </MainLayout>
-    );
-  }
   
   if (!article) {
     return (
@@ -241,31 +213,6 @@ const LearnArticle = () => {
   return (
     <MainLayout>
       <div className="container py-8">
-        {error && (
-          <div className="bg-amber-50 border border-amber-200 p-3 rounded-md text-amber-800 mb-6 flex items-center justify-between">
-            <div>{error}</div>
-            <Button 
-              onClick={handleRefresh} 
-              variant="outline" 
-              size="sm" 
-              className="text-xs"
-              disabled={refreshing}
-            >
-              {refreshing ? (
-                <>
-                  <Loader2 className="mr-2 h-3 w-3 animate-spin" />
-                  Refreshing...
-                </>
-              ) : (
-                <>
-                  <RefreshCcw className="mr-2 h-3 w-3" />
-                  Refresh Content
-                </>
-              )}
-            </Button>
-          </div>
-        )}
-        
         <PageHeader
           title={article.title}
           breadcrumbs={[
@@ -308,9 +255,7 @@ const LearnArticle = () => {
                   <h3 className="text-lg font-medium mb-4">Related Articles</h3>
                   <div className="space-y-4">
                     {article.relatedArticles.map((relatedSlug) => {
-                      // For now, we're using the fallback data for related articles
-                      // In a full implementation, you would want to fetch this data from Notion
-                      const relatedArticle = fallbackArticles[relatedSlug];
+                      const relatedArticle = articles[relatedSlug];
                       if (!relatedArticle) return null;
                       
                       return (
