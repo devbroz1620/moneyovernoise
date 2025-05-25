@@ -184,26 +184,21 @@ const VideoInsights = () => {
         ))}
       </div>
 
-      {/* Video Grid */}
-      {isMobile ? (
-        <Carousel className="w-full">
-          <CarouselContent className="-ml-2 md:-ml-4">
-            {filteredVideos.slice(0, 6).map((video) => (
-              <CarouselItem key={video.id} className="pl-2 md:pl-4 basis-4/5">
-                <VideoCard video={video} />
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-          <CarouselPrevious />
-          <CarouselNext />
-        </Carousel>
-      ) : (
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {/* Video Carousel - Always use carousel for consistent horizontal scrolling */}
+      <Carousel className="w-full">
+        <CarouselContent className="-ml-2 md:-ml-4">
           {filteredVideos.map((video) => (
-            <VideoCard key={video.id} video={video} />
+            <CarouselItem 
+              key={video.id} 
+              className={`pl-2 md:pl-4 ${isMobile ? 'basis-4/5' : 'basis-1/3'}`}
+            >
+              <VideoCard video={video} />
+            </CarouselItem>
           ))}
-        </div>
-      )}
+        </CarouselContent>
+        <CarouselPrevious />
+        <CarouselNext />
+      </Carousel>
 
       {filteredVideos.length === 0 && (
         <div className="text-center py-8">
