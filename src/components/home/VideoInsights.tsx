@@ -103,8 +103,8 @@ const VideoInsights = () => {
   };
 
   const VideoCard = ({ video }: { video: VideoInsight }) => (
-    <Card className="group overflow-hidden hover:shadow-lg transition-all duration-300 cursor-pointer h-full">
-      <div className="relative" onClick={() => handleVideoClick(video.youtubeUrl)}>
+    <Card className="group overflow-hidden hover:shadow-lg transition-all duration-300 cursor-pointer h-full flex flex-col">
+      <div className="relative flex-shrink-0" onClick={() => handleVideoClick(video.youtubeUrl)}>
         <img 
           src={video.thumbnailUrl} 
           alt={video.title}
@@ -125,7 +125,7 @@ const VideoInsights = () => {
         </div>
       </div>
 
-      <CardContent className="p-4">
+      <CardContent className="p-4 flex flex-col flex-grow">
         <h3 className="font-semibold text-lg mb-2 line-clamp-2 group-hover:text-primary transition-colors">
           {video.title}
         </h3>
@@ -134,7 +134,7 @@ const VideoInsights = () => {
           by {video.creator}
         </p>
 
-        <div className="flex flex-wrap gap-1 mb-4">
+        <div className="flex flex-wrap gap-1 mb-4 flex-grow">
           {video.tags.map((tag) => (
             <Badge key={tag} variant="outline" className="text-xs">
               {tag}
@@ -142,7 +142,7 @@ const VideoInsights = () => {
           ))}
         </div>
 
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between mt-auto">
           <Button 
             size="sm" 
             onClick={() => handleVideoClick(video.youtubeUrl)}

@@ -70,8 +70,8 @@ const FeaturedETFs = () => {
   const ETFCard = ({ etf }: { etf: FeaturedETF }) => {
     const IconComponent = etf.icon;
     return (
-      <Card className="group hover:shadow-lg transition-all duration-300 border-0 shadow-md hover:shadow-xl h-full">
-        <CardHeader className="pb-4">
+      <Card className="group hover:shadow-lg transition-all duration-300 border-0 shadow-md hover:shadow-xl h-full flex flex-col">
+        <CardHeader className="pb-4 flex-shrink-0">
           <div className="flex items-start justify-between mb-3">
             <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
               <IconComponent className="h-5 w-5 text-primary" />
@@ -90,8 +90,8 @@ const FeaturedETFs = () => {
             {etf.description}
           </p>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="grid grid-cols-2 gap-3">
+        <CardContent className="flex flex-col flex-grow">
+          <div className="grid grid-cols-2 gap-3 mb-4">
             <div className="space-y-1">
               <p className="text-xs text-muted-foreground font-medium">AUM</p>
               <p className="font-semibold text-sm">{etf.aum}</p>
@@ -102,14 +102,14 @@ const FeaturedETFs = () => {
             </div>
           </div>
           
-          <div className="space-y-2">
+          <div className="space-y-2 mb-4 flex-grow">
             <p className="text-xs text-muted-foreground font-medium">Ideal For</p>
             <p className="text-sm font-medium text-foreground">{etf.idealFor}</p>
           </div>
 
           <Button 
             asChild 
-            className="w-full mt-4 group-hover:shadow-md transition-all"
+            className="w-full group-hover:shadow-md transition-all mt-auto"
           >
             <Link to={`/list/etfs/${etf.ticker}`}>
               Explore ETF
