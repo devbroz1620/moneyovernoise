@@ -121,7 +121,7 @@ const FeaturedETFs = () => {
   };
 
   return (
-    <section className="container py-12 md:py-16">
+    <section className="container py-8 md:py-12">
       <div className="flex items-baseline justify-between mb-8">
         <div>
           <h2 className="text-3xl font-bold mb-2">Featured ETFs</h2>

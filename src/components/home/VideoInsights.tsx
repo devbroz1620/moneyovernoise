@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -171,7 +172,7 @@ const VideoInsights = () => {
   );
 
   return (
-    <section className="container py-12 md:py-16">
+    <section className="container py-8 md:py-12">
       <div className="text-center mb-8">
         <h2 className="text-3xl font-bold mb-2">🎙️ Video Insights</h2>
         <p className="text-muted-foreground text-lg">
