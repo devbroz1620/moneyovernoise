@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -23,61 +22,51 @@ const videoInsights: VideoInsight[] = [
     id: '1',
     title: 'What is an ETF? (Explained for Beginners)',
     creator: 'CA Rachana Ranade',
-    youtubeUrl: 'https://www.youtube.com/watch?v=example1',
+    youtubeUrl: 'https://youtu.be/R5aDUli_sAc?si=16p8cBxJZwJQW8Rq',
     thumbnailUrl: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=400&h=225&fit=crop',
     duration: '12:45',
-    tags: ['Beginner', 'Basics'],
+    tags: ['Beginner', 'Basics', 'ETF'],
     category: 'Beginner ETF Explainers'
   },
   {
     id: '2',
     title: 'How to build your first ETF Portfolio',
     creator: 'Pranjal Kamra',
-    youtubeUrl: 'https://www.youtube.com/watch?v=example2',
+    youtubeUrl: 'https://youtu.be/Wec_gpnLLmE?si=inHtmZC9TM0SeMIE',
     thumbnailUrl: 'https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?w=400&h=225&fit=crop',
     duration: '18:30',
-    tags: ['Asset Allocation', 'Psychology'],
+    tags: ['Portfolio', 'Asset Allocation', 'Strategy'],
     category: 'Investing Psychology'
   },
   {
     id: '3',
-    title: 'Why GOLDBEES ETF is Trending in 2025',
-    creator: 'AssetYogi',
-    youtubeUrl: 'https://www.youtube.com/watch?v=example3',
+    title: 'ETF vs Mutual Fund: Complete Analysis',
+    creator: 'Finance Expert',
+    youtubeUrl: 'https://youtu.be/EzjYVb2Y5EM?si=PSdCwYOvqRNmGDTp',
     thumbnailUrl: 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=225&fit=crop',
     duration: '15:20',
-    tags: ['Gold', 'Strategy'],
-    category: 'Gold & International ETFs'
+    tags: ['Comparison', 'Analysis', 'Investment'],
+    category: 'Market Insights & Forecasts'
   },
   {
     id: '4',
-    title: 'Debt vs Equity ETFs: Complete Comparison',
-    creator: 'FinShiksha',
-    youtubeUrl: 'https://www.youtube.com/watch?v=example4',
+    title: 'Debt vs Equity ETFs: Complete Guide',
+    creator: 'Investment Guru',
+    youtubeUrl: 'https://youtu.be/t86OsSL7Opk?si=btyRoZh358QLq3Ha',
     thumbnailUrl: 'https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=400&h=225&fit=crop',
     duration: '22:15',
-    tags: ['Debt', 'Equity', 'Comparison'],
+    tags: ['Debt', 'Equity', 'Comparison', 'Guide'],
     category: 'Debt vs Equity'
   },
   {
     id: '5',
-    title: 'Market Psychology & ETF Investing',
-    creator: 'Investing Insights',
-    youtubeUrl: 'https://www.youtube.com/watch?v=example5',
+    title: 'Gold ETF Investment Strategy 2025',
+    creator: 'Wealth Builder',
+    youtubeUrl: 'https://youtu.be/OvoDRnAFNuw?si=-aSJvlSw6_PEpOrC',
     thumbnailUrl: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=225&fit=crop',
     duration: '16:45',
-    tags: ['Psychology', 'Behavioral Finance'],
-    category: 'Investing Psychology'
-  },
-  {
-    id: '6',
-    title: '2025 Market Forecast: ETF Opportunities',
-    creator: 'Market Movers',
-    youtubeUrl: 'https://www.youtube.com/watch?v=example6',
-    thumbnailUrl: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=400&h=225&fit=crop',
-    duration: '25:30',
-    tags: ['Forecast', 'Market Analysis'],
-    category: 'Market Insights & Forecasts'
+    tags: ['Gold', 'Strategy', '2025', 'Commodities'],
+    category: 'Gold & International ETFs'
   }
 ];
 
@@ -116,7 +105,7 @@ const VideoInsights = () => {
     : videoInsights.filter(video => video.category === selectedCategory);
 
   const handleVideoClick = (youtubeUrl: string) => {
-    window.open(youtubeUrl, '_blank');
+    window.open(youtubeUrl, '_blank', 'noopener,noreferrer');
   };
 
   const VideoCard = ({ video }: { video: VideoInsight }) => (
