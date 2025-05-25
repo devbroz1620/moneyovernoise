@@ -90,6 +90,23 @@ const categories = [
   'Market Insights & Forecasts'
 ];
 
+const getCategoryColor = (category: string) => {
+  switch (category) {
+    case 'Beginner ETF Explainers':
+      return 'bg-green-100 text-green-700 border-green-200';
+    case 'Debt vs Equity':
+      return 'bg-blue-100 text-blue-700 border-blue-200';
+    case 'Gold & International ETFs':
+      return 'bg-yellow-100 text-yellow-700 border-yellow-200';
+    case 'Investing Psychology':
+      return 'bg-purple-100 text-purple-700 border-purple-200';
+    case 'Market Insights & Forecasts':
+      return 'bg-orange-100 text-orange-700 border-orange-200';
+    default:
+      return 'bg-gray-100 text-gray-700 border-gray-200';
+  }
+};
+
 const VideoInsights = () => {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const isMobile = useIsMobile();
@@ -108,7 +125,7 @@ const VideoInsights = () => {
         <img 
           src={video.thumbnailUrl} 
           alt={video.title}
-          className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+          className={`w-full object-cover group-hover:scale-105 transition-transform duration-300 ${isMobile ? 'h-32' : 'h-48'}`}
         />
         
         {/* Duration Badge */}
@@ -125,18 +142,22 @@ const VideoInsights = () => {
         </div>
       </div>
 
-      <CardContent className="p-4 flex flex-col flex-grow">
-        <h3 className="font-semibold text-lg mb-2 line-clamp-2 group-hover:text-primary transition-colors">
+      <CardContent className={`flex flex-col flex-grow ${isMobile ? 'p-3' : 'p-4'}`}>
+        <h3 className={`font-semibold mb-2 line-clamp-2 group-hover:text-primary transition-colors ${isMobile ? 'text-sm' : 'text-lg'}`}>
           {video.title}
         </h3>
         
-        <p className="text-sm text-muted-foreground mb-3">
+        <p className={`text-muted-foreground mb-3 ${isMobile ? 'text-xs' : 'text-sm'}`}>
           by {video.creator}
         </p>
 
         <div className="flex flex-wrap gap-1 mb-4 flex-grow">
           {video.tags.map((tag) => (
-            <Badge key={tag} variant="outline" className="text-xs">
+            <Badge 
+              key={tag} 
+              variant="outline" 
+              className={`${isMobile ? 'text-xs px-2 py-0.5' : 'text-xs'} ${getCategoryColor(video.category)}`}
+            >
               {tag}
             </Badge>
           ))}
@@ -144,16 +165,16 @@ const VideoInsights = () => {
 
         <div className="flex items-center justify-between mt-auto">
           <Button 
-            size="sm" 
+            size={isMobile ? "sm" : "sm"}
             onClick={() => handleVideoClick(video.youtubeUrl)}
-            className="flex items-center gap-1"
+            className={`flex items-center gap-1 ${isMobile ? 'text-xs px-3 py-1 h-7' : ''}`}
           >
-            <Play className="h-3 w-3" />
+            <Play className={`${isMobile ? 'h-2.5 w-2.5' : 'h-3 w-3'}`} />
             Watch
           </Button>
           
-          <Button size="sm" variant="ghost">
-            <Bookmark className="h-4 w-4" />
+          <Button size={isMobile ? "sm" : "sm"} variant="ghost" className={isMobile ? 'h-7 w-7 p-0' : ''}>
+            <Bookmark className={`${isMobile ? 'h-3 w-3' : 'h-4 w-4'}`} />
           </Button>
         </div>
       </CardContent>
@@ -177,7 +198,7 @@ const VideoInsights = () => {
             variant={selectedCategory === category ? "default" : "outline"}
             size="sm"
             onClick={() => setSelectedCategory(category)}
-            className="text-xs"
+            className={`${isMobile ? 'text-xs px-2 py-1 h-7' : 'text-xs'} ${selectedCategory === category ? '' : getCategoryColor(category)}`}
           >
             {category}
           </Button>
