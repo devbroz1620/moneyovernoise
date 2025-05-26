@@ -1,10 +1,10 @@
-
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { MessageCircle, X, Send } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface ChatMessage {
   id: string;
@@ -31,6 +31,7 @@ const AIChatbot = () => {
   const [inputValue, setInputValue] = useState('');
   const [userProfile, setUserProfile] = useState<UserProfile>({});
   const [conversationStep, setConversationStep] = useState<'initial' | 'risk' | 'age' | 'complete'>('initial');
+  const isMobile = useIsMobile();
 
   const portfolioAllocation = {
     '<30': {
@@ -154,29 +155,42 @@ ${allocation.gold > 0 ? `• ${allocation.gold}% in HDFC Gold ETF` : ''}
     return "I can help you with:\n\n• Creating personalized ETF portfolio recommendations\n• Understanding diversification and asset allocation\n• Learning about different ETF types\n\nType 'start' to begin your portfolio assessment, or ask me about any ETF-related topic!";
   };
 
-  const handleSendMessage = () => {
-    if (!inputValue.trim()) return;
+  const handleSendMessage = (messageToSend?: string) => {
+    const messageContent = messageToSend || inputValue;
+    if (!messageContent.trim()) return;
 
     const userMessage: ChatMessage = {
       id: Date.now().toString(),
-      content: inputValue,
+      content: messageContent,
       isUser: true,
       timestamp: new Date()
     };
 
     const aiResponse: ChatMessage = {
       id: (Date.now() + 1).toString(),
-      content: getAIResponse(inputValue),
+      content: getAIResponse(messageContent),
       isUser: false,
       timestamp: new Date()
     };
 
     setMessages(prev => [...prev, userMessage, aiResponse]);
     setInputValue('');
+
+    // Auto scroll to bottom after message is sent
+    setTimeout(() => {
+      const scrollArea = document.querySelector('[data-radix-scroll-area-viewport]');
+      if (scrollArea) {
+        scrollArea.scrollTop = scrollArea.scrollHeight;
+      }
+    }, 100);
   };
 
   const handleQuickAction = (action: string) => {
-    setInputValue(action);
+    if (action === 'Start Portfolio Assessment') {
+      handleSendMessage('start');
+    } else {
+      setInputValue(action);
+    }
   };
 
   const getQuickActions = () => {
@@ -191,13 +205,16 @@ ${allocation.gold > 0 ? `• ${allocation.gold}% in HDFC Gold ETF` : ''}
     }
   };
 
+  const chatHeight = isMobile ? 'h-[85vh]' : 'h-[500px]';
+  const chatWidth = isMobile ? 'w-[95vw] max-w-sm' : 'w-96';
+
   return (
     <>
       {/* Floating Chat Button */}
       {!isOpen && (
         <Button
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-6 right-6 h-14 w-14 rounded-full shadow-lg z-50 p-0"
+          className="fixed bottom-6 right-6 h-14 w-14 rounded-full shadow-lg z-50 p-0 hover:scale-110 transition-transform"
           size="icon"
         >
           <MessageCircle className="h-6 w-6" />
@@ -206,18 +223,18 @@ ${allocation.gold > 0 ? `• ${allocation.gold}% in HDFC Gold ETF` : ''}
 
       {/* Chat Window */}
       {isOpen && (
-        <Card className="fixed bottom-6 right-6 w-96 h-[500px] shadow-2xl z-50 flex flex-col">
-          <CardHeader className="pb-3 border-b flex-shrink-0">
+        <Card className={`fixed bottom-6 right-6 ${chatWidth} ${chatHeight} shadow-2xl z-50 flex flex-col border-2 border-primary/20`}>
+          <CardHeader className="pb-3 border-b flex-shrink-0 bg-gradient-to-r from-primary/5 to-primary/10">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-2">
-                <div className="p-2 bg-primary/10 rounded-lg">
+                <div className="p-2 bg-primary/20 rounded-lg">
                   <MessageCircle className="h-4 w-4 text-primary" />
                 </div>
                 <div>
-                  <CardTitle className="text-lg">ETF Assistant</CardTitle>
+                  <CardTitle className={isMobile ? 'text-base' : 'text-lg'}>ETF Assistant</CardTitle>
                   <div className="flex items-center space-x-1">
-                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                    <span className="text-xs text-muted-foreground">Online</span>
+                    <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                    <span className={`text-muted-foreground ${isMobile ? 'text-xs' : 'text-xs'}`}>Online</span>
                   </div>
                 </div>
               </div>
@@ -225,7 +242,7 @@ ${allocation.gold > 0 ? `• ${allocation.gold}% in HDFC Gold ETF` : ''}
                 variant="ghost"
                 size="icon"
                 onClick={() => setIsOpen(false)}
-                className="h-8 w-8"
+                className="h-8 w-8 hover:bg-destructive/10 hover:text-destructive"
               >
                 <X className="h-4 w-4" />
               </Button>
@@ -234,21 +251,21 @@ ${allocation.gold > 0 ? `• ${allocation.gold}% in HDFC Gold ETF` : ''}
 
           <CardContent className="flex-1 flex flex-col p-0 overflow-hidden">
             {/* Messages with proper ScrollArea */}
-            <ScrollArea className="flex-1 p-4">
-              <div className="space-y-4">
+            <ScrollArea className="flex-1 p-3">
+              <div className="space-y-3">
                 {messages.map((message) => (
                   <div
                     key={message.id}
                     className={`flex ${message.isUser ? 'justify-end' : 'justify-start'}`}
                   >
                     <div
-                      className={`max-w-[80%] p-3 rounded-lg text-sm ${
+                      className={`max-w-[85%] p-3 rounded-lg text-sm transition-all duration-200 ${
                         message.isUser
-                          ? 'bg-primary text-primary-foreground'
-                          : 'bg-muted'
+                          ? 'bg-primary text-primary-foreground shadow-md'
+                          : 'bg-muted border border-border shadow-sm'
                       }`}
                     >
-                      <div className="whitespace-pre-wrap">{message.content}</div>
+                      <div className="whitespace-pre-wrap leading-relaxed">{message.content}</div>
                     </div>
                   </div>
                 ))}
@@ -256,16 +273,18 @@ ${allocation.gold > 0 ? `• ${allocation.gold}% in HDFC Gold ETF` : ''}
             </ScrollArea>
 
             {/* Quick Actions */}
-            <div className="p-4 border-t bg-muted/30 flex-shrink-0">
-              <p className="text-xs text-muted-foreground mb-2">Quick actions:</p>
-              <div className="space-y-2">
+            <div className="p-3 border-t bg-muted/20 flex-shrink-0">
+              <p className={`text-muted-foreground mb-2 ${isMobile ? 'text-xs' : 'text-xs'}`}>Quick actions:</p>
+              <div className="flex flex-wrap gap-1">
                 {getQuickActions().slice(0, 3).map((action, index) => (
                   <Button
                     key={index}
                     variant="outline"
                     size="sm"
                     onClick={() => handleQuickAction(action)}
-                    className="w-full text-left justify-start h-auto py-2 px-3 text-xs"
+                    className={`text-left justify-start transition-all duration-200 hover:bg-primary/10 hover:border-primary/30 ${
+                      isMobile ? 'text-xs py-1 px-2 h-auto' : 'text-xs py-1.5 px-3 h-auto'
+                    }`}
                   >
                     {action}
                   </Button>
@@ -274,7 +293,7 @@ ${allocation.gold > 0 ? `• ${allocation.gold}% in HDFC Gold ETF` : ''}
             </div>
 
             {/* Input */}
-            <div className="p-4 border-t flex-shrink-0">
+            <div className="p-3 border-t flex-shrink-0 bg-background">
               <div className="flex space-x-2">
                 <input
                   type="text"
@@ -282,12 +301,14 @@ ${allocation.gold > 0 ? `• ${allocation.gold}% in HDFC Gold ETF` : ''}
                   onChange={(e) => setInputValue(e.target.value)}
                   onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
                   placeholder="Ask about ETFs..."
-                  className="flex-1 px-3 py-2 text-sm border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                  className={`flex-1 px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200 ${
+                    isMobile ? 'text-sm' : 'text-sm'
+                  }`}
                 />
                 <Button
-                  onClick={handleSendMessage}
+                  onClick={() => handleSendMessage()}
                   size="icon"
-                  className="h-10 w-10"
+                  className="h-10 w-10 hover:scale-105 transition-transform"
                   disabled={!inputValue.trim()}
                 >
                   <Send className="h-4 w-4" />

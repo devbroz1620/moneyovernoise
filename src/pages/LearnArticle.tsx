@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import MainLayout from '@/components/layout/MainLayout';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { ArrowLeft, Clock, Share2 } from 'lucide-react';
+import { ArrowLeft, Clock } from 'lucide-react';
 import { learnArticles } from '@/data/learnData';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { ShareButton } from '@/components/shared/ShareButton';
@@ -70,22 +70,6 @@ const LearnArticle = () => {
             <p className={`text-muted-foreground mb-6 leading-relaxed ${isMobile ? 'text-base mb-4' : 'text-xl mb-6'}`}>
               {article.description}
             </p>
-            
-            <div className="flex flex-wrap items-center justify-between gap-4">
-              <div className="flex flex-wrap gap-2">
-                {article.tags.map((tag) => (
-                  <Badge key={tag} variant="secondary" className={isMobile ? 'text-xs' : ''}>
-                    {tag}
-                  </Badge>
-                ))}
-              </div>
-              
-              <ShareButton 
-                title={article.title}
-                url={`${window.location.origin}/learn/etfs/${article.slug}`}
-                isMobile={isMobile}
-              />
-            </div>
           </header>
 
           {/* Content */}
