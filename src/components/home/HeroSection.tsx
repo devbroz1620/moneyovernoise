@@ -2,8 +2,17 @@
 import { Link } from 'react-router-dom';
 import { ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useEffect } from 'react';
 
 const HeroSection = () => {
+  const handleLearnClick = () => {
+    window.scrollTo(0, 0);
+  };
+
+  const handleExploreClick = () => {
+    window.scrollTo(0, 0);
+  };
+
   return (
     <section className="py-12 md:py-20 px-4 md:px-6 lg:px-8">
       <div className="container px-4 md:px-6">
@@ -21,13 +30,13 @@ const HeroSection = () => {
             </div>
             <div className="flex flex-col gap-2 min-[400px]:flex-row">
               <Button asChild size="lg" className="font-medium">
-                <Link to="/learn">
+                <Link to="/learn" onClick={handleLearnClick}>
                   Learn ETFs
                   <ChevronRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
               <Button asChild size="lg" variant="outline" className="font-medium">
-                <Link to="/list/etfs">
+                <Link to="/list/etfs" onClick={handleExploreClick}>
                   Explore ETFs
                   <ChevronRight className="ml-2 h-4 w-4" />
                 </Link>

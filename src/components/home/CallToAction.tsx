@@ -3,6 +3,14 @@ import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 
 const CallToAction = () => {
+  const handleLearnClick = () => {
+    window.scrollTo(0, 0);
+  };
+
+  const handleExploreClick = () => {
+    window.scrollTo(0, 0);
+  };
+
   return (
     <section className="bg-primary/5 border-t border-b py-16 md:py-24">
       <div className="container">
@@ -15,10 +23,10 @@ const CallToAction = () => {
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <Button asChild size="lg">
-              <Link to="/learn">Learn More About ETFs</Link>
+              <Link to="/learn" onClick={handleLearnClick}>Learn More About ETFs</Link>
             </Button>
             <Button asChild size="lg" variant="outline">
-              <Link to="/list/etfs">Explore ETF Screener</Link>
+              <Link to="/list/etfs" onClick={handleExploreClick}>Explore ETF Screener</Link>
             </Button>
           </div>
         </div>

@@ -21,7 +21,7 @@ interface VideoInsight {
 const videoInsights: VideoInsight[] = [
   {
     id: '1',
-    title: 'What is an ETF? (Explained for Beginners)',
+    title: 'What is ETF? | Exchange Traded Fund explained | Should you invest in ETF?',
     creator: 'CA Rachana Ranade',
     youtubeUrl: 'https://youtu.be/R5aDUli_sAc?si=16p8cBxJZwJQW8Rq',
     thumbnailUrl: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=400&h=225&fit=crop',
@@ -31,7 +31,7 @@ const videoInsights: VideoInsight[] = [
   },
   {
     id: '2',
-    title: 'How to build your first ETF Portfolio',
+    title: 'How to Create your Portfolio from Scratch | Step-by-step Process',
     creator: 'Pranjal Kamra',
     youtubeUrl: 'https://youtu.be/Wec_gpnLLmE?si=inHtmZC9TM0SeMIE',
     thumbnailUrl: 'https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?w=400&h=225&fit=crop',
@@ -41,7 +41,7 @@ const videoInsights: VideoInsight[] = [
   },
   {
     id: '3',
-    title: 'ETF vs Mutual Fund: Complete Analysis',
+    title: 'ETF vs Mutual Fund | Which is Better for You?',
     creator: 'Finance Expert',
     youtubeUrl: 'https://youtu.be/EzjYVb2Y5EM?si=PSdCwYOvqRNmGDTp',
     thumbnailUrl: 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=225&fit=crop',
@@ -51,7 +51,7 @@ const videoInsights: VideoInsight[] = [
   },
   {
     id: '4',
-    title: 'Debt vs Equity ETFs: Complete Guide',
+    title: 'Debt vs Equity Funds | Which is Better? Complete Analysis',
     creator: 'Investment Guru',
     youtubeUrl: 'https://youtu.be/t86OsSL7Opk?si=btyRoZh358QLq3Ha',
     thumbnailUrl: 'https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=400&h=225&fit=crop',
@@ -61,7 +61,7 @@ const videoInsights: VideoInsight[] = [
   },
   {
     id: '5',
-    title: 'Gold ETF Investment Strategy 2025',
+    title: 'Gold ETF vs Gold Mutual Fund | Best Way to Invest in Gold',
     creator: 'Wealth Builder',
     youtubeUrl: 'https://youtu.be/OvoDRnAFNuw?si=-aSJvlSw6_PEpOrC',
     thumbnailUrl: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=225&fit=crop',
