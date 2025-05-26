@@ -28,7 +28,7 @@ const Navbar = () => {
           </Link>
         </div>
 
-        <nav className="hidden md:flex flex-1 items-center justify-between">
+        <nav className="hidden md:flex flex-1 items-center">
           <div className="flex items-center space-x-6 text-sm font-medium">
             {navLinks.map((link) => (
               <Link
@@ -43,15 +43,6 @@ const Navbar = () => {
                 {link.name}
               </Link>
             ))}
-          </div>
-          
-          <div className="flex items-center space-x-4">
-            <Button variant="outline" size="sm">
-              Sign In
-            </Button>
-            <Button size="sm">
-              Sign Up
-            </Button>
           </div>
         </nav>
 
@@ -85,10 +76,6 @@ const Navbar = () => {
                 {link.name}
               </Link>
             ))}
-            <div className="flex flex-col space-y-2 pt-2">
-              <Button variant="outline">Sign In</Button>
-              <Button>Sign Up</Button>
-            </div>
           </nav>
         </div>
       )}

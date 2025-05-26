@@ -9,6 +9,7 @@ import Learn from "./pages/Learn";
 import LearnArticle from "./pages/LearnArticle";
 import ETFList from "./pages/ETFList";
 import ETFDetail from "./pages/ETFDetail";
+import About from "./pages/About";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -26,6 +27,7 @@ const App = () => (
           <Route path="/list" element={<ETFList />} />
           <Route path="/list/etfs" element={<ETFList />} />
           <Route path="/list/etfs/:ticker" element={<ETFDetail />} />
+          <Route path="/about" element={<About />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

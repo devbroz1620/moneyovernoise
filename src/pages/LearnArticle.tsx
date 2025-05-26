@@ -3,9 +3,10 @@ import { useParams, Link } from 'react-router-dom';
 import MainLayout from '@/components/layout/MainLayout';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { ArrowLeft, Clock, Share2, Bookmark } from 'lucide-react';
+import { ArrowLeft, Clock, Share2 } from 'lucide-react';
 import { learnArticles } from '@/data/learnData';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { ShareButton } from '@/components/shared/ShareButton';
 
 const LearnArticle = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -52,14 +53,6 @@ const LearnArticle = () => {
         <article className="max-w-4xl mx-auto">
           {/* Header */}
           <header className={`mb-8 ${isMobile ? 'mb-6' : 'mb-8'}`}>
-            <div className={`aspect-video mb-6 overflow-hidden rounded-lg ${isMobile ? 'mb-4' : 'mb-6'}`}>
-              <img 
-                src={article.image} 
-                alt={article.title}
-                className="w-full h-full object-cover"
-              />
-            </div>
-            
             <div className={`flex flex-wrap items-center gap-3 mb-4 ${isMobile ? 'gap-2 mb-3' : 'gap-3 mb-4'}`}>
               <Badge variant="outline" className={isMobile ? 'text-xs' : ''}>
                 {article.category}
@@ -87,24 +80,19 @@ const LearnArticle = () => {
                 ))}
               </div>
               
-              <div className="flex items-center gap-2">
-                <Button size="sm" variant="outline" className={isMobile ? 'h-8 px-3' : ''}>
-                  <Bookmark className={`${isMobile ? 'h-3 w-3' : 'h-4 w-4'} mr-1`} />
-                  Save
-                </Button>
-                <Button size="sm" variant="outline" className={isMobile ? 'h-8 px-3' : ''}>
-                  <Share2 className={`${isMobile ? 'h-3 w-3' : 'h-4 w-4'} mr-1`} />
-                  Share
-                </Button>
-              </div>
+              <ShareButton 
+                title={article.title}
+                url={`${window.location.origin}/learn/etfs/${article.slug}`}
+                isMobile={isMobile}
+              />
             </div>
           </header>
 
           {/* Content */}
           <div className={`prose max-w-none ${isMobile ? 'prose-sm' : 'prose-lg'}`}>
-            <style jsx>{`
+            <style>{`
               .prose h2 {
-                margin-top: 2em;
+                margin-top: 2.5em;
                 margin-bottom: 1em;
                 font-size: ${isMobile ? '1.5em' : '1.75em'};
                 font-weight: 700;
@@ -112,7 +100,7 @@ const LearnArticle = () => {
               }
               
               .prose h3 {
-                margin-top: 1.5em;
+                margin-top: 2em;
                 margin-bottom: 0.75em;
                 font-size: ${isMobile ? '1.25em' : '1.5em'};
                 font-weight: 600;
@@ -120,18 +108,18 @@ const LearnArticle = () => {
               }
               
               .prose p {
-                margin-bottom: 1.5em;
-                line-height: 1.7;
+                margin-bottom: 1.75em;
+                line-height: 1.8;
                 font-size: ${isMobile ? '16px' : '18px'};
               }
               
               .prose ul, .prose ol {
-                margin-bottom: 1.5em;
+                margin-bottom: 1.75em;
               }
               
               .prose li {
-                margin-bottom: 0.5em;
-                line-height: 1.6;
+                margin-bottom: 0.75em;
+                line-height: 1.7;
                 font-size: ${isMobile ? '16px' : '18px'};
               }
               
@@ -140,7 +128,7 @@ const LearnArticle = () => {
               }
               
               .prose blockquote {
-                margin: 2em 0;
+                margin: 2.5em 0;
                 padding: 1.5em;
                 background: hsl(var(--muted));
                 border-left: 4px solid hsl(var(--primary));
@@ -166,10 +154,11 @@ const LearnArticle = () => {
                 <span className={`text-muted-foreground ${isMobile ? 'text-sm' : ''}`}>
                   Found this helpful?
                 </span>
-                <Button size="sm" variant="outline">
-                  <Bookmark className="h-4 w-4 mr-1" />
-                  Save for Later
-                </Button>
+                <ShareButton 
+                  title={article.title}
+                  url={`${window.location.origin}/learn/etfs/${article.slug}`}
+                  isMobile={isMobile}
+                />
               </div>
             </div>
           </footer>
