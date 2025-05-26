@@ -4,9 +4,14 @@ import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Target, Users, TrendingUp } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { useEffect } from 'react';
 
 const About = () => {
   const isMobile = useIsMobile();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const goals = [
     {
@@ -29,13 +34,13 @@ const About = () => {
   return (
     <MainLayout>
       {/* Hero Section */}
-      <section className="bg-gradient-to-b from-primary/5 to-background py-12 md:py-20">
+      <section className="bg-gradient-to-b from-primary/5 to-background py-8 md:py-12">
         <div className="container text-center">
           <div className="max-w-4xl mx-auto">
-            <h1 className={`font-bold mb-6 ${isMobile ? 'text-3xl' : 'text-5xl'}`}>
+            <h1 className={`font-bold mb-4 ${isMobile ? 'text-3xl' : 'text-5xl'}`}>
               About Us
             </h1>
-            <p className={`text-muted-foreground leading-relaxed mb-8 ${isMobile ? 'text-lg' : 'text-xl'}`}>
+            <p className={`text-muted-foreground leading-relaxed mb-6 ${isMobile ? 'text-lg' : 'text-xl'}`}>
               Money Over Noise is India's first ETF-first investing education platform.
             </p>
           </div>
@@ -43,11 +48,11 @@ const About = () => {
       </section>
 
       {/* Main Content */}
-      <section className="container py-12 md:py-16">
+      <section className="container py-8 md:py-12">
         <div className="max-w-4xl mx-auto">
           {/* Mission Statement */}
-          <div className="mb-12 md:mb-16">
-            <p className={`leading-relaxed mb-8 ${isMobile ? 'text-base' : 'text-lg'}`}>
+          <div className="mb-8 md:mb-12">
+            <p className={`leading-relaxed mb-6 ${isMobile ? 'text-base' : 'text-lg'}`}>
               We help retail investors cut through the noise of the stock market by focusing on simple, 
               transparent, low-cost investing — starting with Exchange Traded Funds (ETFs).
             </p>
@@ -59,12 +64,12 @@ const About = () => {
           </div>
 
           {/* Our Goals */}
-          <div className="mb-12 md:mb-16">
-            <h2 className={`font-bold mb-8 text-center ${isMobile ? 'text-2xl' : 'text-3xl'}`}>
+          <div className="mb-8 md:mb-12">
+            <h2 className={`font-bold mb-6 text-center ${isMobile ? 'text-2xl' : 'text-3xl'}`}>
               Our Goal
             </h2>
             
-            <div className="grid gap-8 md:grid-cols-3">
+            <div className="grid gap-6 md:grid-cols-3">
               {goals.map((goal, index) => {
                 const IconComponent = goal.icon;
                 return (
@@ -85,7 +90,7 @@ const About = () => {
           </div>
 
           {/* Closing Statement */}
-          <div className="text-center bg-muted/30 rounded-lg p-8 md:p-12">
+          <div className="text-center bg-muted/30 rounded-lg p-6 md:p-8">
             <h3 className={`font-bold mb-4 ${isMobile ? 'text-xl' : 'text-2xl'}`}>
               Real Knowledge. No Noise.
             </h3>

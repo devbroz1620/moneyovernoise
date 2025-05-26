@@ -10,7 +10,7 @@ const Index = () => {
   return (
     <MainLayout>
       <HeroSection />
-      <div className="space-y-8 md:space-y-12">
+      <div className="space-y-6 md:space-y-8">
         <FeatureSection />
         <FeaturedETFs />
         <VideoInsights />
