@@ -14,7 +14,7 @@ const Learn = () => {
   return (
     <MainLayout>
       {/* Hero Section */}
-      <section className="bg-gradient-to-b from-primary/5 to-background py-12 md:py-20">
+      <section className="bg-gradient-to-b from-primary/5 to-background py-12 md:py-16">
         <div className="container text-center">
           <div className="max-w-3xl mx-auto">
             <div className="flex justify-center mb-6">
@@ -33,7 +33,7 @@ const Learn = () => {
         </div>
       </section>
       
-      <section className="container py-12 md:py-16">
+      <section className="container py-8 md:py-12">
         {articles.length === 0 ? (
           <div className="text-center py-16">
             <div className="max-w-md mx-auto">
