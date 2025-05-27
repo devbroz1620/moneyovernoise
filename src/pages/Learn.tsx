@@ -18,14 +18,13 @@ const Learn = () => {
   }, []);
 
   const handleArticleClick = () => {
-    // This will be handled by the article component's useEffect
     window.scrollTo(0, 0);
   };
 
   return (
     <MainLayout>
       {/* Hero Section */}
-      <section className="bg-gradient-to-b from-primary/5 to-background py-12 md:py-16">
+      <section className="bg-gradient-to-b from-primary/5 to-background py-8 md:py-12">
         <div className="container text-center">
           <div className="max-w-3xl mx-auto">
             <div className="flex justify-center mb-6">
@@ -44,7 +43,7 @@ const Learn = () => {
         </div>
       </section>
       
-      <section className="container py-8 md:py-12">
+      <section className="container py-6 md:py-8">
         {articles.length === 0 ? (
           <div className="text-center py-16">
             <div className="max-w-md mx-auto">
@@ -57,6 +56,7 @@ const Learn = () => {
               </p>
               <Link 
                 to="/"
+                onClick={() => window.scrollTo(0, 0)}
                 className="inline-flex items-center text-primary font-medium hover:underline"
               >
                 Back to Home

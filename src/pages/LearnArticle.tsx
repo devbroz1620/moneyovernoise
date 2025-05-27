@@ -32,10 +32,10 @@ const LearnArticle = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Button asChild>
-                <Link to="/learn">Browse All Articles</Link>
+                <Link to="/learn" onClick={() => window.scrollTo(0, 0)}>Browse All Articles</Link>
               </Button>
               <Button asChild variant="outline">
-                <Link to="/">Back to Home</Link>
+                <Link to="/" onClick={() => window.scrollTo(0, 0)}>Back to Home</Link>
               </Button>
             </div>
           </div>
@@ -50,7 +50,7 @@ const LearnArticle = () => {
     <MainLayout>
       <div className={`container ${isMobile ? 'py-4' : 'py-8'}`}>
         <Button variant="ghost" asChild className={`mb-6 ${isMobile ? 'mb-4' : 'mb-8'}`}>
-          <Link to="/learn">
+          <Link to="/learn" onClick={() => window.scrollTo(0, 0)}>
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to Learn
           </Link>
@@ -160,6 +160,39 @@ const LearnArticle = () => {
               .prose blockquote p {
                 color: hsl(var(--muted-foreground));
               }
+              
+              .prose table {
+                width: 100%;
+                border-collapse: collapse;
+                margin: 2em 0;
+                font-size: ${isMobile ? '14px' : '16px'};
+                overflow-x: auto;
+                display: block;
+                white-space: nowrap;
+              }
+              
+              @media (min-width: 768px) {
+                .prose table {
+                  display: table;
+                  white-space: normal;
+                }
+              }
+              
+              .prose th, .prose td {
+                padding: ${isMobile ? '8px 6px' : '12px 16px'};
+                text-align: left;
+                border-bottom: 1px solid hsl(var(--border));
+              }
+              
+              .prose th {
+                font-weight: 600;
+                background: hsl(var(--muted));
+                font-size: ${isMobile ? '13px' : '15px'};
+              }
+              
+              .prose td {
+                font-size: ${isMobile ? '13px' : '15px'};
+              }
             `}</style>
             <div 
               dangerouslySetInnerHTML={{ __html: article.content }}
@@ -170,7 +203,7 @@ const LearnArticle = () => {
           <footer className={`mt-12 pt-8 border-t ${isMobile ? 'mt-8 pt-6' : 'mt-12 pt-8'}`}>
             <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
               <Button asChild variant="outline">
-                <Link to="/learn">
+                <Link to="/learn" onClick={() => window.scrollTo(0, 0)}>
                   <ArrowLeft className="h-4 w-4 mr-2" />
                   More Articles
                 </Link>

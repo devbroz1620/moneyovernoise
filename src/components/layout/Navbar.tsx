@@ -15,14 +15,18 @@ const Navbar = () => {
   const navLinks = [
     { name: 'Home', path: '/' },
     { name: 'Learn', path: '/learn' },
-    { name: 'Explore ETFs', path: '/list' },
+    { name: 'ETF Screener', path: '/list' },
   ];
+
+  const handleLogoClick = () => {
+    window.scrollTo(0, 0);
+  };
 
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center">
         <div className="mr-4 md:flex">
-          <Link to="/" className="flex items-center">
+          <Link to="/" onClick={handleLogoClick} className="flex items-center">
             <span className="text-xl font-bold text-primary">Money</span>
             <span className="text-xl font-semibold text-foreground">OverNoise</span>
           </Link>
@@ -34,6 +38,7 @@ const Navbar = () => {
               <Link
                 key={link.path}
                 to={link.path}
+                onClick={() => window.scrollTo(0, 0)}
                 className={`text-sm transition-colors hover:text-primary ${
                   (link.path === '/' ? location.pathname === '/' : isActive(link.path))
                     ? 'text-primary font-semibold'
@@ -66,7 +71,10 @@ const Navbar = () => {
               <Link
                 key={link.path}
                 to={link.path}
-                onClick={() => setIsMenuOpen(false)}
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  window.scrollTo(0, 0);
+                }}
                 className={`text-sm py-2 transition-colors hover:text-primary ${
                   (link.path === '/' ? location.pathname === '/' : isActive(link.path))
                     ? 'text-primary font-semibold'

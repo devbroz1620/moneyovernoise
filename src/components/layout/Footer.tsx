@@ -2,12 +2,16 @@
 import { Link } from 'react-router-dom';
 
 const Footer = () => {
+  const handleLinkClick = () => {
+    window.scrollTo(0, 0);
+  };
+
   return (
     <footer className="border-t bg-background">
       <div className="container py-8 md:py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
-            <Link to="/" className="flex items-center mb-4">
+            <Link to="/" onClick={handleLinkClick} className="flex items-center mb-4">
               <span className="text-xl font-bold text-primary">Money</span>
               <span className="text-xl font-semibold text-foreground">OverNoise</span>
             </Link>
@@ -20,23 +24,23 @@ const Footer = () => {
             <h4 className="font-medium text-sm mb-4">Learn</h4>
             <ul className="space-y-2">
               <li>
-                <Link to="/learn/etfs/what-is-an-etf" className="text-muted-foreground text-sm hover:text-primary">
+                <Link to="/learn/etfs/what-is-an-etf" onClick={handleLinkClick} className="text-muted-foreground text-sm hover:text-primary">
                   What is an ETF?
                 </Link>
               </li>
               <li>
-                <Link to="/learn/etfs/thematic" className="text-muted-foreground text-sm hover:text-primary">
-                  Thematic ETFs
+                <Link to="/learn/etfs/etfs-vs-mutual-funds" onClick={handleLinkClick} className="text-muted-foreground text-sm hover:text-primary">
+                  ETFs vs Mutual Funds
                 </Link>
               </li>
               <li>
-                <Link to="/learn/etfs/liquidity-volatility" className="text-muted-foreground text-sm hover:text-primary">
-                  Liquidity & Volatility
+                <Link to="/learn/etfs/types-of-etfs-india" onClick={handleLinkClick} className="text-muted-foreground text-sm hover:text-primary">
+                  Types of ETFs in India
                 </Link>
               </li>
               <li>
-                <Link to="/learn/etfs/asset-allocation" className="text-muted-foreground text-sm hover:text-primary">
-                  Asset Allocation
+                <Link to="/learn/etfs/how-to-buy-first-etf" onClick={handleLinkClick} className="text-muted-foreground text-sm hover:text-primary">
+                  How to Buy Your First ETF
                 </Link>
               </li>
             </ul>
@@ -46,12 +50,12 @@ const Footer = () => {
             <h4 className="font-medium text-sm mb-4">Explore</h4>
             <ul className="space-y-2">
               <li>
-                <Link to="/list/etfs" className="text-muted-foreground text-sm hover:text-primary">
+                <Link to="/list/etfs" onClick={handleLinkClick} className="text-muted-foreground text-sm hover:text-primary">
                   ETF Screener
                 </Link>
               </li>
               <li>
-                <Link to="/list/compare" className="text-muted-foreground text-sm hover:text-primary">
+                <Link to="/list/compare" onClick={handleLinkClick} className="text-muted-foreground text-sm hover:text-primary">
                   Compare ETFs
                 </Link>
               </li>
@@ -62,22 +66,22 @@ const Footer = () => {
             <h4 className="font-medium text-sm mb-4">Company</h4>
             <ul className="space-y-2">
               <li>
-                <Link to="/about" className="text-muted-foreground text-sm hover:text-primary">
+                <Link to="/about" onClick={handleLinkClick} className="text-muted-foreground text-sm hover:text-primary">
                   About Us
                 </Link>
               </li>
               <li>
-                <Link to="/contact" className="text-muted-foreground text-sm hover:text-primary">
+                <Link to="/contact" onClick={handleLinkClick} className="text-muted-foreground text-sm hover:text-primary">
                   Contact
                 </Link>
               </li>
               <li>
-                <Link to="/privacy" className="text-muted-foreground text-sm hover:text-primary">
+                <Link to="/privacy" onClick={handleLinkClick} className="text-muted-foreground text-sm hover:text-primary">
                   Privacy Policy
                 </Link>
               </li>
               <li>
-                <Link to="/terms" className="text-muted-foreground text-sm hover:text-primary">
+                <Link to="/terms" onClick={handleLinkClick} className="text-muted-foreground text-sm hover:text-primary">
                   Terms of Service
                 </Link>
               </li>

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { TrendingUp, Shield, Zap } from 'lucide-react';
+import { TrendingUp, Shield, Zap, ArrowRight } from 'lucide-react';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { useIsMobile } from '@/hooks/use-mobile';
 
@@ -16,6 +16,7 @@ interface FeaturedETF {
   idealFor: string;
   icon: React.ElementType;
   category: string;
+  gradient: string;
 }
 
 const featuredETFs: FeaturedETF[] = [
@@ -27,7 +28,8 @@ const featuredETFs: FeaturedETF[] = [
     expenseRatio: "0.22%",
     idealFor: "Growth-focused investors beyond Nifty 50",
     icon: TrendingUp,
-    category: "Growth"
+    category: "Growth",
+    gradient: "from-blue-500 to-blue-700"
   },
   {
     name: "GoldBeES",
@@ -37,7 +39,8 @@ const featuredETFs: FeaturedETF[] = [
     expenseRatio: "0.81%",
     idealFor: "Safe haven and portfolio diversification",
     icon: Shield,
-    category: "Safety"
+    category: "Safety",
+    gradient: "from-yellow-500 to-yellow-700"
   },
   {
     name: "HDFC Smallcap 250 ETF",
@@ -47,7 +50,8 @@ const featuredETFs: FeaturedETF[] = [
     expenseRatio: "0.30%",
     idealFor: "High-risk, long-term wealth creation",
     icon: Zap,
-    category: "High Growth"
+    category: "High Growth",
+    gradient: "from-purple-500 to-purple-700"
   }
 ];
 
@@ -70,26 +74,31 @@ const FeaturedETFs = () => {
   const ETFCard = ({ etf }: { etf: FeaturedETF }) => {
     const IconComponent = etf.icon;
     return (
-      <Card className="group hover:shadow-lg transition-all duration-300 border-0 shadow-md hover:shadow-xl h-full flex flex-col">
-        <CardHeader className="pb-4 flex-shrink-0">
-          <div className="flex items-start justify-between mb-3">
-            <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
-              <IconComponent className="h-5 w-5 text-primary" />
-            </div>
-            <Badge variant="outline" className={getCategoryStyle(etf.category)}>
+      <Card className="group hover:shadow-2xl transition-all duration-500 border-0 shadow-lg hover:scale-105 h-full flex flex-col overflow-hidden">
+        {/* Hero Image Section */}
+        <div className={`relative h-40 bg-gradient-to-br ${etf.gradient} p-6 flex items-center justify-center`}>
+          <div className="absolute inset-0 bg-black/10"></div>
+          <div className="relative z-10 text-center">
+            <IconComponent className="h-12 w-12 text-white mb-2 mx-auto" />
+            <Badge variant="secondary" className="bg-white/20 text-white border-white/30 backdrop-blur-sm">
               {etf.category}
             </Badge>
           </div>
-          <CardTitle className="text-xl font-bold mb-2 group-hover:text-primary transition-colors">
+        </div>
+        
+        {/* Content Section */}
+        <CardHeader className="pb-4 flex-shrink-0">
+          <CardTitle className="text-xl font-bold mb-1 group-hover:text-primary transition-colors">
             {etf.name}
           </CardTitle>
-          <div className="text-sm text-muted-foreground font-mono">
+          <div className="text-sm text-muted-foreground font-mono mb-3">
             {etf.ticker}
           </div>
-          <p className="text-sm text-muted-foreground leading-relaxed mt-2">
+          <p className="text-sm text-muted-foreground leading-relaxed">
             {etf.description}
           </p>
         </CardHeader>
+        
         <CardContent className="flex flex-col flex-grow">
           <div className="grid grid-cols-2 gap-3 mb-4">
             <div className="space-y-1">
@@ -111,7 +120,7 @@ const FeaturedETFs = () => {
             asChild 
             className="w-full group-hover:shadow-md transition-all mt-auto"
           >
-            <Link to={`/list/etfs/${etf.ticker}`}>
+            <Link to={`/list/etfs/${etf.ticker}`} onClick={() => window.scrollTo(0, 0)}>
               Explore ETF
             </Link>
           </Button>
@@ -127,30 +136,27 @@ const FeaturedETFs = () => {
           <h2 className="text-3xl font-bold mb-2">Featured ETFs</h2>
           <p className="text-muted-foreground">Discover top-performing ETFs across different categories</p>
         </div>
-        <Link to="/list/etfs" className="text-primary font-medium hover:underline">
+        <Link 
+          to="/list/etfs" 
+          onClick={() => window.scrollTo(0, 0)}
+          className="inline-flex items-center text-primary font-medium hover:underline"
+        >
           View All ETFs
+          <ArrowRight className="h-4 w-4 ml-1" />
         </Link>
       </div>
       
-      {isMobile ? (
-        <Carousel className="w-full">
-          <CarouselContent className="-ml-2 md:-ml-4">
-            {featuredETFs.map((etf) => (
-              <CarouselItem key={etf.ticker} className="pl-2 md:pl-4 basis-4/5">
-                <ETFCard etf={etf} />
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-          <CarouselPrevious />
-          <CarouselNext />
-        </Carousel>
-      ) : (
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <Carousel className="w-full">
+        <CarouselContent className="-ml-2 md:-ml-4">
           {featuredETFs.map((etf) => (
-            <ETFCard key={etf.ticker} etf={etf} />
+            <CarouselItem key={etf.ticker} className={`pl-2 md:pl-4 ${isMobile ? 'basis-4/5' : 'basis-1/2 lg:basis-1/3'}`}>
+              <ETFCard etf={etf} />
+            </CarouselItem>
           ))}
-        </div>
-      )}
+        </CarouselContent>
+        <CarouselPrevious className="hidden md:flex" />
+        <CarouselNext className="hidden md:flex" />
+      </Carousel>
     </section>
   );
 };

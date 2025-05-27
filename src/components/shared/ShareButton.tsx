@@ -24,6 +24,7 @@ export const ShareButton = ({ title, url, isMobile }: ShareButtonProps) => {
       name: 'WhatsApp',
       icon: MessageCircle,
       color: 'text-green-600',
+      bgColor: 'bg-green-50',
       action: () => {
         const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(`${title} - ${url}`)}`;
         window.open(whatsappUrl, '_blank');
@@ -36,7 +37,8 @@ export const ShareButton = ({ title, url, isMobile }: ShareButtonProps) => {
           <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
         </svg>
       ),
-      color: 'text-gray-900 dark:text-white',
+      color: 'text-black dark:text-white',
+      bgColor: 'bg-gray-50 dark:bg-gray-800',
       action: () => {
         const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`;
         window.open(twitterUrl, '_blank');
@@ -50,6 +52,7 @@ export const ShareButton = ({ title, url, isMobile }: ShareButtonProps) => {
         </svg>
       ),
       color: 'text-blue-600',
+      bgColor: 'bg-blue-50',
       action: () => {
         const linkedinUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
         window.open(linkedinUrl, '_blank');
@@ -59,6 +62,7 @@ export const ShareButton = ({ title, url, isMobile }: ShareButtonProps) => {
       name: 'Email',
       icon: Mail,
       color: 'text-gray-600',
+      bgColor: 'bg-gray-50',
       action: () => {
         const emailUrl = `mailto:?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(`Check out this article: ${title}\n\n${url}`)}`;
         window.location.href = emailUrl;
@@ -68,6 +72,7 @@ export const ShareButton = ({ title, url, isMobile }: ShareButtonProps) => {
       name: 'Copy Link',
       icon: Link2,
       color: 'text-purple-600',
+      bgColor: 'bg-purple-50',
       action: async () => {
         try {
           await navigator.clipboard.writeText(url);
@@ -101,11 +106,13 @@ export const ShareButton = ({ title, url, isMobile }: ShareButtonProps) => {
             <DropdownMenuItem
               key={option.name}
               onClick={option.action}
-              className="cursor-pointer py-3"
+              className="cursor-pointer py-3 px-3"
             >
               <div className="flex items-center space-x-3 w-full">
-                <IconComponent className={`h-4 w-4 ${option.color}`} />
-                <span className="font-medium">{option.name}</span>
+                <div className={`p-2 rounded-full ${option.bgColor} flex items-center justify-center`}>
+                  <IconComponent className={`h-4 w-4 ${option.color}`} />
+                </div>
+                <span className="font-medium text-sm">{option.name}</span>
               </div>
             </DropdownMenuItem>
           );
