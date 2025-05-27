@@ -1,4 +1,3 @@
-
 export interface LearnArticle {
   id: string;
   title: string;
@@ -12,11 +11,385 @@ export interface LearnArticle {
 }
 
 export const learnArticles: Record<string, LearnArticle> = {
+  'etf-nav-vs-market-price': {
+    id: 'etf-nav-vs-market-price',
+    title: 'ETF NAV vs Market Price: Why They are Different',
+    slug: 'etf-nav-vs-market-price',
+    description: 'ETFs don\'t always trade exactly at their NAV. Here\'s why that happens, how iNAV works, and what you should watch out for — especially with international ETFs.',
+    readingTime: '5 min',
+    category: 'Intermediate',
+    tags: ['ETF Pricing', 'NAV', 'iNAV', 'Premiums and Discounts'],
+    image: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800',
+    content: `
+      <h2>What Is NAV in ETFs?</h2>
+      <p>NAV (Net Asset Value) is the total value of the ETF's underlying holdings divided by the number of units.</p>
+      <p>For example:</p>
+      <p>If an ETF holds ₹100 crore worth of stocks and has 10 lakh units outstanding, its NAV is:</p>
+      <p>NAV = ₹100 crore / 10 lakh = ₹1,000 per unit</p>
+      <p>NAV is calculated once a day, usually at the end of the trading session — just like mutual funds.</p>
+
+      <h3>But ETFs Trade Like Stocks…</h3>
+      <p>Unlike mutual funds, ETFs are listed on stock exchanges — so their price fluctuates throughout the day based on demand and supply.</p>
+      <p>This traded price is what you see on platforms like Zerodha or Groww.</p>
+      <p>That's why you might see:</p>
+      <ul>
+        <li>NAV of an ETF at ₹99</li>
+        <li>But the traded price at ₹101</li>
+      </ul>
+
+      <h3>What is iNAV?</h3>
+      <p>iNAV, or Indicative Net Asset Value, is a real-time estimate of an Exchange Traded Fund (ETF)'s value, updated frequently during market hours.</p>
+      <p>To help bridge the gap, AMCs and exchanges publish a live estimate called iNAV (Indicative NAV) every 15 seconds.</p>
+      <p>This helps investors see a near real-time value of what the ETF should be worth, based on current prices of its underlying holdings.</p>
+      <p>However, this NAV doesn't always match the traded price, especially in the following situations.</p>
+
+      <h3>Why Do ETFs Trade at a Premium or Discount?</h3>
+      <p><strong>Demand–Supply Gap</strong></p>
+      <p>Like any stock, if more people are buying the ETF than selling it, the price goes up. This demand may not immediately reflect in the NAV.</p>
+
+      <p><strong>Market Timing Issues</strong></p>
+      <p>For example, international ETFs (like Nasdaq 100 ETFs) track the US market. If you're trading them during Indian hours (when the US market is closed), the ETF price moves based on expectations, not actual NAV.</p>
+
+      <p><strong>Creation/Redemption Delays</strong></p>
+      <p>Large investors (called authorized participants) help maintain ETF pricing by creating or redeeming units. But if this process gets delayed — especially in smaller or international ETFs — pricing can go haywire temporarily.</p>
+
+      <p><strong>Upper/Lower Circuit Limits</strong></p>
+      <p>SEBI has imposed circuit limits (often 5%) on international ETFs to prevent wild swings. If the ETF hits the upper limit due to demand, but no more units are being created, it may trade significantly above its NAV.</p>
+
+      <h3>Real Example: International ETFs and Premiums</h3>
+      <p>In late 2022, several Nasdaq 100 and S&P 500 ETFs in India were trading at 8–15% premiums to their NAV.</p>
+      <p>Why?</p>
+      <ul>
+        <li>SEBI had capped overseas investments at $7 billion per AMC.</li>
+        <li>So, fund houses stopped creating new ETF units.</li>
+        <li>But retail demand continued rising.</li>
+        <li>Result: prices went up, but NAV stayed the same → leading to inflated premiums.</li>
+      </ul>
+      <p>Investors who bought during this period unknowingly paid much more than what the underlying US stocks were worth.</p>
+
+      <h3>Why Should You Care?</h3>
+      <p>Paying too much above NAV means you're overpaying for the same underlying assets.</p>
+      <p>Let's say:</p>
+      <ul>
+        <li>NAV of Nasdaq ETF = ₹400</li>
+        <li>Traded price = ₹460</li>
+      </ul>
+      <p>You're paying ₹60 extra per unit, which won't reflect in returns unless the index itself rises enough to cover that.</p>
+      <p>When you eventually sell — especially if the premium normalizes — you may get lower returns or even a loss despite the index rising.</p>
+
+      <h3>Tips to Avoid Overpaying</h3>
+      <p><strong>Check NAV vs Market Price</strong></p>
+      <p>Most AMCs publish NAV on their websites or stock exchange sites (NSE/BSE). Avoid buying when the market price is far above it.</p>
+
+      <p><strong>Avoid Thinly Traded ETFs</strong></p>
+      <p>If the ETF has low trading volume, spreads can be wide. Use limit orders instead of market orders.</p>
+
+      <p><strong>Be Extra Cautious With International ETFs</strong></p>
+      <p>Look at global market cues before investing. Also, check if unit creation is currently paused due to SEBI limits.</p>
+
+      <h3>Final Thoughts</h3>
+      <p>NAV is the true value of an ETF's assets. But ETFs don't always trade at that value due to market forces, especially in India where liquidity and regulatory limits can affect international ETF pricing.</p>
+      <p>Understanding NAV, iNAV, and traded price can help you avoid overpaying — and make smarter, more informed decisions.</p>
+      <p>An ETF is a powerful tool — just make sure you're not paying a premium price for a budget-value product.</p>
+    `
+  },
+  'how-to-buy-etf-india': {
+    id: 'how-to-buy-etf-india',
+    title: 'How to Buy Your First ETF in India: Step-by-Step Guide for Beginners',
+    slug: 'how-to-buy-etf-india',
+    description: 'A beginner-friendly walkthrough on opening a demat account, choosing a broker, and making your first ETF purchase.',
+    readingTime: '5 min',
+    category: 'Beginner',
+    tags: ['ETF Investing', 'Demat Account', 'DIY Investing'],
+    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800',
+    content: `
+      <h2>Why This Matters</h2>
+      <p>ETFs are a great low-cost way to invest in the stock market, but the process of buying your first ETF can feel intimidating. This guide breaks it down — step by step — so that even if you've never invested before, you'll walk away knowing exactly what to do.</p>
+
+      <h3>Step 1: Open a Demat + Trading Account</h3>
+      <p>To invest in ETFs, you need both:</p>
+      <ul>
+        <li><strong>Demat Account</strong> – holds your ETF units electronically.</li>
+        <li><strong>Trading Account</strong> – lets you place buy/sell orders on the exchange.</li>
+      </ul>
+
+      <p>Most platforms offer both together. Popular brokers in India include:</p>
+      <table style="width: 100%; border-collapse: collapse; margin: 1.5em 0;">
+        <thead>
+          <tr style="background-color: #f8f9fa;">
+            <th style="border: 1px solid #ddd; padding: 12px; text-align: left;">Platform</th>
+            <th style="border: 1px solid #ddd; padding: 12px; text-align: left;">Known For</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="border: 1px solid #ddd; padding: 12px;">Zerodha</td>
+            <td style="border: 1px solid #ddd; padding: 12px;">Simplicity, low cost</td>
+          </tr>
+          <tr>
+            <td style="border: 1px solid #ddd; padding: 12px;">Groww</td>
+            <td style="border: 1px solid #ddd; padding: 12px;">Mobile-first interface</td>
+          </tr>
+          <tr>
+            <td style="border: 1px solid #ddd; padding: 12px;">Upstox</td>
+            <td style="border: 1px solid #ddd; padding: 12px;">Fast account opening</td>
+          </tr>
+          <tr>
+            <td style="border: 1px solid #ddd; padding: 12px;">Angel One</td>
+            <td style="border: 1px solid #ddd; padding: 12px;">Strong advisory tools</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p><strong>✅ Tip:</strong> Choose a broker that charges zero account opening fees and low annual maintenance charges.</p>
+
+      <h3>Step 2: Complete KYC</h3>
+      <p>You'll need to verify your identity. Keep these ready:</p>
+      <ul>
+        <li>PAN Card</li>
+        <li>Aadhaar Card (linked with mobile number for OTP)</li>
+        <li>Bank proof (cheque or statement)</li>
+        <li>A selfie</li>
+      </ul>
+      <p>The whole KYC process is digital and takes ~10–15 minutes. Approval can take a few hours to a day.</p>
+
+      <h3>Step 3: Fund Your Account</h3>
+      <p>Once your account is live:</p>
+      <ul>
+        <li>Add your bank account.</li>
+        <li>Transfer funds using UPI, Net Banking, or IMPS.</li>
+        <li>You'll now see this reflected in your broker dashboard.</li>
+      </ul>
+      <p>No need to pre-decide the ETF yet. Fund your account first.</p>
+
+      <h3>Step 4: Search and Select Your ETF</h3>
+      <p>You can now search for ETFs in your broker app like you search for stocks.</p>
+      <p>Example queries:</p>
+      <ul>
+        <li>"Nifty 50 ETF"</li>
+        <li>"Nippon Gold ETF"</li>
+        <li>"ICICI US Equity ETF"</li>
+        <li>"Kotak Banking ETF"</li>
+      </ul>
+      <p>Click on the result and check:</p>
+      <ul>
+        <li>Fund details</li>
+        <li>Expense ratio</li>
+        <li>Liquidity (volume traded)</li>
+        <li>Underlying index (Nifty 50, Sensex, Nasdaq 100, etc.)</li>
+      </ul>
+      <p><strong>✅ Tip:</strong> For your first ETF, stick with a large, high-volume index like a Nifty 50 or Sensex ETF.</p>
+
+      <h3>Step 5: Place Your First Order</h3>
+      <p>Once you've decided:</p>
+      <ul>
+        <li>Enter the quantity (1 unit = 1 share of the ETF)</li>
+        <li>Choose order type:
+          <ul>
+            <li><strong>Market order</strong> – buy instantly at best available price</li>
+            <li><strong>Limit order</strong> – set your own price and wait for match</li>
+          </ul>
+        </li>
+        <li>Hit Buy</li>
+      </ul>
+      <p>That's it — once it's executed, the ETF units will appear in your Demat holdings.</p>
+
+      <h3>Step 6: Track Your Investment</h3>
+      <ul>
+        <li>You can track live prices daily</li>
+        <li>Dividends (if any) get credited to your bank</li>
+      </ul>
+      <p><strong>✅ Optional:</strong> Set up reminders to review your ETF once a quarter. No need to check daily.</p>
+
+      <h3>FAQs for First-Time ETF Investors</h3>
+      <p><strong>Q: How much money do I need to start?</strong></p>
+      <p>A: Just enough to buy 1 unit. For many ETFs, this is ₹100–₹500.</p>
+
+      <p><strong>Q: Can I set up a SIP in an ETF?</strong></p>
+      <p>A: Not directly like mutual funds. But you can manually invest a fixed amount every month.</p>
+
+      <p><strong>Q: What if I want to sell later?</strong></p>
+      <p>A: Just place a Sell order during market hours — it's as easy as buying.</p>
+
+      <h3>Closing Thoughts</h3>
+      <p>Buying your first ETF might feel like a big leap, but it's actually one of the simplest and smartest ways to start your investing journey.</p>
+      <p>By following this 6-step process, you're not just buying a fund — you're building a lifelong habit of disciplined investing. Whether you want to invest ₹500 a month or ₹5,000, ETFs offer the flexibility and diversification to help you get started with confidence.</p>
+    `
+  },
+  'etf-costs-india': {
+    id: 'etf-costs-india',
+    title: 'Understanding ETF Costs: Expense Ratios, Brokerage, and Hidden Fees Explained',
+    slug: 'etf-costs-india',
+    description: 'Breaking down all the costs associated with ETF investing in India — what they are, how they impact returns, and what to watch out for.',
+    readingTime: '5 min',
+    category: 'Beginner',
+    tags: ['ETF Costs', 'Expense Ratio', 'Investing Fees'],
+    image: 'https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?w=800',
+    content: `
+      <h2>Why This Matters</h2>
+      <p>One of the biggest attractions of ETFs is their low cost — but "low" doesn't mean "free." From expense ratios to brokerage to hidden trading charges, it's important to know what you're actually paying. Understanding these costs ensures you don't unknowingly lose returns to small fees that add up.</p>
+
+      <h3>1. Expense Ratio (Charged by AMC)</h3>
+      <p>This is the annual fee charged by the ETF provider (AMC) to manage the fund. It's expressed as a percentage of your investment.</p>
+      <p><strong>Example:</strong></p>
+      <ul>
+        <li>You invest ₹10,000 in an ETF.</li>
+        <li>The expense ratio is 0.20%.</li>
+        <li>You pay ₹20 per year.</li>
+      </ul>
+
+      <p><strong>✅ Good to know:</strong> Expense ratios for Indian ETFs are very low, typically:</p>
+      <ul>
+        <li>0.05% – 0.30% for index ETFs</li>
+        <li>0.40% – 0.75% for international or thematic ETFs</li>
+      </ul>
+      <p>You don't pay this directly — it's adjusted daily in the NAV.</p>
+
+      <h3>2. Brokerage Charges (Charged by Broker)</h3>
+      <p>ETFs are traded like stocks, so your broker may charge a fee when you buy/sell.</p>
+      <table style="width: 100%; border-collapse: collapse; margin: 1.5em 0;">
+        <thead>
+          <tr style="background-color: #f8f9fa;">
+            <th style="border: 1px solid #ddd; padding: 12px; text-align: left;">Broker</th>
+            <th style="border: 1px solid #ddd; padding: 12px; text-align: left;">Delivery Charges (Buy & Hold)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="border: 1px solid #ddd; padding: 12px;">Zerodha</td>
+            <td style="border: 1px solid #ddd; padding: 12px;">₹0</td>
+          </tr>
+          <tr>
+            <td style="border: 1px solid #ddd; padding: 12px;">Groww</td>
+            <td style="border: 1px solid #ddd; padding: 12px;">₹0</td>
+          </tr>
+          <tr>
+            <td style="border: 1px solid #ddd; padding: 12px;">Upstox</td>
+            <td style="border: 1px solid #ddd; padding: 12px;">₹20 or 2.5% (whichever lower)</td>
+          </tr>
+          <tr>
+            <td style="border: 1px solid #ddd; padding: 12px;">ICICI Direct</td>
+            <td style="border: 1px solid #ddd; padding: 12px;">~₹20–₹25 per trade</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p><strong>✅ Pro Tip:</strong> If you're a long-term ETF investor, choose brokers with zero delivery charges.</p>
+
+      <h3>3. Exchange Transaction Charges</h3>
+      <p>These are standard charges collected by exchanges like NSE/BSE and passed to you by your broker. They're very small but good to be aware of.</p>
+      <table style="width: 100%; border-collapse: collapse; margin: 1.5em 0;">
+        <thead>
+          <tr style="background-color: #f8f9fa;">
+            <th style="border: 1px solid #ddd; padding: 12px; text-align: left;">Fee Type</th>
+            <th style="border: 1px solid #ddd; padding: 12px; text-align: left;">Approximate Rate</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="border: 1px solid #ddd; padding: 12px;">Exchange transaction fee</td>
+            <td style="border: 1px solid #ddd; padding: 12px;">₹325 per crore (~₹0.03 per ₹1,000)</td>
+          </tr>
+          <tr>
+            <td style="border: 1px solid #ddd; padding: 12px;">SEBI turnover fee</td>
+            <td style="border: 1px solid #ddd; padding: 12px;">₹10 per crore</td>
+          </tr>
+          <tr>
+            <td style="border: 1px solid #ddd; padding: 12px;">Stamp duty</td>
+            <td style="border: 1px solid #ddd; padding: 12px;">0.015% on buy side only</td>
+          </tr>
+          <tr>
+            <td style="border: 1px solid #ddd; padding: 12px;">GST</td>
+            <td style="border: 1px solid #ddd; padding: 12px;">18% on brokerage + fees</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p><strong>🧠</strong> These add up to a few paise or rupees per ₹1,000 — not a deal-breaker, but still part of your total cost.</p>
+
+      <h3>4. Bid-Ask Spread (Hidden Cost While Trading)</h3>
+      <p>The bid is the highest price someone is willing to pay. The ask is the lowest price someone is willing to sell at. The difference = spread — and this affects your actual buying/selling cost.</p>
+      <p><strong>Example:</strong></p>
+      <ul>
+        <li>You want to buy an ETF.</li>
+        <li>Bid is ₹100. Ask is ₹101.</li>
+        <li>You buy at ₹101 — that ₹1 gap is your "invisible" cost.</li>
+      </ul>
+      <p><strong>✅ Pro Tip:</strong> Stick to high-volume ETFs with narrow spreads (e.g., Nifty 50 ETFs) to avoid this cost.</p>
+
+      <h3>5. Tracking Error (Indirect Cost)</h3>
+      <p>Tracking error is the difference between the ETF's returns and the index it's supposed to mimic. It's not a fee, but a performance drag.</p>
+      <p>Reasons include:</p>
+      <ul>
+        <li>Expense ratio</li>
+        <li>Cash held for liquidity</li>
+        <li>Delays in index replication</li>
+        <li>Poor fund management</li>
+      </ul>
+      <p>Look for ETFs with low tracking error (less than 1% for broad index ETFs).</p>
+
+      <h3>6. Currency Conversion Charges (For International ETFs)</h3>
+      <p>If you buy international ETFs (like Nasdaq 100), they're often structured as Fund of Funds (FoFs). These involve currency conversion when the AMC buys foreign assets.</p>
+      <p>Indirect charges can include:</p>
+      <ul>
+        <li>Currency spread (₹/$)</li>
+        <li>Additional FoF expense ratio (sometimes > 0.5%)</li>
+      </ul>
+      <p><strong>✅ Pro Tip:</strong> Always check total expense ratio (TER) and not just base TER for such ETFs.</p>
+
+      <h3>Summary: All ETF Costs You Should Know</h3>
+      <table style="width: 100%; border-collapse: collapse; margin: 1.5em 0;">
+        <thead>
+          <tr style="background-color: #f8f9fa;">
+            <th style="border: 1px solid #ddd; padding: 12px; text-align: left;">Cost Type</th>
+            <th style="border: 1px solid #ddd; padding: 12px; text-align: left;">Who Charges It?</th>
+            <th style="border: 1px solid #ddd; padding: 12px; text-align: left;">Typical Range</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="border: 1px solid #ddd; padding: 12px;">Expense Ratio</td>
+            <td style="border: 1px solid #ddd; padding: 12px;">Fund House (AMC)</td>
+            <td style="border: 1px solid #ddd; padding: 12px;">0.05% – 0.75%</td>
+          </tr>
+          <tr>
+            <td style="border: 1px solid #ddd; padding: 12px;">Brokerage</td>
+            <td style="border: 1px solid #ddd; padding: 12px;">Broker</td>
+            <td style="border: 1px solid #ddd; padding: 12px;">₹0 – ₹25 per trade</td>
+          </tr>
+          <tr>
+            <td style="border: 1px solid #ddd; padding: 12px;">Exchange + Govt Charges</td>
+            <td style="border: 1px solid #ddd; padding: 12px;">NSE/BSE + Govt</td>
+            <td style="border: 1px solid #ddd; padding: 12px;">Negligible</td>
+          </tr>
+          <tr>
+            <td style="border: 1px solid #ddd; padding: 12px;">Bid-Ask Spread</td>
+            <td style="border: 1px solid #ddd; padding: 12px;">Market trading condition</td>
+            <td style="border: 1px solid #ddd; padding: 12px;">0.1% – 0.5% (varies)</td>
+          </tr>
+          <tr>
+            <td style="border: 1px solid #ddd; padding: 12px;">Tracking Error</td>
+            <td style="border: 1px solid #ddd; padding: 12px;">Indirect performance loss</td>
+            <td style="border: 1px solid #ddd; padding: 12px;">0.1% – 1%</td>
+          </tr>
+          <tr>
+            <td style="border: 1px solid #ddd; padding: 12px;">Currency Charges</td>
+            <td style="border: 1px solid #ddd; padding: 12px;">Fund Structure (FoF)</td>
+            <td style="border: 1px solid #ddd; padding: 12px;">0.5%+ (check factsheet)</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Closing Thoughts</h3>
+      <p>ETFs are still one of the most cost-efficient ways to invest — especially when compared to mutual funds or ULIPs. But being aware of these costs puts you in control. Don't just chase the lowest expense ratio; look at total cost of ownership.</p>
+      <p>Because in investing, what you don't see often hurts the most.</p>
+    `
+  },
   'what-is-etf': {
     id: 'what-is-etf',
     title: 'What is an ETF',
     slug: 'what-is-etf',
-    description: 'A beginner-friendly introduction to ETFs – what they are, how they work, and why they've become so popular among Indian investors.',
+    description: 'A beginner-friendly introduction to ETFs – what they are, how they work, and why they have become so popular among Indian investors.',
     readingTime: '7 min',
     category: 'Beginner',
     tags: ['ETF Basics', 'Beginner Guide', 'Investment Fundamentals'],
