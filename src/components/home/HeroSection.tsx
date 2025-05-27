@@ -1,8 +1,6 @@
-
 import { Link } from 'react-router-dom';
 import { ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useEffect } from 'react';
 
 const HeroSection = () => {
   const handleLearnClick = () => {
@@ -30,14 +28,14 @@ const HeroSection = () => {
             </div>
             <div className="flex flex-col gap-2 min-[400px]:flex-row">
               <Button asChild size="lg" className="font-medium">
-                <Link to="/learn" onClick={handleLearnClick}>
+                <Link to="/etfs/learn" onClick={handleLearnClick}>
                   Learn ETFs
                   <ChevronRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
               <Button asChild size="lg" variant="outline" className="font-medium">
-                <Link to="/list/etfs" onClick={handleExploreClick}>
-                  Explore ETFs
+                <Link to="/etfs/screener" onClick={handleExploreClick}>
+                  ETF Screener
                   <ChevronRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>

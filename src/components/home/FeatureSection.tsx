@@ -3,6 +3,10 @@ import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 
 const FeatureSection = () => {
+  const handleScrollToTop = () => {
+    window.scrollTo(0, 0);
+  };
+
   return (
     <section className="container py-8 md:py-16">
       <div className="text-center max-w-3xl mx-auto mb-12">
@@ -35,8 +39,8 @@ const FeatureSection = () => {
           <p className="mb-4 text-muted-foreground">
             Find the perfect ETF for your portfolio with our data-rich screener. Filter by returns, expense ratio, volume, and more.
           </p>
-          <Button asChild variant="link" className="p-0">
-            <Link to="/list/etfs">Explore ETFs →</Link>
+          <Button asChild variant="link" className="p-0" onClick={handleScrollToTop}>
+            <Link to="/etfs/screener">Explore ETFs →</Link>
           </Button>
         </div>
         
@@ -62,8 +66,8 @@ const FeatureSection = () => {
           <p className="mb-4 text-muted-foreground">
             Learn everything about ETFs through easy-to-understand articles and guides tailored for Indian investors.
           </p>
-          <Button asChild variant="link" className="p-0">
-            <Link to="/learn">Start Learning →</Link>
+          <Button asChild variant="link" className="p-0" onClick={handleScrollToTop}>
+            <Link to="/etfs/learn">Start Learning →</Link>
           </Button>
         </div>
         
@@ -89,8 +93,8 @@ const FeatureSection = () => {
           <p className="mb-4 text-muted-foreground">
             Data, insights, and recommendations specifically tailored for Indian investors and the Indian ETF market.
           </p>
-          <Button asChild variant="link" className="p-0">
-            <Link to="/list/etfs">Discover Indian ETFs →</Link>
+          <Button asChild variant="link" className="p-0" onClick={handleScrollToTop}>
+            <Link to="/etfs/screener">Discover Indian ETFs →</Link>
           </Button>
         </div>
       </div>

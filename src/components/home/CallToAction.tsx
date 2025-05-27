@@ -23,10 +23,10 @@ const CallToAction = () => {
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <Button asChild size="lg">
-              <Link to="/learn" onClick={handleLearnClick}>Learn More About ETFs</Link>
+              <Link to="/etfs/learn" onClick={handleLearnClick}>Learn More About ETFs</Link>
             </Button>
             <Button asChild size="lg" variant="outline">
-              <Link to="/list/etfs" onClick={handleExploreClick}>Explore ETF Screener</Link>
+              <Link to="/etfs/screener" onClick={handleExploreClick}>Explore ETF Screener</Link>
             </Button>
           </div>
         </div>

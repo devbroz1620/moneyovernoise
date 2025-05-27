@@ -14,8 +14,9 @@ const Navbar = () => {
 
   const navLinks = [
     { name: 'Home', path: '/' },
-    { name: 'Learn', path: '/learn' },
-    { name: 'ETF Screener', path: '/list' },
+    { name: 'ETFs', path: '/etfs' },
+    { name: 'Mind over Money', path: '/psychology' },
+    { name: 'Debt', path: '/debt' },
   ];
 
   const handleLogoClick = () => {

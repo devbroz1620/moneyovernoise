@@ -16,7 +16,7 @@ const Footer = () => {
               <span className="text-xl font-semibold text-foreground">OverNoise</span>
             </Link>
             <p className="text-muted-foreground text-sm">
-              Master ETFs. Invest smart with India's premier ETF learning and screening platform.
+              MoneyOverNoise helps Indian investors cut through the noise — with clear, honest, and practical money insights. From investing to money mindset, we make money simple again.
             </p>
           </div>
           
@@ -24,38 +24,33 @@ const Footer = () => {
             <h4 className="font-medium text-sm mb-4">Learn</h4>
             <ul className="space-y-2">
               <li>
-                <Link to="/learn/etfs/what-is-an-etf" onClick={handleLinkClick} className="text-muted-foreground text-sm hover:text-primary">
-                  What is an ETF?
+                <Link to="/etfs/learn" onClick={handleLinkClick} className="text-muted-foreground text-sm hover:text-primary">
+                  ETF Guides
                 </Link>
               </li>
               <li>
-                <Link to="/learn/etfs/etfs-vs-mutual-funds" onClick={handleLinkClick} className="text-muted-foreground text-sm hover:text-primary">
-                  ETFs vs Mutual Funds
+                <Link to="/psychology" onClick={handleLinkClick} className="text-muted-foreground text-sm hover:text-primary">
+                  Psychology of Money
                 </Link>
               </li>
               <li>
-                <Link to="/learn/etfs/types-of-etfs-india" onClick={handleLinkClick} className="text-muted-foreground text-sm hover:text-primary">
-                  Types of ETFs in India
-                </Link>
-              </li>
-              <li>
-                <Link to="/learn/etfs/how-to-buy-first-etf" onClick={handleLinkClick} className="text-muted-foreground text-sm hover:text-primary">
-                  How to Buy Your First ETF
+                <Link to="/debt" onClick={handleLinkClick} className="text-muted-foreground text-sm hover:text-primary">
+                  Debt (Coming Soon)
                 </Link>
               </li>
             </ul>
           </div>
           
           <div>
-            <h4 className="font-medium text-sm mb-4">Explore</h4>
+            <h4 className="font-medium text-sm mb-4">Tools</h4>
             <ul className="space-y-2">
               <li>
-                <Link to="/list/etfs" onClick={handleLinkClick} className="text-muted-foreground text-sm hover:text-primary">
-                  ETF Screener
+                <Link to="/etfs/screener" onClick={handleLinkClick} className="text-muted-foreground text-sm hover:text-primary">
+                  ETF Tools
                 </Link>
               </li>
               <li>
-                <Link to="/list/compare" onClick={handleLinkClick} className="text-muted-foreground text-sm hover:text-primary">
+                <Link to="/etfs/compare" onClick={handleLinkClick} className="text-muted-foreground text-sm hover:text-primary">
                   Compare ETFs
                 </Link>
               </li>
@@ -67,7 +62,7 @@ const Footer = () => {
             <ul className="space-y-2">
               <li>
                 <Link to="/about" onClick={handleLinkClick} className="text-muted-foreground text-sm hover:text-primary">
-                  About Us
+                  About
                 </Link>
               </li>
               <li>
