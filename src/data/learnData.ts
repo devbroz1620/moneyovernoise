@@ -719,7 +719,7 @@ export const learnArticles: Record<string, LearnArticle> = {
     id: 'etf-popularity-india',
     title: 'Why Are ETFs Gaining Popularity in India?',
     slug: 'etf-popularity-india',
-    description: 'Explore the key reasons behind the explosive growth of ETFs in India and why they're attracting both retail and institutional investors.',
+    description: 'Explore the key reasons behind the explosive growth of ETFs in India and why they are attracting both retail and institutional investors.',
     readingTime: '6 min',
     category: 'Beginner',
     tags: ['ETF Growth', 'Market Trends', 'Indian Investing'],
@@ -816,8 +816,8 @@ export const learnArticles: Record<string, LearnArticle> = {
       <p>If you're still sitting on the fence, here's the bottom line:</p>
       <ul>
         <li>ETFs are no longer niche</li>
-        <li>They're cost-effective, transparent, and accessible</li>
-        <li>They're likely to keep growing as SEBI, government bodies, and fintech platforms continue to support them</li>
+        <li>They are cost-effective, transparent, and accessible</li>
+        <li>They are likely to keep growing as SEBI, government bodies, and fintech platforms continue to support them</li>
       </ul>
 
       <h3>Final Thoughts</h3>
@@ -989,7 +989,7 @@ export const learnArticles: Record<string, LearnArticle> = {
   },
   'how-etfs-work-india': {
     id: 'how-etfs-work-india',
-    title: 'What Makes an ETF Unique: How They're Created, Managed, and Traded',
+    title: 'What Makes an ETF Unique: How They are Created, Managed, and Traded',
     slug: 'how-etfs-work-india',
     description: 'Ever wondered how ETFs actually function? Learn how ETFs are created, managed, and traded on exchanges — and what makes them different from mutual funds.',
     readingTime: '8 min',
@@ -1098,8 +1098,8 @@ export const learnArticles: Record<string, LearnArticle> = {
       </table>
 
       <h3>Final Thoughts</h3>
-      <p>ETFs may look simple, but they're backed by a sophisticated system designed for liquidity, efficiency, and low cost.</p>
-      <p>Understanding how ETFs work helps you use them more confidently — whether you're buying a Nifty 50 ETF or exploring Bharat Bond.</p>
+      <p>ETFs may look simple, but they are backed by a sophisticated system designed for liquidity, efficiency, and low cost.</p>
+      <p>Understanding how ETFs work helps you use them more confidently — whether you are buying a Nifty 50 ETF or exploring Bharat Bond.</p>
     `
   },
   'etf-liquidity-importance': {
@@ -1174,7 +1174,7 @@ export const learnArticles: Record<string, LearnArticle> = {
       <ul>
         <li>Use limit orders instead of market orders for low-volume ETFs to avoid price shocks.</li>
         <li>Trade during high volume hours — usually between 10:30 AM to 2:30 PM.</li>
-        <li>If you're investing a large amount, break it into chunks to avoid moving the price.</li>
+        <li>If you are investing a large amount, break it into chunks to avoid moving the price.</li>
       </ul>
 
       <h3>Final Thoughts</h3>
