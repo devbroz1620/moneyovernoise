@@ -1,5 +1,6 @@
 
 import { useParams, Link } from 'react-router-dom';
+import { useEffect } from 'react';
 import MainLayout from '@/components/layout/MainLayout';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -11,6 +12,11 @@ import { ShareButton } from '@/components/shared/ShareButton';
 const LearnArticle = () => {
   const { slug } = useParams<{ slug: string }>();
   const isMobile = useIsMobile();
+  
+  // Scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [slug]);
   
   if (!slug || !learnArticles[slug]) {
     return (
@@ -75,12 +81,18 @@ const LearnArticle = () => {
           {/* Content */}
           <div className={`prose max-w-none ${isMobile ? 'prose-sm' : 'prose-lg'}`}>
             <style>{`
+              .prose {
+                line-height: 1.8;
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+              }
+              
               .prose h2 {
                 margin-top: 2.5em;
                 margin-bottom: 1em;
                 font-size: ${isMobile ? '1.5em' : '1.75em'};
                 font-weight: 700;
                 line-height: 1.3;
+                color: hsl(var(--foreground));
               }
               
               .prose h3 {
@@ -89,26 +101,51 @@ const LearnArticle = () => {
                 font-size: ${isMobile ? '1.25em' : '1.5em'};
                 font-weight: 600;
                 line-height: 1.4;
+                color: hsl(var(--foreground));
               }
               
               .prose p {
                 margin-bottom: 1.75em;
                 line-height: 1.8;
                 font-size: ${isMobile ? '16px' : '18px'};
+                color: hsl(var(--foreground));
               }
               
               .prose ul, .prose ol {
                 margin-bottom: 1.75em;
+                padding-left: 1.5em;
               }
               
               .prose li {
                 margin-bottom: 0.75em;
                 line-height: 1.7;
                 font-size: ${isMobile ? '16px' : '18px'};
+                position: relative;
+                color: hsl(var(--foreground));
+              }
+              
+              .prose ul li {
+                list-style: none;
+                padding-left: 1.5em;
+              }
+              
+              .prose ul li:before {
+                content: "•";
+                color: hsl(var(--primary));
+                font-weight: bold;
+                position: absolute;
+                left: 0;
+                font-size: 1.2em;
+                line-height: 1.4;
+              }
+              
+              .prose ol li {
+                padding-left: 0.5em;
               }
               
               .prose strong {
                 font-weight: 600;
+                color: hsl(var(--foreground));
               }
               
               .prose blockquote {
@@ -117,6 +154,11 @@ const LearnArticle = () => {
                 background: hsl(var(--muted));
                 border-left: 4px solid hsl(var(--primary));
                 border-radius: 0 8px 8px 0;
+                font-style: italic;
+              }
+              
+              .prose blockquote p {
+                color: hsl(var(--muted-foreground));
               }
             `}</style>
             <div 
@@ -134,7 +176,7 @@ const LearnArticle = () => {
                 </Link>
               </Button>
               
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-3">
                 <span className={`text-muted-foreground ${isMobile ? 'text-sm' : ''}`}>
                   Found this helpful?
                 </span>

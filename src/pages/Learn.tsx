@@ -1,5 +1,6 @@
 
 import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
 import MainLayout from '@/components/layout/MainLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -10,6 +11,16 @@ import { useIsMobile } from '@/hooks/use-mobile';
 const Learn = () => {
   const articles = Object.values(learnArticles);
   const isMobile = useIsMobile();
+
+  // Scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  const handleArticleClick = () => {
+    // This will be handled by the article component's useEffect
+    window.scrollTo(0, 0);
+  };
 
   return (
     <MainLayout>
@@ -56,7 +67,12 @@ const Learn = () => {
         ) : (
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {articles.map((article) => (
-              <Link key={article.id} to={`/learn/etfs/${article.slug}`} className="block">
+              <Link 
+                key={article.id} 
+                to={`/learn/etfs/${article.slug}`} 
+                className="block"
+                onClick={handleArticleClick}
+              >
                 <Card className="group hover:shadow-lg transition-all duration-300 overflow-hidden h-full flex flex-col cursor-pointer border-2 hover:border-primary/20">
                   <CardHeader className={`${isMobile ? 'p-4' : 'p-6'} flex-grow`}>
                     <div className="flex items-center justify-between mb-4">
