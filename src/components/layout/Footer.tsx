@@ -24,34 +24,39 @@ const Footer = () => {
             <h4 className="font-medium text-sm mb-4">Learn</h4>
             <ul className="space-y-2">
               <li>
-                <Link to="/etfs/learn" onClick={handleLinkClick} className="text-muted-foreground text-sm hover:text-primary">
+                <Link to="/etfs/learn" onClick={handleLinkClick} className="text-muted-foreground text-sm hover:text-primary transition-colors">
                   ETF Guides
                 </Link>
               </li>
               <li>
-                <Link to="/psychology" onClick={handleLinkClick} className="text-muted-foreground text-sm hover:text-primary">
+                <Link to="/psychology" onClick={handleLinkClick} className="text-muted-foreground text-sm hover:text-primary transition-colors">
                   Psychology of Money
                 </Link>
               </li>
               <li>
-                <Link to="/debt" onClick={handleLinkClick} className="text-muted-foreground text-sm hover:text-primary">
+                <span className="text-muted-foreground text-sm opacity-50">
                   Debt (Coming Soon)
-                </Link>
+                </span>
               </li>
             </ul>
           </div>
           
           <div>
-            <h4 className="font-medium text-sm mb-4">Tools</h4>
+            <h4 className="font-medium text-sm mb-4">Tools & Resources</h4>
             <ul className="space-y-2">
               <li>
-                <Link to="/etfs/screener" onClick={handleLinkClick} className="text-muted-foreground text-sm hover:text-primary">
+                <Link to="/etfs/screener" onClick={handleLinkClick} className="text-muted-foreground text-sm hover:text-primary transition-colors">
                   ETF Tools
                 </Link>
               </li>
               <li>
-                <Link to="/etfs/compare" onClick={handleLinkClick} className="text-muted-foreground text-sm hover:text-primary">
+                <Link to="/etfs/compare" onClick={handleLinkClick} className="text-muted-foreground text-sm hover:text-primary transition-colors">
                   Compare ETFs
+                </Link>
+              </li>
+              <li>
+                <Link to="/psychology" onClick={handleLinkClick} className="text-muted-foreground text-sm hover:text-primary transition-colors">
+                  Blog
                 </Link>
               </li>
             </ul>
@@ -61,22 +66,22 @@ const Footer = () => {
             <h4 className="font-medium text-sm mb-4">Company</h4>
             <ul className="space-y-2">
               <li>
-                <Link to="/about" onClick={handleLinkClick} className="text-muted-foreground text-sm hover:text-primary">
+                <Link to="/about" onClick={handleLinkClick} className="text-muted-foreground text-sm hover:text-primary transition-colors">
                   About
                 </Link>
               </li>
               <li>
-                <Link to="/contact" onClick={handleLinkClick} className="text-muted-foreground text-sm hover:text-primary">
+                <Link to="/contact" onClick={handleLinkClick} className="text-muted-foreground text-sm hover:text-primary transition-colors">
                   Contact
                 </Link>
               </li>
               <li>
-                <Link to="/privacy" onClick={handleLinkClick} className="text-muted-foreground text-sm hover:text-primary">
+                <Link to="/privacy" onClick={handleLinkClick} className="text-muted-foreground text-sm hover:text-primary transition-colors">
                   Privacy Policy
                 </Link>
               </li>
               <li>
-                <Link to="/terms" onClick={handleLinkClick} className="text-muted-foreground text-sm hover:text-primary">
+                <Link to="/terms" onClick={handleLinkClick} className="text-muted-foreground text-sm hover:text-primary transition-colors">
                   Terms of Service
                 </Link>
               </li>

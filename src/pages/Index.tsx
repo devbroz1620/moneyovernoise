@@ -127,29 +127,29 @@ const Index = () => {
           <div className="flex items-start gap-3">
             <CheckCircle className="h-6 w-6 text-green-600 mt-1 flex-shrink-0" />
             <div>
-              <h3 className="font-semibold mb-1">Simple & Clear</h3>
-              <p className="text-sm text-muted-foreground">We simplify money so anyone can understand it</p>
+              <h3 className="font-semibold mb-1">Clarity First</h3>
+              <p className="text-sm text-muted-foreground">No jargon, no confusion.</p>
             </div>
           </div>
           <div className="flex items-start gap-3">
             <CheckCircle className="h-6 w-6 text-green-600 mt-1 flex-shrink-0" />
             <div>
-              <h3 className="font-semibold mb-1">No Hidden Agendas</h3>
-              <p className="text-sm text-muted-foreground">No hype, no hidden agendas</p>
+              <h3 className="font-semibold mb-1">No Hype</h3>
+              <p className="text-sm text-muted-foreground">Just honest, unbiased guidance.</p>
             </div>
           </div>
           <div className="flex items-start gap-3">
             <CheckCircle className="h-6 w-6 text-green-600 mt-1 flex-shrink-0" />
             <div>
-              <h3 className="font-semibold mb-1">India Focused</h3>
-              <p className="text-sm text-muted-foreground">Built for real Indian investors</p>
+              <h3 className="font-semibold mb-1">For India</h3>
+              <p className="text-sm text-muted-foreground">Tailored for Indian investors.</p>
             </div>
           </div>
           <div className="flex items-start gap-3">
             <CheckCircle className="h-6 w-6 text-green-600 mt-1 flex-shrink-0" />
             <div>
-              <h3 className="font-semibold mb-1">Research Backed</h3>
-              <p className="text-sm text-muted-foreground">Backed by research, explained like you're 5</p>
+              <h3 className="font-semibold mb-1">Trustworthy</h3>
+              <p className="text-sm text-muted-foreground">Research-backed. Explained for everyone.</p>
             </div>
           </div>
         </div>
@@ -225,6 +225,12 @@ const Index = () => {
             <p className="text-lg text-muted-foreground mb-8">
               Join thousands of Indians who prefer clarity over chaos when it comes to their money.
             </p>
+            <div className="flex items-center justify-center mb-4">
+              <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+                <CheckCircle className="h-4 w-4 text-green-600" />
+                <span>SSL Secured</span>
+              </div>
+            </div>
             <Button size="lg" className="font-medium">
               Get Weekly Money Insights
             </Button>
