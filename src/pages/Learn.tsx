@@ -5,16 +5,45 @@ import MainLayout from '@/components/layout/MainLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Clock, ArrowRight, BookOpen, GraduationCap } from 'lucide-react';
-import { learnArticles } from '@/data/learnData';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 const Learn = () => {
-  const articles = Object.values(learnArticles);
   const isMobile = useIsMobile();
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  // Sample articles data - you can replace this with actual data
+  const articles = [
+    {
+      id: 'what-are-etfs',
+      slug: 'what-are-etfs',
+      title: 'What are ETFs? A Complete Beginner\'s Guide',
+      description: 'Learn the fundamentals of Exchange-Traded Funds, how they work, and why they\'re perfect for Indian investors starting their investment journey.',
+      readingTime: '8 min read',
+      category: 'Beginner',
+      tags: ['ETFs', 'Basics', 'Investment', 'Beginner']
+    },
+    {
+      id: 'etf-vs-mutual-funds',
+      slug: 'etf-vs-mutual-funds',
+      title: 'ETFs vs Mutual Funds: Which is Better for You?',
+      description: 'A detailed comparison between ETFs and mutual funds, covering costs, flexibility, tax efficiency, and which option suits different investor profiles.',
+      readingTime: '10 min read',
+      category: 'Intermediate',
+      tags: ['ETFs', 'Mutual Funds', 'Comparison', 'Investment Strategy']
+    },
+    {
+      id: 'building-etf-portfolio',
+      slug: 'building-etf-portfolio',
+      title: 'How to Build a Diversified ETF Portfolio',
+      description: 'Step-by-step guide to creating a well-balanced ETF portfolio that matches your risk tolerance and investment goals.',
+      readingTime: '12 min read',
+      category: 'Intermediate',
+      tags: ['Portfolio', 'Diversification', 'Asset Allocation', 'Strategy']
+    }
+  ];
 
   const handleArticleClick = () => {
     window.scrollTo(0, 0);
@@ -78,7 +107,7 @@ const Learn = () => {
                   <CardHeader className="pb-4">
                     <div className="flex items-center justify-between mb-3">
                       <Badge variant="outline" className={`text-xs ${
-                        article.category === 'Beginner' ? 'bg-primary/10 border-primary/20 text-primary' :
+                        article.category === 'Beginner' ? 'bg-primary/10 border-primary/20 text-primary dark:bg-primary/20 dark:border-primary/30 dark:text-primary' :
                         article.category === 'Intermediate' ? 'bg-blue-50 border-blue-200 text-blue-700 dark:bg-blue-900/20 dark:border-blue-800 dark:text-blue-300' :
                         'bg-purple-50 border-purple-200 text-purple-700 dark:bg-purple-900/20 dark:border-purple-800 dark:text-purple-300'
                       }`}>
@@ -105,12 +134,12 @@ const Learn = () => {
                     
                     <div className="flex flex-wrap gap-2 mb-4">
                       {article.tags.slice(0, 3).map((tag) => (
-                        <Badge key={tag} variant="secondary" className="text-xs bg-secondary/50 hover:bg-secondary/70 transition-colors">
+                        <Badge key={tag} variant="secondary" className="text-xs bg-secondary/50 hover:bg-secondary/70 transition-colors dark:bg-secondary/30 dark:text-secondary-foreground">
                           {tag}
                         </Badge>
                       ))}
                       {article.tags.length > 3 && (
-                        <Badge variant="secondary" className="text-xs bg-secondary/50">
+                        <Badge variant="secondary" className="text-xs bg-secondary/50 dark:bg-secondary/30 dark:text-secondary-foreground">
                           +{article.tags.length - 3}
                         </Badge>
                       )}

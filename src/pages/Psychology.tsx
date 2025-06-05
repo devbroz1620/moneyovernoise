@@ -17,7 +17,7 @@ const Psychology = () => {
   const articles = [
     {
       id: 'overspend-emotions',
-      title: 'Why We Overspend When We\'re Happy (and Sad)',
+      title: 'Why We Overspend When We Are Happy (and Sad)',
       description: 'Understanding how our emotions drive spending decisions and learning to build strategies that work with our feelings, not against them.',
       readingTime: '6 min read',
       category: 'Behavioral Finance',
@@ -25,8 +25,8 @@ const Psychology = () => {
     },
     {
       id: 'illusion-of-more',
-      title: 'The Illusion of "More"',
-      description: 'Why the finish line for "enough" keeps moving and how real wealth comes from learning to say "this is enough."',
+      title: 'The Illusion of More',
+      description: 'Why the finish line for enough keeps moving and how real wealth comes from learning to say this is enough.',
       readingTime: '8 min read',
       category: 'Money Mindset',
       publishedAt: 'Dec 18, 2024'
@@ -115,11 +115,14 @@ const Psychology = () => {
             >
               <Card className="group hover:shadow-lg transition-all duration-300 cursor-pointer border-l-4 border-l-primary/30 hover:border-l-primary h-full">
                 <CardHeader className={`${isMobile ? 'pb-3 px-4 pt-4' : 'pb-4'}`}>
-                  <div className={`flex items-center justify-between ${isMobile ? 'mb-2 flex-col items-start gap-2' : 'mb-3'}`}>
-                    <Badge variant="outline" className={`text-xs ${getCategoryColor(article.category)}`}>
-                      {article.category}
-                    </Badge>
-                    <div className={`flex items-center text-muted-foreground text-sm gap-4 ${isMobile ? 'self-end' : ''}`}>
+                  {/* Mobile-optimized header layout */}
+                  <div className={`${isMobile ? 'flex flex-col gap-3' : 'flex items-center justify-between mb-3'}`}>
+                    <div className={`${isMobile ? 'order-1' : ''}`}>
+                      <Badge variant="outline" className={`text-xs ${getCategoryColor(article.category)}`}>
+                        {article.category}
+                      </Badge>
+                    </div>
+                    <div className={`flex items-center text-muted-foreground text-sm gap-3 ${isMobile ? 'order-2 justify-between' : ''}`}>
                       <span className={isMobile ? 'text-xs' : ''}>{article.publishedAt}</span>
                       <div className="flex items-center">
                         <Clock className="h-3 w-3 mr-1" />
@@ -128,7 +131,7 @@ const Psychology = () => {
                     </div>
                   </div>
                   
-                  <CardTitle className={`group-hover:text-primary transition-colors leading-tight text-foreground ${isMobile ? 'text-lg mb-2' : 'text-2xl mb-3'}`}>
+                  <CardTitle className={`group-hover:text-primary transition-colors leading-tight text-foreground ${isMobile ? 'text-lg mb-2 order-3' : 'text-2xl mb-3'}`}>
                     {article.title}
                   </CardTitle>
                 </CardHeader>

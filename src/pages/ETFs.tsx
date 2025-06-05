@@ -14,7 +14,7 @@ const ETFs = () => {
         <FeaturedETFs />
         <VideoInsights />
         
-        {/* Why MoneyOverNoise Section - Moved to the end */}
+        {/* Why MoneyOverNoise Section - Moved to the end after Video Insights */}
         <section className="container py-8 md:py-12">
           <div className="text-center max-w-4xl mx-auto">
             <h2 className="text-3xl font-bold mb-8">Why MoneyOverNoise?</h2>
