@@ -30,7 +30,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link to="/psychology" onClick={handleLinkClick} className="text-muted-foreground text-sm hover:text-primary transition-colors">
-                  Psychology of Money
+                  Mind Over Money
                 </Link>
               </li>
               <li>

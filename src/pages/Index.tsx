@@ -33,7 +33,7 @@ const Index = () => {
   return (
     <MainLayout>
       {/* Hero Section */}
-      <section className="py-12 md:py-20 px-4 md:px-6 lg:px-8">
+      <section className="py-8 md:py-12 px-4 md:px-6 lg:px-8">
         <div className="container px-4 md:px-6">
           <div className="text-center max-w-4xl mx-auto">
             <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-6">
@@ -42,19 +42,13 @@ const Index = () => {
             <p className="text-xl md:text-2xl text-muted-foreground mb-8 leading-relaxed">
               No jargon. No noise. Just clear, honest money content for Indian investors.
             </p>
-            <Button asChild size="lg" className="font-medium text-lg px-8 py-6">
-              <Link to="/etfs/learn" onClick={handleScrollToTop}>
-                Start Learning
-                <ChevronRight className="ml-2 h-5 w-5" />
-              </Link>
-            </Button>
           </div>
         </div>
       </section>
 
       {/* Content Category Cards */}
-      <section className="container py-8 md:py-12">
-        <h2 className="text-3xl font-bold text-center mb-12">What Would You Like to Learn?</h2>
+      <section className="container py-4 md:py-8">
+        <h2 className="text-3xl font-bold text-center mb-8">What Would You Like to Learn?</h2>
         <div className="grid gap-8 md:grid-cols-3 max-w-5xl mx-auto">
           <Card className="group hover:shadow-xl transition-all duration-300 cursor-pointer border-2 hover:border-primary/20">
             <Link to="/etfs" onClick={handleScrollToTop}>
@@ -102,7 +96,7 @@ const Index = () => {
                 <div className="rounded-full bg-purple-50 w-16 h-16 flex items-center justify-center mx-auto mb-4 group-hover:bg-purple-100 transition-colors">
                   <Brain className="h-8 w-8 text-purple-600" />
                 </div>
-                <CardTitle className="text-xl">Psychology of Money</CardTitle>
+                <CardTitle className="text-xl">Mind Over Money</CardTitle>
               </CardHeader>
               <CardContent className="text-center">
                 <p className="text-muted-foreground mb-4">
@@ -225,12 +219,6 @@ const Index = () => {
             <p className="text-lg text-muted-foreground mb-8">
               Join thousands of Indians who prefer clarity over chaos when it comes to their money.
             </p>
-            <div className="flex items-center justify-center mb-4">
-              <div className="flex items-center space-x-2 text-sm text-muted-foreground">
-                <CheckCircle className="h-4 w-4 text-green-600" />
-                <span>SSL Secured</span>
-              </div>
-            </div>
             <Button size="lg" className="font-medium">
               Get Weekly Money Insights
             </Button>

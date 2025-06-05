@@ -75,6 +75,7 @@
   body {
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -101,4 +102,32 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
+
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* Mobile table optimization */
+  @media (max-width: 768px) {
+    .mobile-table-compact {
+      font-size: 0.875rem;
+    }
+    
+    .mobile-table-compact th,
+    .mobile-table-compact td {
+      padding: 0.5rem 0.25rem;
+    }
+    
+    .mobile-table-compact .hide-mobile {
+      display: none;
+    }
+  }
+}
+
+/* Smooth theme transitions */
+* {
+  transition: background-color 0.2s ease, border-color 0.2s ease;
 }
