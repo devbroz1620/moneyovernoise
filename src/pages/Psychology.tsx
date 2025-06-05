@@ -18,7 +18,7 @@ const Psychology = () => {
   const articles = [
     {
       id: 'overspend-emotions',
-      title: 'Why We Overspend When We're Happy (and Sad)',
+      title: 'Why We Overspend When We\'re Happy (and Sad)',
       description: 'Understanding how our emotions drive spending decisions and learning to build strategies that work with our feelings, not against them.',
       readingTime: '6 min read',
       category: 'Behavioral Finance',
