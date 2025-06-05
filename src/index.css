@@ -79,7 +79,8 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-semibold tracking-tight text-foreground;
+    @apply font-semibold tracking-tight;
+    color: hsl(var(--foreground));
   }
 
   h1 {
@@ -96,11 +97,11 @@
 
   /* Dark mode text consistency */
   .dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
-    @apply text-foreground;
+    color: hsl(var(--foreground));
   }
 
   .dark p, .dark span, .dark div {
-    @apply text-foreground;
+    color: hsl(var(--foreground));
   }
 
   .dark .text-muted-foreground {
@@ -125,7 +126,7 @@
 
   /* Dark mode gradient improvements */
   .dark .bg-gradient-to-b {
-    background: linear-gradient(to bottom, hsl(var(--background)), hsl(var(--background)));
+    background: linear-gradient(to bottom, hsl(var(--background)), hsl(var(--muted) / 0.2));
   }
 
   /* Dark mode link improvements */
@@ -203,15 +204,91 @@
   color: hsl(var(--primary)) !important;
 }
 
-.dark .text-foreground {
-  color: hsl(var(--foreground)) !important;
-}
-
 /* Better visual hierarchy in dark mode */
 .dark .bg-muted {
   background-color: hsl(var(--muted));
 }
 
+/* Enhanced dark mode contrast and consistency */
+.dark {
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+}
+
 .dark .text-muted-foreground {
   color: hsl(var(--muted-foreground)) !important;
+}
+
+/* Dark mode button and CTA improvements */
+.dark .bg-primary {
+  background-color: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+  border: 1px solid hsl(var(--primary) / 0.3);
+}
+
+.dark .bg-primary:hover {
+  background-color: hsl(var(--primary) / 0.9);
+  box-shadow: 0 4px 12px hsl(var(--primary) / 0.3);
+}
+
+/* Dark mode card enhancements */
+.dark .bg-card {
+  background-color: hsl(var(--card));
+  border: 1px solid hsl(var(--border));
+}
+
+.dark .group:hover .bg-card {
+  background-color: hsl(var(--muted) / 0.5);
+  border-color: hsl(var(--primary) / 0.3);
+}
+
+/* Enhanced gradients for dark mode */
+.dark .bg-gradient-to-b {
+  background: linear-gradient(
+    to bottom, 
+    hsl(var(--background)), 
+    hsl(var(--muted) / 0.1)
+  );
+}
+
+/* Better link visibility in dark mode */
+.dark a:not(.no-style) {
+  color: hsl(var(--primary));
+  text-decoration: none;
+}
+
+.dark a:not(.no-style):hover {
+  color: hsl(var(--primary) / 0.8);
+  text-decoration: underline;
+}
+
+/* Improved text contrast */
+.dark .text-foreground {
+  color: hsl(var(--foreground)) !important;
+}
+
+.dark .text-muted-foreground {
+  color: hsl(var(--muted-foreground)) !important;
+}
+
+/* Better badge styling for dark mode */
+.dark .bg-primary\/10 {
+  background-color: hsl(var(--primary) / 0.15);
+  border: 1px solid hsl(var(--primary) / 0.3);
+}
+
+.dark .border-primary\/20 {
+  border-color: hsl(var(--primary) / 0.4);
+}
+
+/* Consistent form elements in dark mode */
+.dark input, .dark textarea, .dark select {
+  background-color: hsl(var(--muted));
+  border-color: hsl(var(--border));
+  color: hsl(var(--foreground));
+}
+
+.dark input:focus, .dark textarea:focus, .dark select:focus {
+  border-color: hsl(var(--primary));
+  ring-color: hsl(var(--primary) / 0.3);
 }
