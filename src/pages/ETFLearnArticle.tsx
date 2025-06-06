@@ -1,4 +1,3 @@
-
 import { useParams, Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import MainLayout from '@/components/layout/MainLayout';
@@ -7,7 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { ArrowLeft, Clock } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { ShareButton } from '@/components/shared/ShareButton';
-import { Comments } from '@/components/shared/Comments';
+import Comments from '@/components/shared/Comments';
 
 const ETFLearnArticle = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -365,7 +364,7 @@ const ETFLearnArticle = () => {
 
           {/* Comments Section */}
           <div className={`mt-12 ${isMobile ? 'mt-8' : 'mt-12'}`}>
-            <Comments />
+            <Comments articleId={slug || ''} />
           </div>
 
           {/* Footer Navigation */}

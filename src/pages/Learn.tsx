@@ -1,9 +1,9 @@
-
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import MainLayout from '@/components/layout/MainLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { Clock, ArrowRight, BookOpen, GraduationCap } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
 
