@@ -1,7 +1,7 @@
 
 import { useEffect } from 'react';
 import MainLayout from '@/components/layout/MainLayout';
-import { CreditCard, Clock, TrendingUp, Shield, Calculator, FileText } from 'lucide-react';
+import { CreditCard, Clock, TrendingUp, Shield, Calculator, FileText, Building, Landmark, PiggyBank, Receipt, Scale, BookOpen } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Link } from 'react-router-dom';
@@ -15,26 +15,54 @@ const Debt = () => {
     window.scrollTo(0, 0);
   };
 
-  const upcomingTopics = [
+  const debtCategories = [
+    {
+      icon: Landmark,
+      title: "Government Securities",
+      description: "G-Secs (Government Securities), SDLs (State Development Loans), T-Bills (Treasury Bills), Sovereign Gold Bonds, RBI Bonds",
+      color: "bg-green-50 dark:bg-green-900/20",
+      iconColor: "text-green-600 dark:text-green-400",
+      borderColor: "border-l-green-500"
+    },
+    {
+      icon: Building,
+      title: "Corporate Debt",
+      description: "Corporate Bonds, Debentures, Commercial Paper, Non-Convertible Debentures (NCDs)",
+      color: "bg-blue-50 dark:bg-blue-900/20",
+      iconColor: "text-blue-600 dark:text-blue-400",
+      borderColor: "border-l-blue-500"
+    },
     {
       icon: TrendingUp,
-      title: "Government Bonds & Treasury Bills",
-      description: "Understanding sovereign debt instruments and their role in your portfolio"
+      title: "Debt Mutual Funds",
+      description: "Liquid Funds, Gilt Funds, Credit Risk Funds, Corporate Bond Funds, other debt-oriented mutual funds",
+      color: "bg-purple-50 dark:bg-purple-900/20",
+      iconColor: "text-purple-600 dark:text-purple-400",
+      borderColor: "border-l-purple-500"
     },
     {
-      icon: Shield,
-      title: "Corporate Bonds & Credit Risk",
-      description: "How to evaluate corporate debt and manage credit risk effectively"
+      icon: PiggyBank,
+      title: "Other Fixed Income Products",
+      description: "Fixed Deposits (FDs), Post Office Savings Schemes, Fixed Maturity Plans (FMPs)",
+      color: "bg-orange-50 dark:bg-orange-900/20",
+      iconColor: "text-orange-600 dark:text-orange-400",
+      borderColor: "border-l-orange-500"
     },
     {
-      icon: Calculator,
-      title: "Fixed Deposits vs Debt Mutual Funds",
-      description: "Comparing traditional FDs with modern debt investment options"
+      icon: Receipt,
+      title: "Tax-Advantaged Debt Instruments",
+      description: "Tax-Free Bonds, Capital Gains Bonds",
+      color: "bg-indigo-50 dark:bg-indigo-900/20",
+      iconColor: "text-indigo-600 dark:text-indigo-400",
+      borderColor: "border-l-indigo-500"
     },
     {
-      icon: FileText,
-      title: "Tax Implications of Debt Investing",
-      description: "Navigate taxation on debt investments and optimize your returns"
+      icon: BookOpen,
+      title: "Debt Market Basics & Concepts",
+      description: "Yield, Credit Rating, Risks in Debt Investing, How Bonds Are Traded",
+      color: "bg-teal-50 dark:bg-teal-900/20",
+      iconColor: "text-teal-600 dark:text-teal-400",
+      borderColor: "border-l-teal-500"
     }
   ];
 
@@ -56,37 +84,36 @@ const Debt = () => {
               Master the art of fixed-income investing with clear, practical guides designed for Indian investors. 
               From government bonds to corporate debt, we'll help you build a stable foundation for your portfolio.
             </p>
-            
-            <div className="flex items-center justify-center gap-2 mb-8">
-              <Clock className="h-5 w-5 text-orange-600 dark:text-orange-400" />
-              <span className="text-lg font-medium text-orange-600 dark:text-orange-400">Coming Soon</span>
-            </div>
           </div>
         </div>
       </section>
       
-      {/* What's Coming Section */}
+      {/* Content Categories Section */}
       <section className="container py-8 md:py-12">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-8">What's Coming</h2>
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-3xl font-bold text-center mb-8">Debt Investment Categories</h2>
           
-          <div className="grid md:grid-cols-2 gap-6 mb-12">
-            {upcomingTopics.map((topic, index) => {
-              const IconComponent = topic.icon;
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+            {debtCategories.map((category, index) => {
+              const IconComponent = category.icon;
               return (
-                <Card key={index} className="border-l-4 border-l-orange-500 hover:shadow-md transition-shadow">
+                <Card key={index} className={`group hover:shadow-lg transition-all duration-300 cursor-pointer border-l-4 ${category.borderColor}`}>
                   <CardHeader className="pb-4">
-                    <div className="flex items-center gap-3 mb-2">
-                      <div className="rounded-lg bg-orange-100 dark:bg-orange-900/30 p-2">
-                        <IconComponent className="h-5 w-5 text-orange-600 dark:text-orange-400" />
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className={`rounded-lg ${category.color} p-3`}>
+                        <IconComponent className={`h-6 w-6 ${category.iconColor}`} />
                       </div>
-                      <CardTitle className="text-lg">{topic.title}</CardTitle>
+                      <CardTitle className="text-lg leading-tight">{category.title}</CardTitle>
                     </div>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-muted-foreground leading-relaxed">
-                      {topic.description}
+                    <p className="text-muted-foreground leading-relaxed text-sm">
+                      {category.description}
                     </p>
+                    <div className="mt-4 flex items-center text-orange-600 dark:text-orange-400 text-sm font-medium">
+                      <Clock className="h-4 w-4 mr-2" />
+                      Coming Soon
+                    </div>
                   </CardContent>
                 </Card>
               );
@@ -95,18 +122,27 @@ const Debt = () => {
           
           {/* Why Debt Investing Matters */}
           <div className="bg-muted/30 rounded-lg p-6 md:p-8 mb-8">
-            <h3 className="text-2xl font-semibold mb-4 text-center">Why Debt Investing Matters</h3>
+            <h3 className="text-2xl font-semibold mb-6 text-center">Why Debt Investing Matters</h3>
             <div className="grid md:grid-cols-3 gap-6 text-center">
-              <div>
-                <div className="text-2xl font-bold text-primary mb-2">Stability</div>
+              <div className="flex flex-col items-center">
+                <div className="rounded-full bg-primary/10 p-4 w-16 h-16 flex items-center justify-center mb-4">
+                  <Shield className="h-8 w-8 text-primary" />
+                </div>
+                <div className="text-xl font-bold text-primary mb-2">Stability</div>
                 <p className="text-sm text-muted-foreground">Predictable returns and capital preservation</p>
               </div>
-              <div>
-                <div className="text-2xl font-bold text-primary mb-2">Diversification</div>
+              <div className="flex flex-col items-center">
+                <div className="rounded-full bg-primary/10 p-4 w-16 h-16 flex items-center justify-center mb-4">
+                  <Scale className="h-8 w-8 text-primary" />
+                </div>
+                <div className="text-xl font-bold text-primary mb-2">Diversification</div>
                 <p className="text-sm text-muted-foreground">Balance your equity portfolio with fixed income</p>
               </div>
-              <div>
-                <div className="text-2xl font-bold text-primary mb-2">Income</div>
+              <div className="flex flex-col items-center">
+                <div className="rounded-full bg-primary/10 p-4 w-16 h-16 flex items-center justify-center mb-4">
+                  <Calculator className="h-8 w-8 text-primary" />
+                </div>
+                <div className="text-xl font-bold text-primary mb-2">Income</div>
                 <p className="text-sm text-muted-foreground">Regular interest payments for consistent cash flow</p>
               </div>
             </div>

@@ -1,4 +1,3 @@
-
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import MainLayout from '@/components/layout/MainLayout';
@@ -173,63 +172,52 @@ const ETFLearn = () => {
       </section>
       
       <section className="container py-6 md:py-8">
-        {etfArticles.length === 0 ? (
-          <div className="text-center py-16">
-            <div className="max-w-md mx-auto">
-              <div className="rounded-full bg-muted p-4 w-16 h-16 mx-auto mb-6 flex items-center justify-center">
-                <BookOpen className="h-8 w-8 text-muted-foreground" />
-              </div>
-              <h3 className="text-xl font-semibold mb-2">No Articles Found</h3>
-              <p className="text-muted-foreground mb-6">
-                We're working on creating comprehensive ETF learning resources for you.
-              </p>
-            </div>
-          </div>
-        ) : (
-          <div className="grid gap-8 max-w-4xl mx-auto">
-            <div className="mb-4">
-              <p className="text-sm text-muted-foreground">
-                Showing {etfArticles.length} articles
-              </p>
-            </div>
-            {etfArticles.map((article, index) => (
-              <Link 
-                key={article.id} 
-                to={`/etfs/learn/${article.slug}`} 
-                className="block"
-                onClick={handleArticleClick}
-              >
-                <Card className={`group hover:shadow-lg transition-all duration-300 cursor-pointer border-l-4 ${
-                  index % 2 === 0 ? 'border-l-primary' : 'border-l-blue-500'
-                } hover:border-l-primary`}>
-                  <CardHeader className="pb-4">
-                    <div className="flex items-center justify-between mb-3">
-                      <Badge variant="outline" className={`text-xs ${
-                        article.category === 'Beginner' ? 'bg-primary/10 border-primary/20 text-primary dark:bg-primary/20 dark:border-primary/30 dark:text-primary' :
-                        article.category === 'Intermediate' ? 'bg-blue-50 border-blue-200 text-blue-700 dark:bg-blue-900/20 dark:border-blue-800 dark:text-blue-300' :
-                        'bg-purple-50 border-purple-200 text-purple-700 dark:bg-purple-900/20 dark:border-purple-800 dark:text-purple-300'
-                      }`}>
-                        {article.category}
-                      </Badge>
-                      <div className="flex items-center text-muted-foreground text-sm gap-4">
-                        <span>{new Date().toLocaleDateString()}</span>
-                        <div className="flex items-center">
-                          <Clock className="h-3 w-3 mr-1" />
-                          {article.readingTime}
-                        </div>
+        <div className="grid gap-8 max-w-4xl mx-auto">
+          {etfArticles.map((article, index) => (
+            <Link 
+              key={article.id} 
+              to={`/etfs/learn/${article.slug}`} 
+              className="block"
+              onClick={handleArticleClick}
+            >
+              <Card className={`group hover:shadow-lg transition-all duration-300 cursor-pointer border-l-4 ${
+                index % 2 === 0 ? 'border-l-primary' : 'border-l-blue-500'
+              } hover:border-l-primary`}>
+                <CardHeader className="pb-4">
+                  <div className="flex items-center justify-between mb-3">
+                    <Badge variant="outline" className={`text-xs ${
+                      article.category === 'Beginner' ? 'bg-primary/10 border-primary/20 text-primary dark:bg-primary/20 dark:border-primary/30 dark:text-primary' :
+                      article.category === 'Intermediate' ? 'bg-blue-50 border-blue-200 text-blue-700 dark:bg-blue-900/20 dark:border-blue-800 dark:text-blue-300' :
+                      'bg-purple-50 border-purple-200 text-purple-700 dark:bg-purple-900/20 dark:border-purple-800 dark:text-purple-300'
+                    }`}>
+                      {article.category}
+                    </Badge>
+                    <div className={`flex items-center text-muted-foreground text-sm gap-4 ${isMobile ? 'hidden' : ''}`}>
+                      <span>{new Date().toLocaleDateString()}</span>
+                      <div className="flex items-center">
+                        <Clock className="h-3 w-3 mr-1" />
+                        {article.readingTime}
                       </div>
                     </div>
-                    
-                    <CardTitle className={`${isMobile ? 'text-xl' : 'text-2xl'} mb-3 group-hover:text-primary transition-colors leading-tight`}>
-                      {article.title}
-                    </CardTitle>
-                  </CardHeader>
+                    {isMobile && (
+                      <div className="flex items-center text-muted-foreground text-sm">
+                        <Clock className="h-3 w-3 mr-1" />
+                        {article.readingTime}
+                      </div>
+                    )}
+                  </div>
                   
-                  <CardContent>
-                    <p className={`text-muted-foreground ${isMobile ? 'text-sm' : 'text-base'} leading-relaxed mb-4`}>
-                      {article.description}
-                    </p>
-                    
+                  <CardTitle className={`${isMobile ? 'text-xl' : 'text-2xl'} mb-3 group-hover:text-primary transition-colors leading-tight`}>
+                    {article.title}
+                  </CardTitle>
+                </CardHeader>
+                
+                <CardContent>
+                  <p className={`text-muted-foreground ${isMobile ? 'text-sm' : 'text-base'} leading-relaxed mb-4`}>
+                    {article.description}
+                  </p>
+                  
+                  {!isMobile && (
                     <div className="flex flex-wrap gap-2 mb-4">
                       {article.tags.slice(0, 3).map((tag) => (
                         <Badge key={tag} variant="secondary" className="text-xs bg-secondary/50 hover:bg-secondary/70 transition-colors dark:bg-secondary/30 dark:text-secondary-foreground">
@@ -242,17 +230,17 @@ const ETFLearn = () => {
                         </Badge>
                       )}
                     </div>
-                    
-                    <div className="inline-flex items-center text-primary font-medium hover:underline">
-                      <span>Read Article</span>
-                      <ArrowRight className="h-4 w-4 ml-1 group-hover:translate-x-1 transition-transform" />
-                    </div>
-                  </CardContent>
-                </Card>
-              </Link>
-            ))}
-          </div>
-        )}
+                  )}
+                  
+                  <div className="inline-flex items-center text-primary font-medium hover:underline">
+                    <span>Read Article</span>
+                    <ArrowRight className="h-4 w-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </CardContent>
+              </Card>
+            </Link>
+          ))}
+        </div>
       </section>
     </MainLayout>
   );

@@ -20,20 +20,7 @@ interface CommentsProps {
 }
 
 const Comments = ({ articleId }: CommentsProps) => {
-  const [comments, setComments] = useState<Comment[]>([
-    {
-      id: '1',
-      author: 'Rajesh Kumar',
-      content: 'Great article! This really helped me understand ETFs better. I was confused about expense ratios but now it makes sense.',
-      timestamp: '2 hours ago'
-    },
-    {
-      id: '2',
-      author: 'Priya Sharma',
-      content: 'Thanks for breaking this down so simply. Can you write about debt funds next?',
-      timestamp: '1 day ago'
-    }
-  ]);
+  const [comments, setComments] = useState<Comment[]>([]);
   
   const [newComment, setNewComment] = useState('');
   const [authorName, setAuthorName] = useState('');

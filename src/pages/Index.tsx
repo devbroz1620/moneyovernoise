@@ -6,8 +6,11 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { ChevronRight, TrendingUp, Brain, CreditCard, Mail, CheckCircle } from 'lucide-react';
 import { learnArticles } from '@/data/learnData';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const Index = () => {
+  const isMobile = useIsMobile();
+  
   const handleScrollToTop = () => {
     window.scrollTo(0, 0);
   };
@@ -70,24 +73,24 @@ const Index = () => {
             </Link>
           </Card>
 
-          <Card className="group transition-all duration-300 border-2 opacity-60">
-            <CardHeader className="text-center pb-4">
-              <div className="rounded-full bg-gray-50 w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                <CreditCard className="h-8 w-8 text-gray-500" />
-              </div>
-              <div className="flex items-center justify-center gap-2">
+          <Card className="group hover:shadow-xl transition-all duration-300 cursor-pointer border-2 hover:border-primary/20">
+            <Link to="/debt" onClick={handleScrollToTop}>
+              <CardHeader className="text-center pb-4">
+                <div className="rounded-full bg-orange-50 w-16 h-16 flex items-center justify-center mx-auto mb-4 group-hover:bg-orange-100 transition-colors">
+                  <CreditCard className="h-8 w-8 text-orange-600" />
+                </div>
                 <CardTitle className="text-xl">Debt</CardTitle>
-                <Badge variant="secondary" className="text-xs">Coming Soon</Badge>
-              </div>
-            </CardHeader>
-            <CardContent className="text-center">
-              <p className="text-muted-foreground mb-4">
-                Learn debt investing strategies and fixed income instruments
-              </p>
-              <span className="text-gray-500 font-medium">
-                Coming Soon: Learn Debt Investing
-              </span>
-            </CardContent>
+              </CardHeader>
+              <CardContent className="text-center">
+                <p className="text-muted-foreground mb-4">
+                  Learn debt investing strategies and fixed income instruments
+                </p>
+                <span className="text-primary font-medium inline-flex items-center">
+                  Explore Debt Investing
+                  <ChevronRight className="ml-1 h-4 w-4" />
+                </span>
+              </CardContent>
+            </Link>
           </Card>
 
           <Card className="group hover:shadow-xl transition-all duration-300 cursor-pointer border-2 hover:border-primary/20">
@@ -161,6 +164,11 @@ const Index = () => {
                     <Badge variant="outline" className="text-xs border-blue-500 text-blue-700 bg-blue-50">
                       ETFs
                     </Badge>
+                    {!isMobile && (
+                      <div className="flex items-center text-muted-foreground text-xs">
+                        {new Date().toLocaleDateString()}
+                      </div>
+                    )}
                   </div>
                   <CardTitle className="text-lg group-hover:text-primary transition-colors line-clamp-2">
                     {article.title}
@@ -183,6 +191,11 @@ const Index = () => {
                     <Badge variant="outline" className="text-xs border-purple-500 text-purple-700 bg-purple-50">
                       Psychology
                     </Badge>
+                    {!isMobile && (
+                      <div className="flex items-center text-muted-foreground text-xs">
+                        {new Date().toLocaleDateString()}
+                      </div>
+                    )}
                   </div>
                   <CardTitle className="text-lg group-hover:text-primary transition-colors line-clamp-2">
                     {article.title}
