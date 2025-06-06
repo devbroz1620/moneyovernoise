@@ -1,6 +1,9 @@
+
 import Index from '@/pages/Index';
 import ETFs from '@/pages/ETFs';
 import ETFDetail from '@/pages/ETFDetail';
+import ETFLearn from '@/pages/ETFLearn';
+import ETFLearnArticle from '@/pages/ETFLearnArticle';
 import Learn from '@/pages/Learn';
 import LearnArticle from '@/pages/LearnArticle';
 import Psychology from '@/pages/Psychology';
@@ -11,7 +14,7 @@ import Privacy from '@/pages/Privacy';
 import Terms from '@/pages/Terms';
 import NotFound from '@/pages/NotFound';
 import PsychologyArticle from '@/pages/PsychologyArticle';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
 function App() {
   return (
@@ -20,8 +23,15 @@ function App() {
         <Route path="/" element={<Index />} />
         <Route path="/etfs" element={<ETFs />} />
         <Route path="/etfs/:slug" element={<ETFDetail />} />
+        <Route path="/etfs/learn" element={<ETFLearn />} />
+        <Route path="/etfs/learn/:slug" element={<ETFLearnArticle />} />
+        
+        {/* Redirect old learn/etfs routes to new structure */}
+        <Route path="/learn/etfs" element={<Navigate to="/etfs/learn" replace />} />
+        <Route path="/learn/etfs/:slug" element={<Navigate to="/etfs/learn/:slug" replace />} />
+        
         <Route path="/learn" element={<Learn />} />
-        <Route path="/learn/etfs/:slug" element={<LearnArticle />} />
+        <Route path="/learn/:slug" element={<LearnArticle />} />
         <Route path="/psychology" element={<Psychology />} />
         <Route path="/psychology/:slug" element={<PsychologyArticle />} />
         <Route path="/debt" element={<Debt />} />

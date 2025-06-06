@@ -14,34 +14,34 @@ const Learn = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  // Sample articles data - you can replace this with actual data
+  // General learning articles (non-ETF specific)
   const articles = [
     {
-      id: 'what-are-etfs',
-      slug: 'what-are-etfs',
-      title: 'What are ETFs? A Complete Beginner\'s Guide',
-      description: 'Learn the fundamentals of Exchange-Traded Funds, how they work, and why they\'re perfect for Indian investors starting their investment journey.',
-      readingTime: '8 min read',
-      category: 'Beginner',
-      tags: ['ETFs', 'Basics', 'Investment', 'Beginner']
-    },
-    {
-      id: 'etf-vs-mutual-funds',
-      slug: 'etf-vs-mutual-funds',
-      title: 'ETFs vs Mutual Funds: Which is Better for You?',
-      description: 'A detailed comparison between ETFs and mutual funds, covering costs, flexibility, tax efficiency, and which option suits different investor profiles.',
-      readingTime: '10 min read',
-      category: 'Intermediate',
-      tags: ['ETFs', 'Mutual Funds', 'Comparison', 'Investment Strategy']
-    },
-    {
-      id: 'building-etf-portfolio',
-      slug: 'building-etf-portfolio',
-      title: 'How to Build a Diversified ETF Portfolio',
-      description: 'Step-by-step guide to creating a well-balanced ETF portfolio that matches your risk tolerance and investment goals.',
+      id: 'investment-basics',
+      slug: 'investment-basics',
+      title: 'Investment Basics: Getting Started with Your Financial Journey',
+      description: 'Learn the fundamental concepts of investing, risk management, and building wealth through smart financial decisions.',
       readingTime: '12 min read',
+      category: 'Beginner',
+      tags: ['Basics', 'Investment', 'Financial Planning', 'Beginner']
+    },
+    {
+      id: 'risk-management',
+      slug: 'risk-management',
+      title: 'Understanding Investment Risk and How to Manage It',
+      description: 'Comprehensive guide to different types of investment risks and strategies to protect your portfolio.',
+      readingTime: '15 min read',
       category: 'Intermediate',
-      tags: ['Portfolio', 'Diversification', 'Asset Allocation', 'Strategy']
+      tags: ['Risk Management', 'Portfolio', 'Strategy', 'Advanced']
+    },
+    {
+      id: 'financial-planning',
+      slug: 'financial-planning',
+      title: 'Creating a Comprehensive Financial Plan',
+      description: 'Step-by-step guide to creating a financial plan that aligns with your life goals and circumstances.',
+      readingTime: '18 min read',
+      category: 'Advanced',
+      tags: ['Financial Planning', 'Goals', 'Retirement', 'Strategy']
     }
   ];
 
@@ -61,12 +61,28 @@ const Learn = () => {
               </div>
             </div>
             <h1 className={`font-bold mb-4 ${isMobile ? 'text-3xl' : 'text-5xl'}`}>
-              Learn ETF Investing
+              Learn Financial Investing
             </h1>
             <p className={`text-muted-foreground leading-relaxed ${isMobile ? 'text-lg' : 'text-xl'}`}>
-              Master the fundamentals of ETF investing with our comprehensive guides and insights. 
-              Build wealth through evidence-backed strategies designed for Indian investors.
+              Master the fundamentals of investing with our comprehensive guides. 
+              Build wealth through evidence-backed strategies designed for smart investors.
             </p>
+            
+            {/* Quick Navigation */}
+            <div className="mt-8 flex flex-wrap justify-center gap-4">
+              <Button asChild variant="outline">
+                <Link to="/etfs/learn" onClick={() => window.scrollTo(0, 0)}>
+                  <BookOpen className="h-4 w-4 mr-2" />
+                  Learn ETFs
+                </Link>
+              </Button>
+              <Button asChild variant="outline">
+                <Link to="/psychology" onClick={() => window.scrollTo(0, 0)}>
+                  <BookOpen className="h-4 w-4 mr-2" />
+                  Investment Psychology
+                </Link>
+              </Button>
+            </div>
           </div>
         </div>
       </section>
@@ -80,16 +96,27 @@ const Learn = () => {
               </div>
               <h3 className="text-xl font-semibold mb-2">More Content Coming Soon</h3>
               <p className="text-muted-foreground mb-6">
-                We're working on creating comprehensive ETF learning resources for you.
+                We're working on creating comprehensive learning resources for you.
               </p>
-              <Link 
-                to="/"
-                onClick={() => window.scrollTo(0, 0)}
-                className="inline-flex items-center text-primary font-medium hover:underline"
-              >
-                Back to Home
-                <ArrowRight className="h-4 w-4 ml-1" />
-              </Link>
+              <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                <Link 
+                  to="/etfs/learn"
+                  onClick={() => window.scrollTo(0, 0)}
+                  className="inline-flex items-center text-primary font-medium hover:underline"
+                >
+                  <BookOpen className="h-4 w-4 mr-2" />
+                  Learn ETFs
+                  <ArrowRight className="h-4 w-4 ml-1" />
+                </Link>
+                <Link 
+                  to="/"
+                  onClick={() => window.scrollTo(0, 0)}
+                  className="inline-flex items-center text-primary font-medium hover:underline"
+                >
+                  Back to Home
+                  <ArrowRight className="h-4 w-4 ml-1" />
+                </Link>
+              </div>
             </div>
           </div>
         ) : (
@@ -97,7 +124,7 @@ const Learn = () => {
             {articles.map((article, index) => (
               <Link 
                 key={article.id} 
-                to={`/learn/etfs/${article.slug}`} 
+                to={`/learn/${article.slug}`} 
                 className="block"
                 onClick={handleArticleClick}
               >
