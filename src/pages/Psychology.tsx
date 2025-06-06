@@ -20,48 +20,140 @@ const Psychology = () => {
       title: 'Why We Overspend When We Are Happy (and Sad)',
       description: 'Understanding how our emotions drive spending decisions and learning to build strategies that work with our feelings, not against them.',
       readingTime: '6 min read',
-      category: 'Behavioral Finance',
-      publishedAt: 'Dec 20, 2024'
+      category: 'Behavioral Finance'
     },
     {
       id: 'illusion-of-more',
       title: 'The Illusion of More',
       description: 'Why the finish line for enough keeps moving and how real wealth comes from learning to say this is enough.',
       readingTime: '8 min read',
-      category: 'Money Mindset',
-      publishedAt: 'Dec 18, 2024'
+      category: 'Money Mindset'
     },
     {
-      id: 'fomo-investing',
-      title: 'Why FOMO Makes You a Bad Investor',
-      description: 'Understanding how fear of missing out destroys long-term wealth building and what you can do about it.',
-      readingTime: '8 min read',
-      category: 'Behavioral Finance',
-      publishedAt: 'Dec 15, 2024'
+      id: 'keeping-up-with-everyone',
+      title: 'Keeping Up With… Everyone',
+      description: 'There\'s a simple trick to feeling poor: compare yourself to someone richer. Because the only person worth keeping up with is the person you were yesterday.',
+      readingTime: '5 min read',
+      category: 'Money Mindset'
     },
     {
-      id: 'social-media-money',
-      title: 'How Social Media is Ruining Your Money Decisions',
-      description: 'The hidden psychology behind why Instagram makes you spend more and invest worse.',
+      id: 'why-we-fear-investing',
+      title: 'Why We Fear Investing (Even When We Know We Should)',
+      description: 'Investing sounds simple on paper. But in real life, it\'s terrifying. Understanding loss aversion and why the biggest risk isn\'t losing money.',
       readingTime: '6 min read',
-      category: 'Digital Psychology',
-      publishedAt: 'Dec 10, 2024'
+      category: 'Behavioral Finance'
     },
     {
-      id: 'loss-aversion',
-      title: 'Why We Hate Losing Money More Than We Love Making It',
-      description: 'Exploring loss aversion and how this cognitive bias affects every financial decision you make.',
-      readingTime: '10 min read',
-      category: 'Cognitive Biases',
-      publishedAt: 'Dec 5, 2024'
+      id: 'power-of-doing-nothing',
+      title: 'The Power of Doing Nothing',
+      description: 'In a world that celebrates action, doing nothing feels wrong. But most wealth is built quietly, slowly, patiently.',
+      readingTime: '4 min read',
+      category: 'Investment Psychology'
     },
     {
-      id: 'money-habits',
-      title: 'The 5 Money Habits That Actually Matter',
-      description: 'Forget budgeting apps. These psychological principles will transform your relationship with money.',
+      id: 'stories-we-tell-ourselves',
+      title: 'The Stories We Tell Ourselves About Money',
+      description: 'Money isn\'t just numbers. It\'s stories. From childhood, we absorb stories about money that shape how we think, feel, and act.',
+      readingTime: '5 min read',
+      category: 'Money Mindset'
+    },
+    {
+      id: 'underestimate-small-expenses',
+      title: 'Why We Underestimate Small Expenses',
+      description: 'Small expenses are the silent killers of wealth. A ₹100 coffee every day is ₹3,000 a month. Don\'t underestimate the power of small.',
+      readingTime: '5 min read',
+      category: 'Money Habits'
+    },
+    {
+      id: 'myth-of-perfect-plan',
+      title: 'The Myth of the Perfect Plan',
+      description: 'We all want a perfect plan. But life doesn\'t work that way. The best financial plan is one that can change.',
+      readingTime: '5 min read',
+      category: 'Financial Planning'
+    },
+    {
+      id: 'time-warps-money-decisions',
+      title: 'How Time Warps Our Money Decisions',
+      description: 'Time is the most powerful force in building wealth. Yet, it\'s also the hardest concept for most people to grasp when it comes to money.',
       readingTime: '7 min read',
-      category: 'Money Habits',
-      publishedAt: 'Nov 28, 2024'
+      category: 'Behavioral Finance'
+    },
+    {
+      id: 'talking-about-money-is-hard',
+      title: 'Why Talking About Money Is So Hard',
+      description: 'Money is one of the most important parts of our lives. Yet, it\'s also one of the hardest topics to talk about openly.',
+      readingTime: '6 min read',
+      category: 'Money Psychology'
+    },
+    {
+      id: 'writing-for-yourself',
+      title: 'Why Writing for Yourself Makes You a Better Investor',
+      description: 'When you write for yourself, you clarify your own thinking. The same is true for money - invest for yourself, not someone else.',
+      readingTime: '6 min read',
+      category: 'Investment Psychology'
+    },
+    {
+      id: 'role-of-stories',
+      title: 'The Role of Stories in Shaping Financial Behavior',
+      description: 'We like to think our financial decisions are logical. But stories shape our money choices far more than math ever could.',
+      readingTime: '6 min read',
+      category: 'Money Psychology'
+    },
+    {
+      id: 'simple-financial-advice',
+      title: 'Why Simple Financial Advice Works Best',
+      description: 'The world of finance is full of complexity. But the best financial advice is often surprisingly simple.',
+      readingTime: '5 min read',
+      category: 'Financial Wisdom'
+    },
+    {
+      id: 'danger-of-overconfidence',
+      title: 'The Danger of Overconfidence in Finance',
+      description: 'Confidence is powerful. But too much confidence—overconfidence—can be dangerous, especially when it comes to money.',
+      readingTime: '5 min read',
+      category: 'Behavioral Finance'
+    },
+    {
+      id: 'history-helps-avoid-mistakes',
+      title: 'How History Can Help You Avoid Financial Mistakes',
+      description: 'History doesn\'t repeat itself exactly, but it often rhymes. Studying past market cycles helps you understand human behavior.',
+      readingTime: '5 min read',
+      category: 'Financial History'
+    },
+    {
+      id: 'emotional-activation',
+      title: 'The Power of Emotional Activation in Money Decisions',
+      description: 'Money decisions often feel like a battle between logic and emotion. Understanding emotional activation can help you pause before acting.',
+      readingTime: '5 min read',
+      category: 'Behavioral Finance'
+    },
+    {
+      id: 'patience-beats-timing',
+      title: 'Why Patience Beats Timing in Investing',
+      description: 'Everyone wants to buy low and sell high. But timing the market is incredibly difficult—even for professionals.',
+      readingTime: '5 min read',
+      category: 'Investment Psychology'
+    },
+    {
+      id: 'inner-scorecard',
+      title: 'How to Build an "Inner Scorecard" for Financial Success',
+      description: 'Most people measure financial success by external markers. But building an inner scorecard means defining success on your own terms.',
+      readingTime: '6 min read',
+      category: 'Money Mindset'
+    },
+    {
+      id: 'importance-of-sample-size',
+      title: 'The Importance of Sample Size in Financial Decisions',
+      description: 'When making financial decisions, it\'s tempting to rely on recent experiences. But small sample sizes can mislead us.',
+      readingTime: '5 min read',
+      category: 'Decision Making'
+    },
+    {
+      id: 'unique-financial-journey',
+      title: 'Why Everyone\'s Financial Journey Is Unique',
+      description: 'No two financial journeys are the same. Your financial story is shaped by your experiences, values, and circumstances.',
+      readingTime: '5 min read',
+      category: 'Money Mindset'
     }
   ];
 
@@ -71,12 +163,20 @@ const Psychology = () => {
         return 'bg-primary/10 text-primary border-primary/20 dark:bg-primary/20 dark:border-primary/30 dark:text-primary';
       case 'Money Mindset':
         return 'bg-blue-500/10 text-blue-600 border-blue-500/20 dark:bg-blue-500/20 dark:border-blue-500/30 dark:text-blue-400';
-      case 'Digital Psychology':
+      case 'Investment Psychology':
         return 'bg-green-500/10 text-green-600 border-green-500/20 dark:bg-green-500/20 dark:border-green-500/30 dark:text-green-400';
-      case 'Cognitive Biases':
+      case 'Money Psychology':
         return 'bg-red-500/10 text-red-600 border-red-500/20 dark:bg-red-500/20 dark:border-red-500/30 dark:text-red-400';
       case 'Money Habits':
         return 'bg-orange-500/10 text-orange-600 border-orange-500/20 dark:bg-orange-500/20 dark:border-orange-500/30 dark:text-orange-400';
+      case 'Financial Planning':
+        return 'bg-purple-500/10 text-purple-600 border-purple-500/20 dark:bg-purple-500/20 dark:border-purple-500/30 dark:text-purple-400';
+      case 'Financial Wisdom':
+        return 'bg-indigo-500/10 text-indigo-600 border-indigo-500/20 dark:bg-indigo-500/20 dark:border-indigo-500/30 dark:text-indigo-400';
+      case 'Financial History':
+        return 'bg-yellow-500/10 text-yellow-600 border-yellow-500/20 dark:bg-yellow-500/20 dark:border-yellow-500/30 dark:text-yellow-400';
+      case 'Decision Making':
+        return 'bg-pink-500/10 text-pink-600 border-pink-500/20 dark:bg-pink-500/20 dark:border-pink-500/30 dark:text-pink-400';
       default:
         return 'bg-primary/10 text-primary border-primary/20 dark:bg-primary/20 dark:border-primary/30 dark:text-primary';
     }
@@ -122,13 +222,12 @@ const Psychology = () => {
                         {article.category}
                       </Badge>
                     </div>
-                    <div className={`flex items-center text-muted-foreground text-sm gap-3 ${isMobile ? 'order-2 justify-between' : ''}`}>
-                      <span className={isMobile ? 'text-xs' : ''}>{article.publishedAt}</span>
-                      <div className="flex items-center">
+                    {!isMobile && (
+                      <div className="flex items-center text-muted-foreground text-sm">
                         <Clock className="h-3 w-3 mr-1" />
-                        <span className={isMobile ? 'text-xs' : ''}>{article.readingTime}</span>
+                        <span>{article.readingTime}</span>
                       </div>
-                    </div>
+                    )}
                   </div>
                   
                   <CardTitle className={`group-hover:text-primary transition-colors leading-tight text-foreground ${isMobile ? 'text-lg mb-2 order-3' : 'text-2xl mb-3'}`}>
