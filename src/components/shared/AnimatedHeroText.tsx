@@ -27,10 +27,11 @@ const AnimatedHeroText = () => {
     <div className="min-h-[120px] flex items-center justify-center">
       {showInitial && (
         <h1 
-          className={`text-4xl md:text-6xl font-bold tracking-tight transition-all duration-500 ${
+          className={`text-4xl md:text-6xl font-bold tracking-tight transition-all duration-500 overflow-hidden whitespace-nowrap ${
             showInitial ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform -translate-y-4'
           }`}
           style={{
+            width: showInitial ? '100%' : '0',
             animation: showInitial ? 'typewriter 1.5s steps(15, end)' : 'none'
           }}
         >
@@ -40,7 +41,7 @@ const AnimatedHeroText = () => {
       
       {showFinal && (
         <div 
-          className={`transition-all duration-700 ${
+          className={`transition-all duration-700 text-center ${
             showFinal ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform translate-y-4'
           }`}
         >
@@ -52,13 +53,6 @@ const AnimatedHeroText = () => {
           </p>
         </div>
       )}
-      
-      <style jsx>{`
-        @keyframes typewriter {
-          from { width: 0 }
-          to { width: 100% }
-        }
-      `}</style>
     </div>
   );
 };
