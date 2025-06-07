@@ -314,6 +314,24 @@
       display: none;
     }
   }
+
+  /* Typewriter Animation */
+  @keyframes typewriter {
+    from { 
+      width: 0;
+      opacity: 0;
+    }
+    to { 
+      width: 100%;
+      opacity: 1;
+    }
+  }
+
+  .typewriter {
+    overflow: hidden;
+    white-space: nowrap;
+    animation: typewriter 1.5s steps(15, end);
+  }
 }
 
 /* Smooth theme transitions */

@@ -1,5 +1,6 @@
 
 import MainLayout from '@/components/layout/MainLayout';
+import AnimatedHeroText from '@/components/shared/AnimatedHeroText';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -15,20 +16,29 @@ const Index = () => {
     window.scrollTo(0, 0);
   };
 
-  const etfArticles = Object.values(learnArticles).slice(0, 3);
+  const etfArticles = Object.values(learnArticles).slice(0, 2);
   
-  // Mock psychology articles for demonstration
+  // Real psychology articles with actual slugs
   const psychologyArticles = [
     {
       id: 'fomo-investing',
+      slug: 'fomo-investing',
       title: 'Why FOMO Makes You a Bad Investor',
       description: 'Understanding how fear of missing out destroys long-term wealth building.',
       category: 'Psychology'
     },
     {
       id: 'social-media-money',
+      slug: 'social-media-money', 
       title: 'How Social Media is Ruining Your Money Decisions',
       description: 'The hidden psychology behind why Instagram makes you spend more.',
+      category: 'Psychology'
+    },
+    {
+      id: 'why-we-fear-investing',
+      slug: 'why-we-fear-investing',
+      title: 'Why We Fear Investing (And How to Overcome It)',
+      description: 'Exploring the psychological barriers that keep us from building wealth.',
       category: 'Psychology'
     }
   ];
@@ -62,19 +72,14 @@ const Index = () => {
       <section className="py-8 md:py-12 px-4 md:px-6 lg:px-8">
         <div className="container px-4 md:px-6">
           <div className="text-center max-w-4xl mx-auto">
-            <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-6">
-              Simplifying Money for You
-            </h1>
-            <p className="text-xl md:text-2xl text-muted-foreground mb-8 leading-relaxed">
-              No jargon. No noise. Just clear, honest money content for Indian investors.
-            </p>
+            <AnimatedHeroText />
           </div>
         </div>
       </section>
 
       {/* Content Category Cards */}
       <section className="container py-4 md:py-8">
-        <h2 className="text-3xl font-bold text-center mb-8">What Would You Like to Learn?</h2>
+        <h2 className="text-2xl md:text-3xl font-bold text-center mb-8">What Would You Like to Learn?</h2>
         <div className="grid gap-8 md:grid-cols-3 max-w-5xl mx-auto">
           <Card className="group hover:shadow-xl transition-all duration-300 cursor-pointer border-2 hover:border-primary/20">
             <Link to="/etfs" onClick={handleScrollToTop}>
@@ -192,9 +197,9 @@ const Index = () => {
             </Card>
           ))}
           
-          {psychologyArticles.map((article) => (
+          {psychologyArticles.slice(0, 2).map((article) => (
             <Card key={article.id} className="group hover:shadow-lg transition-all duration-300 cursor-pointer">
-              <Link to={`/psychology/${article.id}`} onClick={handleScrollToTop}>
+              <Link to={`/psychology/${article.slug}`} onClick={handleScrollToTop}>
                 <CardHeader>
                   <div className="flex items-center justify-between mb-2">
                     <Badge variant="outline" className="text-xs border-purple-500 text-purple-700 bg-purple-50">
