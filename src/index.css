@@ -48,7 +48,7 @@
     --popover-foreground: 0 0% 95%;  /* #F2F2F2 - Primary text */
 
     --primary: 174 61% 56%;          /* #4FD1C5 - Aqua accent color */
-    --primary-foreground: 217 19% 6%; /* Dark background for contrast */
+    --primary-foreground: 0 0% 10%;  /* Black text for primary buttons */
 
     --secondary: 217 19% 16%;        /* #2C2F36 - Border/separator color */
     --secondary-foreground: 0 0% 95%; /* #F2F2F2 - Primary text */
@@ -57,7 +57,7 @@
     --muted-foreground: 0 0% 63%;    /* #A0A0A0 - Secondary text */
 
     --accent: 174 61% 56%;           /* #4FD1C5 - Aqua accent color */
-    --accent-foreground: 217 19% 6%; /* Dark background for contrast */
+    --accent-foreground: 0 0% 10%;   /* Black text for accent elements */
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
@@ -114,18 +114,39 @@
     color: hsl(var(--muted-foreground)) !important;
   }
 
-  /* Professional dark mode button styling */
+  /* Fixed dark mode button styling with proper contrast */
   .dark .bg-primary {
     background-color: hsl(var(--primary));
-    color: hsl(var(--primary-foreground));
+    color: hsl(0 0% 10%) !important; /* Force black text */
     border: 1px solid hsl(var(--primary) / 0.3);
     box-shadow: 0 4px 12px hsl(var(--primary) / 0.15);
   }
 
   .dark .bg-primary:hover {
     background-color: hsl(var(--primary) / 0.9);
+    color: hsl(0 0% 10%) !important; /* Force black text on hover */
     box-shadow: 0 6px 20px hsl(var(--primary) / 0.25);
     transform: translateY(-1px);
+  }
+
+  /* Fix text color on primary buttons */
+  .dark .text-primary-foreground {
+    color: hsl(0 0% 10%) !important;
+  }
+
+  /* Fix outline button visibility */
+  .dark .border-border {
+    border-color: hsl(var(--border));
+    color: hsl(var(--foreground)) !important;
+  }
+
+  .dark .hover\:bg-accent:hover {
+    background-color: hsl(var(--accent));
+    color: hsl(0 0% 10%) !important;
+  }
+
+  .dark .hover\:text-accent-foreground:hover {
+    color: hsl(0 0% 10%) !important;
   }
 
   /* Enhanced dark mode card styling - lifted appearance */

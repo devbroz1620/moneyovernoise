@@ -24,7 +24,7 @@ const Navbar = () => {
         {/* Logo */}
         <div className="flex items-center">
           <Link to="/" onClick={handleLogoClick} className="flex items-center">
-            <span className="text-xl font-bold text-primary">Money</span>
+            <span className="text-xl font-bold text-primary dark:text-primary">Money</span>
             <span className="text-xl font-semibold text-foreground">OverNoise</span>
           </Link>
         </div>

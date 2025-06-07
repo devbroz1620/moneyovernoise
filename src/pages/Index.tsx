@@ -1,6 +1,7 @@
-
+import { useState, useEffect } from 'react';
 import MainLayout from '@/components/layout/MainLayout';
 import AnimatedHeroText from '@/components/shared/AnimatedHeroText';
+import SplashScreen from '@/components/shared/SplashScreen';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -10,8 +11,15 @@ import { learnArticles } from '@/data/learnData';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 const Index = () => {
+  const [showSplash, setShowSplash] = useState(true);
+  const [showContent, setShowContent] = useState(false);
   const isMobile = useIsMobile();
   
+  const handleSplashComplete = () => {
+    setShowSplash(false);
+    setTimeout(() => setShowContent(true), 100);
+  };
+
   const handleScrollToTop = () => {
     window.scrollTo(0, 0);
   };
@@ -66,191 +74,197 @@ const Index = () => {
     }
   ];
 
+  if (showSplash) {
+    return <SplashScreen onComplete={handleSplashComplete} />;
+  }
+
   return (
-    <MainLayout>
-      {/* Hero Section */}
-      <section className="py-8 md:py-12 px-4 md:px-6 lg:px-8">
-        <div className="container px-4 md:px-6">
-          <div className="text-center max-w-4xl mx-auto">
-            <AnimatedHeroText />
+    <div className={`transition-all duration-1000 ${showContent ? 'opacity-100' : 'opacity-0'}`}>
+      <MainLayout>
+        {/* Hero Section */}
+        <section className="py-8 md:py-12 px-4 md:px-6 lg:px-8">
+          <div className="container px-4 md:px-6">
+            <div className="text-center max-w-4xl mx-auto">
+              <AnimatedHeroText />
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Content Category Cards */}
-      <section className="container py-4 md:py-8">
-        <h2 className="text-2xl md:text-3xl font-bold text-center mb-8">What Would You Like to Learn?</h2>
-        <div className="grid gap-8 md:grid-cols-3 max-w-5xl mx-auto">
-          <Card className="group hover:shadow-xl transition-all duration-300 cursor-pointer border-2 hover:border-primary/20">
-            <Link to="/etfs" onClick={handleScrollToTop}>
-              <CardHeader className="text-center pb-4">
-                <div className="rounded-full bg-blue-50 w-16 h-16 flex items-center justify-center mx-auto mb-4 group-hover:bg-blue-100 transition-colors">
-                  <TrendingUp className="h-8 w-8 text-blue-600" />
-                </div>
-                <CardTitle className="text-xl">ETFs</CardTitle>
-              </CardHeader>
-              <CardContent className="text-center">
-                <p className="text-muted-foreground mb-4">
-                  Master ETF investing with comprehensive guides and tools
-                </p>
-                <span className="text-primary font-medium inline-flex items-center">
-                  Explore ETF Guides
-                  <ChevronRight className="ml-1 h-4 w-4" />
-                </span>
-              </CardContent>
-            </Link>
-          </Card>
-
-          <Card className="group hover:shadow-xl transition-all duration-300 cursor-pointer border-2 hover:border-primary/20">
-            <Link to="/debt" onClick={handleScrollToTop}>
-              <CardHeader className="text-center pb-4">
-                <div className="rounded-full bg-orange-50 w-16 h-16 flex items-center justify-center mx-auto mb-4 group-hover:bg-orange-100 transition-colors">
-                  <CreditCard className="h-8 w-8 text-orange-600" />
-                </div>
-                <CardTitle className="text-xl">Debt</CardTitle>
-              </CardHeader>
-              <CardContent className="text-center">
-                <p className="text-muted-foreground mb-4">
-                  Learn debt investing strategies and fixed income instruments
-                </p>
-                <span className="text-primary font-medium inline-flex items-center">
-                  Explore Debt Investing
-                  <ChevronRight className="ml-1 h-4 w-4" />
-                </span>
-              </CardContent>
-            </Link>
-          </Card>
-
-          <Card className="group hover:shadow-xl transition-all duration-300 cursor-pointer border-2 hover:border-primary/20">
-            <Link to="/psychology" onClick={handleScrollToTop}>
-              <CardHeader className="text-center pb-4">
-                <div className="rounded-full bg-purple-50 w-16 h-16 flex items-center justify-center mx-auto mb-4 group-hover:bg-purple-100 transition-colors">
-                  <Brain className="h-8 w-8 text-purple-600" />
-                </div>
-                <CardTitle className="text-xl">Mind Over Money</CardTitle>
-              </CardHeader>
-              <CardContent className="text-center">
-                <p className="text-muted-foreground mb-4">
-                  Understand how psychology affects your financial decisions
-                </p>
-                <span className="text-primary font-medium inline-flex items-center">
-                  Decode How We Think About Money
-                  <ChevronRight className="ml-1 h-4 w-4" />
-                </span>
-              </CardContent>
-            </Link>
-          </Card>
-        </div>
-      </section>
-
-      {/* Why MoneyOverNoise */}
-      <section className="container py-8 md:py-12">
-        <div className="mb-8 md:mb-12">
-          <h2 className={`font-bold mb-8 text-center ${isMobile ? 'text-2xl' : 'text-3xl'}`}>
-            Why MoneyOverNoise?
-          </h2>
-          
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-            {whyChooseUs.map((item, index) => {
-              const IconComponent = item.icon;
-              return (
-                <div key={index} className="text-center p-6 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors">
-                  <div className="rounded-full bg-primary/10 w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                    <IconComponent className="h-8 w-8 text-primary" />
+        {/* Content Category Cards */}
+        <section className="container py-4 md:py-8">
+          <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-center mb-8">What Would You Like to Learn?</h2>
+          <div className="grid gap-8 md:grid-cols-3 max-w-5xl mx-auto">
+            <Card className="group hover:shadow-xl transition-all duration-300 cursor-pointer border-2 hover:border-primary/20">
+              <Link to="/etfs" onClick={handleScrollToTop}>
+                <CardHeader className="text-center pb-4">
+                  <div className="rounded-full bg-blue-50 w-16 h-16 flex items-center justify-center mx-auto mb-4 group-hover:bg-blue-100 transition-colors">
+                    <TrendingUp className="h-8 w-8 text-blue-600" />
                   </div>
-                  <h3 className={`font-semibold mb-3 ${isMobile ? 'text-lg' : 'text-xl'}`}>
-                    {item.title}
-                  </h3>
-                  <p className="text-muted-foreground leading-relaxed">
-                    {item.description}
-                  </p>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* Latest Articles */}
-      <section className="container py-8 md:py-12">
-        <h2 className="text-3xl font-bold text-center mb-12">Latest Articles</h2>
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">
-          {etfArticles.map((article) => (
-            <Card key={article.id} className="group hover:shadow-lg transition-all duration-300 cursor-pointer">
-              <Link to={`/etfs/learn/${article.slug}`} onClick={handleScrollToTop}>
-                <CardHeader>
-                  <div className="flex items-center justify-between mb-2">
-                    <Badge variant="outline" className="text-xs border-blue-500 text-blue-700 bg-blue-50">
-                      ETFs
-                    </Badge>
-                  </div>
-                  <CardTitle className="text-lg group-hover:text-primary transition-colors line-clamp-2">
-                    {article.title}
-                  </CardTitle>
+                  <CardTitle className="text-xl">ETFs</CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground text-sm line-clamp-3">
-                    {article.description}
+                <CardContent className="text-center">
+                  <p className="text-muted-foreground mb-4">
+                    Master ETF investing with comprehensive guides and tools
                   </p>
+                  <span className="text-primary font-medium inline-flex items-center">
+                    Explore ETF Guides
+                    <ChevronRight className="ml-1 h-4 w-4" />
+                  </span>
                 </CardContent>
               </Link>
             </Card>
-          ))}
-          
-          {psychologyArticles.slice(0, 2).map((article) => (
-            <Card key={article.id} className="group hover:shadow-lg transition-all duration-300 cursor-pointer">
-              <Link to={`/psychology/${article.slug}`} onClick={handleScrollToTop}>
-                <CardHeader>
-                  <div className="flex items-center justify-between mb-2">
-                    <Badge variant="outline" className="text-xs border-purple-500 text-purple-700 bg-purple-50">
-                      Psychology
-                    </Badge>
+
+            <Card className="group hover:shadow-xl transition-all duration-300 cursor-pointer border-2 hover:border-primary/20">
+              <Link to="/debt" onClick={handleScrollToTop}>
+                <CardHeader className="text-center pb-4">
+                  <div className="rounded-full bg-orange-50 w-16 h-16 flex items-center justify-center mx-auto mb-4 group-hover:bg-orange-100 transition-colors">
+                    <CreditCard className="h-8 w-8 text-orange-600" />
                   </div>
-                  <CardTitle className="text-lg group-hover:text-primary transition-colors line-clamp-2">
-                    {article.title}
-                  </CardTitle>
+                  <CardTitle className="text-xl">Debt</CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground text-sm line-clamp-3">
-                    {article.description}
+                <CardContent className="text-center">
+                  <p className="text-muted-foreground mb-4">
+                    Learn debt investing strategies and fixed income instruments
                   </p>
+                  <span className="text-primary font-medium inline-flex items-center">
+                    Explore Debt Investing
+                    <ChevronRight className="ml-1 h-4 w-4" />
+                  </span>
                 </CardContent>
               </Link>
             </Card>
-          ))}
-        </div>
-        
-        <div className="text-center mt-8">
-          <Button asChild variant="outline" size="lg">
-            <Link to="/etfs/learn" onClick={handleScrollToTop}>
-              View All Articles
-              <ChevronRight className="ml-2 h-4 w-4" />
-            </Link>
-          </Button>
-        </div>
-      </section>
 
-      {/* Newsletter Block */}
-      <section className="bg-primary/5 border-t border-b py-16 md:py-24">
-        <div className="container">
-          <div className="max-w-3xl mx-auto text-center">
-            <Mail className="h-12 w-12 mx-auto mb-6 text-primary" />
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">
-              Stay Ahead of the Noise
+            <Card className="group hover:shadow-xl transition-all duration-300 cursor-pointer border-2 hover:border-primary/20">
+              <Link to="/psychology" onClick={handleScrollToTop}>
+                <CardHeader className="text-center pb-4">
+                  <div className="rounded-full bg-purple-50 w-16 h-16 flex items-center justify-center mx-auto mb-4 group-hover:bg-purple-100 transition-colors">
+                    <Brain className="h-8 w-8 text-purple-600" />
+                  </div>
+                  <CardTitle className="text-xl">Mind Over Money</CardTitle>
+                </CardHeader>
+                <CardContent className="text-center">
+                  <p className="text-muted-foreground mb-4">
+                    Understand how psychology affects your financial decisions
+                  </p>
+                  <span className="text-primary font-medium inline-flex items-center">
+                    Decode How We Think About Money
+                    <ChevronRight className="ml-1 h-4 w-4" />
+                  </span>
+                </CardContent>
+              </Link>
+            </Card>
+          </div>
+        </section>
+
+        {/* Why MoneyOverNoise */}
+        <section className="container py-8 md:py-12">
+          <div className="mb-8 md:mb-12">
+            <h2 className={`font-bold mb-8 text-center ${isMobile ? 'text-2xl' : 'text-3xl'}`}>
+              Why MoneyOverNoise?
             </h2>
-            <p className="text-lg text-muted-foreground mb-8">
-              Join thousands of Indians who prefer clarity over chaos when it comes to their money.
-            </p>
-            <Button size="lg" className="font-medium">
-              Get Weekly Money Insights
-            </Button>
-            <p className="text-sm text-muted-foreground mt-4">
-              No spam, just valuable insights delivered to your inbox every week.
-            </p>
+            
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+              {whyChooseUs.map((item, index) => {
+                const IconComponent = item.icon;
+                return (
+                  <div key={index} className="text-center p-6 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors">
+                    <div className="rounded-full bg-primary/10 w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                      <IconComponent className="h-8 w-8 text-primary" />
+                    </div>
+                    <h3 className={`font-semibold mb-3 ${isMobile ? 'text-lg' : 'text-xl'}`}>
+                      {item.title}
+                    </h3>
+                    <p className="text-muted-foreground leading-relaxed">
+                      {item.description}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
           </div>
-        </div>
-      </section>
-    </MainLayout>
+        </section>
+
+        {/* Latest Articles */}
+        <section className="container py-8 md:py-12">
+          <h2 className="text-3xl font-bold text-center mb-12">Latest Articles</h2>
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">
+            {etfArticles.map((article) => (
+              <Card key={article.id} className="group hover:shadow-lg transition-all duration-300 cursor-pointer">
+                <Link to={`/etfs/learn/${article.slug}`} onClick={handleScrollToTop}>
+                  <CardHeader>
+                    <div className="flex items-center justify-between mb-2">
+                      <Badge variant="outline" className="text-xs border-blue-500 text-blue-700 bg-blue-50">
+                        ETFs
+                      </Badge>
+                    </div>
+                    <CardTitle className="text-lg group-hover:text-primary transition-colors line-clamp-2">
+                      {article.title}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-muted-foreground text-sm line-clamp-3">
+                      {article.description}
+                    </p>
+                  </CardContent>
+                </Link>
+              </Card>
+            ))}
+            
+            {psychologyArticles.map((article) => (
+              <Card key={article.id} className="group hover:shadow-lg transition-all duration-300 cursor-pointer">
+                <Link to={`/psychology/${article.slug}`} onClick={handleScrollToTop}>
+                  <CardHeader>
+                    <div className="flex items-center justify-between mb-2">
+                      <Badge variant="outline" className="text-xs border-purple-500 text-purple-700 bg-purple-50">
+                        Psychology
+                      </Badge>
+                    </div>
+                    <CardTitle className="text-lg group-hover:text-primary transition-colors line-clamp-2">
+                      {article.title}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-muted-foreground text-sm line-clamp-3">
+                      {article.description}
+                    </p>
+                  </CardContent>
+                </Link>
+              </Card>
+            ))}
+          </div>
+          
+          <div className="text-center mt-8">
+            <Button asChild variant="outline" size="lg">
+              <Link to="/etfs/learn" onClick={handleScrollToTop}>
+                View All Articles
+                <ChevronRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
+          </div>
+        </section>
+
+        {/* Newsletter Block */}
+        <section className="bg-primary/5 border-t border-b py-16 md:py-24">
+          <div className="container">
+            <div className="max-w-3xl mx-auto text-center">
+              <Mail className="h-12 w-12 mx-auto mb-6 text-primary" />
+              <h2 className="text-3xl md:text-4xl font-bold mb-6">
+                Stay Ahead of the Noise
+              </h2>
+              <p className="text-lg text-muted-foreground mb-8">
+                Join thousands of Indians who prefer clarity over chaos when it comes to their money.
+              </p>
+              <Button size="lg" className="font-medium">
+                Get Weekly Money Insights
+              </Button>
+              <p className="text-sm text-muted-foreground mt-4">
+                No spam, just valuable insights delivered to your inbox every week.
+              </p>
+            </div>
+          </div>
+        </section>
+      </MainLayout>
+    </div>
   );
 };
 
