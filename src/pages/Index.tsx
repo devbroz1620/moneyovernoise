@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { ChevronRight, TrendingUp, Brain, CreditCard, Mail, CheckCircle } from 'lucide-react';
+import { ChevronRight, TrendingUp, Brain, CreditCard, Mail, Eye, Heart, MapPin, Award } from 'lucide-react';
 import { learnArticles } from '@/data/learnData';
 import { useIsMobile } from '@/hooks/use-mobile';
 
@@ -30,6 +30,29 @@ const Index = () => {
       title: 'How Social Media is Ruining Your Money Decisions',
       description: 'The hidden psychology behind why Instagram makes you spend more.',
       category: 'Psychology'
+    }
+  ];
+
+  const whyChooseUs = [
+    {
+      icon: Eye,
+      title: "Clarity First",
+      description: "No jargon, no confusion."
+    },
+    {
+      icon: Heart,
+      title: "No Hype",
+      description: "Just honest, unbiased guidance."
+    },
+    {
+      icon: MapPin,
+      title: "For India",
+      description: "Tailored for Indian investors."
+    },
+    {
+      icon: Award,
+      title: "Trustworthy",
+      description: "Research-backed. Explained for everyone."
     }
   ];
 
@@ -116,38 +139,29 @@ const Index = () => {
       </section>
 
       {/* Why MoneyOverNoise */}
-      <section className="container py-8 md:py-12 bg-muted/30 rounded-lg mx-auto">
-        <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold mb-4">Why MoneyOverNoise?</h2>
-        </div>
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 max-w-6xl mx-auto">
-          <div className="flex items-start gap-3">
-            <CheckCircle className="h-6 w-6 text-green-600 mt-1 flex-shrink-0" />
-            <div>
-              <h3 className="font-semibold mb-1">Clarity First</h3>
-              <p className="text-sm text-muted-foreground">No jargon, no confusion.</p>
-            </div>
-          </div>
-          <div className="flex items-start gap-3">
-            <CheckCircle className="h-6 w-6 text-green-600 mt-1 flex-shrink-0" />
-            <div>
-              <h3 className="font-semibold mb-1">No Hype</h3>
-              <p className="text-sm text-muted-foreground">Just honest, unbiased guidance.</p>
-            </div>
-          </div>
-          <div className="flex items-start gap-3">
-            <CheckCircle className="h-6 w-6 text-green-600 mt-1 flex-shrink-0" />
-            <div>
-              <h3 className="font-semibold mb-1">For India</h3>
-              <p className="text-sm text-muted-foreground">Tailored for Indian investors.</p>
-            </div>
-          </div>
-          <div className="flex items-start gap-3">
-            <CheckCircle className="h-6 w-6 text-green-600 mt-1 flex-shrink-0" />
-            <div>
-              <h3 className="font-semibold mb-1">Trustworthy</h3>
-              <p className="text-sm text-muted-foreground">Research-backed. Explained for everyone.</p>
-            </div>
+      <section className="container py-8 md:py-12">
+        <div className="mb-8 md:mb-12">
+          <h2 className={`font-bold mb-8 text-center ${isMobile ? 'text-2xl' : 'text-3xl'}`}>
+            Why MoneyOverNoise?
+          </h2>
+          
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+            {whyChooseUs.map((item, index) => {
+              const IconComponent = item.icon;
+              return (
+                <div key={index} className="text-center p-6 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors">
+                  <div className="rounded-full bg-primary/10 w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                    <IconComponent className="h-8 w-8 text-primary" />
+                  </div>
+                  <h3 className={`font-semibold mb-3 ${isMobile ? 'text-lg' : 'text-xl'}`}>
+                    {item.title}
+                  </h3>
+                  <p className="text-muted-foreground leading-relaxed">
+                    {item.description}
+                  </p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -164,11 +178,6 @@ const Index = () => {
                     <Badge variant="outline" className="text-xs border-blue-500 text-blue-700 bg-blue-50">
                       ETFs
                     </Badge>
-                    {!isMobile && (
-                      <div className="flex items-center text-muted-foreground text-xs">
-                        {new Date().toLocaleDateString()}
-                      </div>
-                    )}
                   </div>
                   <CardTitle className="text-lg group-hover:text-primary transition-colors line-clamp-2">
                     {article.title}
@@ -191,11 +200,6 @@ const Index = () => {
                     <Badge variant="outline" className="text-xs border-purple-500 text-purple-700 bg-purple-50">
                       Psychology
                     </Badge>
-                    {!isMobile && (
-                      <div className="flex items-center text-muted-foreground text-xs">
-                        {new Date().toLocaleDateString()}
-                      </div>
-                    )}
                   </div>
                   <CardTitle className="text-lg group-hover:text-primary transition-colors line-clamp-2">
                     {article.title}

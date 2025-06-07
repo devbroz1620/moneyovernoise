@@ -34,9 +34,9 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <span className="text-muted-foreground text-sm opacity-50">
-                  Debt (Coming Soon)
-                </span>
+                <Link to="/debt" onClick={handleLinkClick} className="text-muted-foreground text-sm hover:text-primary transition-colors">
+                  Debt
+                </Link>
               </li>
             </ul>
           </div>
@@ -47,16 +47,6 @@ const Footer = () => {
               <li>
                 <Link to="/etfs/screener" onClick={handleLinkClick} className="text-muted-foreground text-sm hover:text-primary transition-colors">
                   ETF Tools
-                </Link>
-              </li>
-              <li>
-                <Link to="/etfs/compare" onClick={handleLinkClick} className="text-muted-foreground text-sm hover:text-primary transition-colors">
-                  Compare ETFs
-                </Link>
-              </li>
-              <li>
-                <Link to="/psychology" onClick={handleLinkClick} className="text-muted-foreground text-sm hover:text-primary transition-colors">
-                  Blog
                 </Link>
               </li>
             </ul>
