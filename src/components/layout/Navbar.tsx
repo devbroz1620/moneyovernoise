@@ -4,9 +4,11 @@ import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Menu, X, Moon, Sun } from 'lucide-react';
 import { useTheme } from '@/hooks/use-theme';
+import SubscriptionModal from '@/components/shared/SubscriptionModal';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isSubscriptionModalOpen, setIsSubscriptionModalOpen] = useState(false);
   const location = useLocation();
   const { theme, toggleTheme } = useTheme();
 
@@ -24,13 +26,13 @@ const Navbar = () => {
         {/* Logo */}
         <div className="flex items-center">
           <Link to="/" onClick={handleLogoClick} className="flex items-center">
-            <span className="text-xl font-bold text-primary dark:text-primary">Money</span>
+            <span className="text-xl font-bold text-blue-600 dark:text-blue-400">Money</span>
             <span className="text-xl font-semibold text-foreground">OverNoise</span>
           </Link>
         </div>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-8">
+        {/* Desktop Navigation - moved to the right */}
+        <nav className="hidden md:flex items-center space-x-8 ml-auto mr-8">
           <Link
             to="/etfs"
             onClick={() => window.scrollTo(0, 0)}
@@ -60,6 +62,24 @@ const Navbar = () => {
           >
             Mind Over Money
           </Link>
+
+          <Link
+            to="/etfs/screener"
+            onClick={() => window.scrollTo(0, 0)}
+            className={`font-medium transition-colors hover:text-primary ${
+              location.pathname === '/etfs/screener' ? 'text-primary font-semibold' : 'text-muted-foreground'
+            }`}
+          >
+            Tools
+          </Link>
+
+          <Button
+            variant="ghost"
+            className="font-medium text-muted-foreground hover:text-primary"
+            onClick={() => setIsSubscriptionModalOpen(true)}
+          >
+            Subscribe
+          </Button>
         </nav>
 
         {/* Theme Toggle */}
@@ -125,10 +145,37 @@ const Navbar = () => {
               >
                 Mind Over Money
               </Link>
+
+              <Link
+                to="/etfs/screener"
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  window.scrollTo(0, 0);
+                }}
+                className="text-sm py-2 text-muted-foreground hover:text-primary transition-colors"
+              >
+                Tools
+              </Link>
+
+              <Button
+                variant="ghost"
+                className="text-sm py-2 text-muted-foreground hover:text-primary transition-colors justify-start px-0"
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  setIsSubscriptionModalOpen(true);
+                }}
+              >
+                Subscribe
+              </Button>
             </nav>
           </div>
         </div>
       )}
+
+      <SubscriptionModal 
+        isOpen={isSubscriptionModalOpen}
+        onClose={() => setIsSubscriptionModalOpen(false)}
+      />
     </header>
   );
 };
