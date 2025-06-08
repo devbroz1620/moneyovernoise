@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -55,8 +56,8 @@
     --muted: 217 19% 12%;            /* Muted background */
     --muted-foreground: 0 0% 63%;    /* #A0A0A0 - Secondary text */
 
-    --accent: 174 61% 56%;           /* #4FD1C5 - Aqua accent color */
-    --accent-foreground: 0 0% 10%;   /* Black text for accent elements */
+    --accent: 217 19% 16%;           /* Accent background */
+    --accent-foreground: 0 0% 95%;   /* Primary text for accent elements */
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
@@ -141,11 +142,11 @@
 
   .dark .hover\:bg-accent:hover {
     background-color: hsl(var(--accent));
-    color: hsl(0 0% 10%) !important;
+    color: hsl(var(--accent-foreground)) !important;
   }
 
   .dark .hover\:text-accent-foreground:hover {
-    color: hsl(0 0% 10%) !important;
+    color: hsl(var(--accent-foreground)) !important;
   }
 
   /* Enhanced dark mode card styling - lifted appearance */
@@ -187,115 +188,65 @@
   .dark .bg-primary\/10 {
     background-color: hsl(var(--primary) / 0.15);
     border: 1px solid hsl(var(--primary) / 0.3);
-    color: hsl(var(--primary));
+    color: hsl(0 0% 10%) !important;
   }
 
-  /* Enhanced tag backgrounds */
+  /* Fix category icon hover colors in dark mode - improved visibility */
   .dark .bg-blue-50 {
-    background-color: hsl(207 73% 15%);
-    border: 1px solid hsl(207 73% 25%);
+    background-color: hsl(var(--primary) / 0.15);
+    border: 1px solid hsl(var(--primary) / 0.25);
   }
 
-  .dark .text-blue-700,
-  .dark .border-blue-500 {
-    color: hsl(207 73% 70%);
-    border-color: hsl(207 73% 50%);
-  }
-
-  .dark .bg-purple-50 {
-    background-color: hsl(280 73% 15%);
-    border: 1px solid hsl(280 73% 25%);
-  }
-
-  .dark .text-purple-700,
-  .dark .border-purple-500 {
-    color: hsl(280 73% 70%);
-    border-color: hsl(280 73% 50%);
+  .dark .group:hover .bg-blue-50,
+  .dark .bg-blue-100 {
+    background-color: hsl(var(--primary) / 0.25);
   }
 
   .dark .bg-orange-50 {
-    background-color: hsl(25 73% 15%);
-    border: 1px solid hsl(25 73% 25%);
+    background-color: hsl(var(--primary) / 0.15);
+    border: 1px solid hsl(var(--primary) / 0.25);
   }
 
-  .dark .text-orange-700,
-  .dark .border-orange-500 {
-    color: hsl(25 73% 70%);
-    border-color: hsl(25 73% 50%);
+  .dark .group:hover .bg-orange-50,
+  .dark .bg-orange-100 {
+    background-color: hsl(var(--primary) / 0.25);
   }
 
-  .dark .bg-green-50 {
-    background-color: hsl(142 73% 15%);
-    border: 1px solid hsl(142 73% 25%);
+  .dark .bg-purple-50 {
+    background-color: hsl(var(--primary) / 0.15);
+    border: 1px solid hsl(var(--primary) / 0.25);
   }
 
-  .dark .text-green-700,
-  .dark .border-green-500 {
-    color: hsl(142 73% 70%);
-    border-color: hsl(142 73% 50%);
+  .dark .group:hover .bg-purple-50,
+  .dark .bg-purple-100 {
+    background-color: hsl(var(--primary) / 0.25);
   }
 
-  .dark .bg-red-50 {
-    background-color: hsl(0 73% 15%);
-    border: 1px solid hsl(0 73% 25%);
-  }
-
-  .dark .text-red-700,
-  .dark .border-red-500 {
-    color: hsl(0 73% 70%);
-    border-color: hsl(0 73% 50%);
-  }
-
-  .dark .bg-yellow-50 {
-    background-color: hsl(45 73% 15%);
-    border: 1px solid hsl(45 73% 25%);
-  }
-
-  .dark .text-yellow-700,
-  .dark .border-yellow-500 {
-    color: hsl(45 73% 70%);
-    border-color: hsl(45 73% 50%);
-  }
-
-  /* Ensure all tags have consistent sizing and black text in dark mode */
-  .dark .bg-blue-50,
-  .dark .bg-purple-50,
-  .dark .bg-orange-50,
-  .dark .bg-green-50,
-  .dark .bg-red-50,
-  .dark .bg-yellow-50 {
-    color: hsl(0 0% 10%) !important;
-    font-size: 0.75rem;
-    padding: 0.25rem 0.5rem;
-    border-radius: 0.375rem;
-  }
-
-  /* Fix category icon hover colors in dark mode */
   .dark .bg-blue-950\/30 {
-    background-color: hsl(207 73% 10%);
+    background-color: hsl(var(--primary) / 0.1);
   }
 
   .dark .group:hover .bg-blue-950\/30,
   .dark .bg-blue-900\/40 {
-    background-color: hsl(207 73% 20%);
+    background-color: hsl(var(--primary) / 0.2);
   }
 
   .dark .bg-orange-950\/30 {
-    background-color: hsl(25 73% 10%);
+    background-color: hsl(var(--primary) / 0.1);
   }
 
   .dark .group:hover .bg-orange-950\/30,
   .dark .bg-orange-900\/40 {
-    background-color: hsl(25 73% 20%);
+    background-color: hsl(var(--primary) / 0.2);
   }
 
   .dark .bg-purple-950\/30 {
-    background-color: hsl(280 73% 10%);
+    background-color: hsl(var(--primary) / 0.1);
   }
 
   .dark .group:hover .bg-purple-950\/30,
   .dark .bg-purple-900\/40 {
-    background-color: hsl(280 73% 20%);
+    background-color: hsl(var(--primary) / 0.2);
   }
 
   /* Ensure all buttons have proper contrast in dark mode */
@@ -305,27 +256,27 @@
   }
 
   .dark .text-blue-600 {
-    color: hsl(207 73% 60%) !important;
+    color: hsl(var(--primary)) !important;
   }
 
   .dark .text-orange-600 {
-    color: hsl(25 73% 60%) !important;
+    color: hsl(var(--primary)) !important;
   }
 
   .dark .text-purple-600 {
-    color: hsl(280 73% 60%) !important;
+    color: hsl(var(--primary)) !important;
   }
 
   .dark .text-blue-400 {
-    color: hsl(207 73% 70%) !important;
+    color: hsl(var(--primary)) !important;
   }
 
   .dark .text-orange-400 {
-    color: hsl(25 73% 70%) !important;
+    color: hsl(var(--primary)) !important;
   }
 
   .dark .text-purple-400 {
-    color: hsl(280 73% 70%) !important;
+    color: hsl(var(--primary)) !important;
   }
 }
 

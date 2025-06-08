@@ -81,20 +81,8 @@ const categories = [
 ];
 
 const getCategoryColor = (category: string) => {
-  switch (category) {
-    case 'Beginner ETF Explainers':
-      return 'bg-green-100 text-green-700 border-green-200';
-    case 'Debt vs Equity':
-      return 'bg-blue-100 text-blue-700 border-blue-200';
-    case 'Gold & International ETFs':
-      return 'bg-yellow-100 text-yellow-700 border-yellow-200';
-    case 'Investing Psychology':
-      return 'bg-purple-100 text-purple-700 border-purple-200';
-    case 'Market Insights & Forecasts':
-      return 'bg-orange-100 text-orange-700 border-orange-200';
-    default:
-      return 'bg-gray-100 text-gray-700 border-gray-200';
-  }
+  // Use uniform primary color for all tags in dark mode, light variation for light mode
+  return 'bg-primary/10 text-primary border-primary/20';
 };
 
 const VideoInsights = () => {
@@ -141,12 +129,12 @@ const VideoInsights = () => {
           by {video.creator}
         </p>
 
-        <div className="flex flex-wrap gap-1 mb-4 flex-grow">
+        <div className="flex flex-wrap gap-1 mb-4 flex-grow items-start">
           {video.tags.map((tag) => (
             <Badge 
               key={tag} 
               variant="outline" 
-              className={`${isMobile ? 'text-xs px-2 py-0.5' : 'text-xs'} ${getCategoryColor(video.category)}`}
+              className={`text-xs px-2 py-1 h-6 flex items-center ${getCategoryColor(video.category)}`}
             >
               {tag}
             </Badge>

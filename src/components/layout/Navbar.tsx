@@ -26,13 +26,13 @@ const Navbar = () => {
         {/* Logo */}
         <div className="flex items-center">
           <Link to="/" onClick={handleLogoClick} className="flex items-center">
-            <span className="text-xl font-bold text-blue-600 dark:text-orange-400">Money</span>
+            <span className="text-xl font-bold text-primary dark:text-primary">Money</span>
             <span className="text-xl font-semibold text-foreground">OverNoise</span>
           </Link>
         </div>
 
-        {/* Desktop Navigation - moved to the right */}
-        <nav className="hidden md:flex items-center space-x-8 ml-auto mr-8">
+        {/* Desktop Navigation - positioned more to the right */}
+        <nav className="hidden md:flex items-center space-x-8 ml-auto mr-4">
           <Link
             to="/etfs"
             onClick={() => window.scrollTo(0, 0)}
@@ -119,7 +119,11 @@ const Navbar = () => {
                   setIsMenuOpen(false);
                   window.scrollTo(0, 0);
                 }}
-                className="text-sm py-2 text-muted-foreground hover:text-primary transition-colors"
+                className={`text-sm py-2 px-2 rounded transition-colors ${
+                  isActive('/etfs') 
+                    ? 'text-primary bg-primary/10 font-semibold' 
+                    : 'text-muted-foreground hover:text-primary hover:bg-accent'
+                }`}
               >
                 ETFs
               </Link>
@@ -130,7 +134,11 @@ const Navbar = () => {
                   setIsMenuOpen(false);
                   window.scrollTo(0, 0);
                 }}
-                className="text-sm py-2 text-muted-foreground hover:text-primary transition-colors"
+                className={`text-sm py-2 px-2 rounded transition-colors ${
+                  isActive('/debt') 
+                    ? 'text-primary bg-primary/10 font-semibold' 
+                    : 'text-muted-foreground hover:text-primary hover:bg-accent'
+                }`}
               >
                 Debt
               </Link>
@@ -141,7 +149,11 @@ const Navbar = () => {
                   setIsMenuOpen(false);
                   window.scrollTo(0, 0);
                 }}
-                className="text-sm py-2 text-muted-foreground hover:text-primary transition-colors"
+                className={`text-sm py-2 px-2 rounded transition-colors ${
+                  location.pathname === '/psychology' 
+                    ? 'text-primary bg-primary/10 font-semibold' 
+                    : 'text-muted-foreground hover:text-primary hover:bg-accent'
+                }`}
               >
                 Mind Over Money
               </Link>
@@ -152,14 +164,18 @@ const Navbar = () => {
                   setIsMenuOpen(false);
                   window.scrollTo(0, 0);
                 }}
-                className="text-sm py-2 text-muted-foreground hover:text-primary transition-colors"
+                className={`text-sm py-2 px-2 rounded transition-colors ${
+                  location.pathname === '/etfs/screener' 
+                    ? 'text-primary bg-primary/10 font-semibold' 
+                    : 'text-muted-foreground hover:text-primary hover:bg-accent'
+                }`}
               >
                 Tools
               </Link>
 
               <Button
                 variant="ghost"
-                className="text-sm py-2 text-muted-foreground hover:text-primary transition-colors justify-start px-0"
+                className="text-sm py-2 text-muted-foreground hover:text-primary transition-colors justify-start px-2"
                 onClick={() => {
                   setIsMenuOpen(false);
                   setIsSubscriptionModalOpen(true);

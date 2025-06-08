@@ -121,7 +121,7 @@ const Index = () => {
       <section className="container py-6 md:py-8">
         <div className="mb-8 md:mb-12">
           <h2 className={`font-bold mb-8 text-center ${isMobile ? 'text-2xl' : 'text-3xl'}`}>
-            Why MoneyOverNoise?
+            Why <span className="text-primary dark:text-primary">Money</span>OverNoise?
           </h2>
           
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
@@ -146,7 +146,7 @@ const Index = () => {
       </section>
 
       {/* ETF Statistics Section */}
-      <section className="container py-4 md:py-6">
+      <section className="container py-6 md:py-8">
         <div className="max-w-4xl mx-auto text-center">
           <div className="bg-gradient-to-br from-primary/5 to-primary/10 rounded-lg p-8 md:p-12 border border-primary/20">
             <p className="text-lg md:text-xl text-foreground leading-relaxed mb-2">
@@ -165,8 +165,8 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Newsletter Block */}
-      <section className="bg-primary/5 border-t border-b py-16 md:py-24">
+      {/* Newsletter Block - Increased top padding for more gap */}
+      <section className="bg-primary/5 border-t border-b py-16 md:py-24 mt-12">
         <div className="container">
           <div className="max-w-3xl mx-auto text-center">
             <Mail className="h-12 w-12 mx-auto mb-6 text-primary" />

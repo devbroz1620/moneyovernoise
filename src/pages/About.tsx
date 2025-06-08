@@ -42,12 +42,9 @@ const About = () => {
       <section className="bg-gradient-to-b from-primary/5 to-background py-8 md:py-12">
         <div className="container text-center">
           <div className="max-w-4xl mx-auto">
-            <h1 className={`font-bold mb-4 ${isMobile ? 'text-3xl' : 'text-5xl'}`}>
+            <h1 className={`font-bold mb-8 ${isMobile ? 'text-3xl' : 'text-5xl'}`}>
               About Us
             </h1>
-            <p className={`text-muted-foreground leading-relaxed mb-6 ${isMobile ? 'text-lg' : 'text-xl'}`}>
-              Making money matters clear, practical, and accessible for everyday Indians.
-            </p>
           </div>
         </div>
       </section>
@@ -58,7 +55,7 @@ const About = () => {
           {/* Mission Statement */}
           <div className="mb-8 md:mb-12 prose prose-lg max-w-none">
             <p className="text-lg leading-relaxed mb-6">
-              At <strong>Money Over Noise</strong>, we simplify money.
+              At <strong><span className="text-primary dark:text-primary">Money</span> Over Noise</strong>, we simplify money.
             </p>
             
             <p className="text-lg leading-relaxed mb-6">
@@ -102,14 +99,14 @@ const About = () => {
             </p>
 
             <p className="text-lg leading-relaxed font-semibold">
-              Welcome to <strong>Money Over Noise</strong>. Welcome to clarity.
+              Welcome to <strong><span className="text-primary dark:text-primary">Money</span> Over Noise</strong>. Welcome to clarity.
             </p>
           </div>
 
           {/* Why MoneyOverNoise */}
           <div className="mb-8 md:mb-12">
             <h2 className={`font-bold mb-8 text-center ${isMobile ? 'text-2xl' : 'text-3xl'}`}>
-              Why MoneyOverNoise?
+              Why <span className="text-primary dark:text-primary">Money</span>OverNoise?
             </h2>
             
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
