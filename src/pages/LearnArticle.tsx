@@ -199,7 +199,7 @@ const LearnArticle = () => {
             />
           </div>
 
-          {/* Footer Navigation */}
+          {/* Footer Navigation - moved above comments */}
           <footer className={`mt-12 pt-8 border-t ${isMobile ? 'mt-8 pt-6' : 'mt-12 pt-8'}`}>
             <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
               <Button asChild variant="outline">
@@ -221,6 +221,11 @@ const LearnArticle = () => {
               </div>
             </div>
           </footer>
+
+          {/* Comments section moved to bottom */}
+          <div className={`mt-8 ${isMobile ? 'mt-6' : 'mt-8'}`}>
+            {/* Comments component would go here */}
+          </div>
         </article>
       </div>
     </MainLayout>

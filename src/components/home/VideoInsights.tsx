@@ -80,11 +80,6 @@ const categories = [
   'Market Insights & Forecasts'
 ];
 
-const getCategoryColor = (category: string) => {
-  // Use uniform primary color for all tags in dark mode, light variation for light mode
-  return 'bg-primary/10 text-primary border-primary/20';
-};
-
 const VideoInsights = () => {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const isMobile = useIsMobile();
@@ -134,7 +129,7 @@ const VideoInsights = () => {
             <Badge 
               key={tag} 
               variant="outline" 
-              className={`text-xs px-2 py-1 h-6 flex items-center ${getCategoryColor(video.category)}`}
+              className={`text-xs px-2 py-1 h-6 flex items-center bg-primary/10 text-primary border-primary/20 dark:bg-primary/20 dark:border-primary/30 dark:text-foreground`}
             >
               {tag}
             </Badge>
@@ -176,7 +171,11 @@ const VideoInsights = () => {
             variant={selectedCategory === category ? "default" : "outline"}
             size="sm"
             onClick={() => setSelectedCategory(category)}
-            className={`${isMobile ? 'text-xs px-2 py-1 h-7' : 'text-xs'} ${selectedCategory === category ? '' : getCategoryColor(category)}`}
+            className={`${isMobile ? 'text-xs px-2 py-1 h-7' : 'text-xs'} ${
+              selectedCategory === category 
+                ? '' 
+                : 'bg-primary/10 text-foreground border-primary/20 hover:bg-primary/20 dark:bg-primary/20 dark:border-primary/30 dark:text-foreground dark:hover:bg-primary/30'
+            }`}
           >
             {category}
           </Button>

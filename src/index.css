@@ -188,95 +188,67 @@
   .dark .bg-primary\/10 {
     background-color: hsl(var(--primary) / 0.15);
     border: 1px solid hsl(var(--primary) / 0.3);
-    color: hsl(0 0% 10%) !important;
+    color: hsl(var(--foreground)) !important;
   }
 
-  /* Fix category icon hover colors in dark mode - improved visibility */
-  .dark .bg-blue-50 {
-    background-color: hsl(var(--primary) / 0.15);
-    border: 1px solid hsl(var(--primary) / 0.25);
-  }
-
-  .dark .group:hover .bg-blue-50,
-  .dark .bg-blue-100 {
-    background-color: hsl(var(--primary) / 0.25);
-  }
-
-  .dark .bg-orange-50 {
-    background-color: hsl(var(--primary) / 0.15);
-    border: 1px solid hsl(var(--primary) / 0.25);
-  }
-
-  .dark .group:hover .bg-orange-50,
-  .dark .bg-orange-100 {
-    background-color: hsl(var(--primary) / 0.25);
-  }
-
+  /* Ensure all category icons have consistent colors */
+  .dark .bg-blue-50,
+  .dark .bg-orange-50,
   .dark .bg-purple-50 {
     background-color: hsl(var(--primary) / 0.15);
     border: 1px solid hsl(var(--primary) / 0.25);
   }
 
+  .dark .group:hover .bg-blue-50,
+  .dark .group:hover .bg-orange-50,
   .dark .group:hover .bg-purple-50,
+  .dark .bg-blue-100,
+  .dark .bg-orange-100,
   .dark .bg-purple-100 {
     background-color: hsl(var(--primary) / 0.25);
   }
 
-  .dark .bg-blue-950\/30 {
-    background-color: hsl(var(--primary) / 0.1);
-  }
-
-  .dark .group:hover .bg-blue-950\/30,
-  .dark .bg-blue-900\/40 {
-    background-color: hsl(var(--primary) / 0.2);
-  }
-
-  .dark .bg-orange-950\/30 {
-    background-color: hsl(var(--primary) / 0.1);
-  }
-
-  .dark .group:hover .bg-orange-950\/30,
-  .dark .bg-orange-900\/40 {
-    background-color: hsl(var(--primary) / 0.2);
-  }
-
+  .dark .bg-blue-950\/30,
+  .dark .bg-orange-950\/30,
   .dark .bg-purple-950\/30 {
     background-color: hsl(var(--primary) / 0.1);
   }
 
+  .dark .group:hover .bg-blue-950\/30,
+  .dark .group:hover .bg-orange-950\/30,
   .dark .group:hover .bg-purple-950\/30,
+  .dark .bg-blue-900\/40,
+  .dark .bg-orange-900\/40,
   .dark .bg-purple-900\/40 {
     background-color: hsl(var(--primary) / 0.2);
   }
 
-  /* Ensure all buttons have proper contrast in dark mode */
+  /* Fix all color variants to use primary color for consistency */
+  .dark .text-blue-600,
+  .dark .text-orange-600,
+  .dark .text-purple-600,
+  .dark .text-blue-400,
+  .dark .text-orange-400,
+  .dark .text-purple-400 {
+    color: hsl(var(--primary)) !important;
+  }
+
+  /* Ensure button and badge text is always visible */
   .dark button,
   .dark .btn {
+    color: hsl(var(--foreground)) !important;
+  }
+
+  /* Primary buttons should have black text */
+  .dark button.bg-primary,
+  .dark .bg-primary button {
     color: hsl(0 0% 10%) !important;
   }
 
-  .dark .text-blue-600 {
-    color: hsl(var(--primary)) !important;
-  }
-
-  .dark .text-orange-600 {
-    color: hsl(var(--primary)) !important;
-  }
-
-  .dark .text-purple-600 {
-    color: hsl(var(--primary)) !important;
-  }
-
-  .dark .text-blue-400 {
-    color: hsl(var(--primary)) !important;
-  }
-
-  .dark .text-orange-400 {
-    color: hsl(var(--primary)) !important;
-  }
-
-  .dark .text-purple-400 {
-    color: hsl(var(--primary)) !important;
+  /* Ensure badge text is visible */
+  .dark .badge,
+  .dark [class*="badge"] {
+    color: hsl(var(--foreground)) !important;
   }
 }
 
