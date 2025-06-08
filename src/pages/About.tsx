@@ -58,56 +58,51 @@ const About = () => {
           {/* Mission Statement */}
           <div className="mb-8 md:mb-12 prose prose-lg max-w-none">
             <p className="text-lg leading-relaxed mb-6">
-              At <strong>Money Over Noise</strong>, we believe that financial clarity is the key to empowerment. 
-              In a world flooded with confusing jargon, conflicting advice, and endless noise—especially in the 
-              Indian investing landscape—our mission is simple: <strong>to make money matters clear, practical, 
-              and accessible for everyday Indians.</strong>
+              At <strong>Money Over Noise</strong>, we simplify money.
             </p>
             
             <p className="text-lg leading-relaxed mb-6">
-              We started with a focus on ETFs (Exchange Traded Funds), creating a comprehensive, easy-to-understand 
-              learning hub that breaks down complex concepts into crisp, visual, and actionable insights. Whether 
-              you're just starting your investment journey or looking to deepen your knowledge, our structured 
-              content—ranging from beginner guides to advanced strategies—helps you make smarter financial 
-              decisions with confidence.
+              In a world flooded with jargon, hype, and half-truths—especially on social media—we help you 
+              cut through the noise and make sense of your finances.
             </p>
 
-            <p className="text-lg leading-relaxed mb-8">
-              But we're more than just an ETF website. We're building a trusted platform that combines:
+            <p className="text-lg leading-relaxed mb-6">
+              Our mission is simple: <strong>clarity over confusion.</strong>
+            </p>
+
+            <p className="text-lg leading-relaxed mb-6">
+              We're building a platform that goes beyond just products or trends. Expect:
             </p>
 
             <ul className="space-y-3 mb-8">
               <li className="flex items-start gap-3">
                 <div className="w-2 h-2 bg-primary rounded-full mt-3 flex-shrink-0"></div>
-                <span><strong>Long-form education</strong> that goes beyond the surface</span>
+                <span><strong>Deep, long-form money content</strong> that actually makes sense</span>
               </li>
               <li className="flex items-start gap-3">
                 <div className="w-2 h-2 bg-primary rounded-full mt-3 flex-shrink-0"></div>
-                <span><strong>Visual storytelling</strong> that simplifies complexity</span>
+                <span><strong>Visual storytelling</strong> that simplifies the complex</span>
               </li>
               <li className="flex items-start gap-3">
                 <div className="w-2 h-2 bg-primary rounded-full mt-3 flex-shrink-0"></div>
-                <span><strong>Interactive tools</strong> that guide your investment choices</span>
+                <span><strong>Tools and guides</strong> that respect your time and brain</span>
               </li>
               <li className="flex items-start gap-3">
                 <div className="w-2 h-2 bg-primary rounded-full mt-3 flex-shrink-0"></div>
-                <span><strong>Behavioral finance insights</strong> that help you understand the psychology behind your money habits</span>
+                <span><strong>Psychology-led money advice</strong> grounded in behavior, not buzzwords</span>
               </li>
             </ul>
 
             <p className="text-lg leading-relaxed mb-6">
-              Our unique approach cuts through misinformation and social media hype by delivering research-backed, 
-              unbiased content designed for the Indian context. We want you to navigate your financial journey 
-              with clarity, not confusion.
+              Everything we do is unbiased, research-backed, and Indian-first.
             </p>
 
             <p className="text-lg leading-relaxed mb-8">
-              Behind Money Over Noise is a passionate team committed to empowering you with knowledge, tools, 
-              and support—because when you understand your money, you control your future.
+              Because when you understand your money, you're in control of your future.
             </p>
 
             <p className="text-lg leading-relaxed font-semibold">
-              Welcome to a clearer, smarter way to invest. Welcome to <strong>Money Over Noise</strong>.
+              Welcome to <strong>Money Over Noise</strong>. Welcome to clarity.
             </p>
           </div>
 
