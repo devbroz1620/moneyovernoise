@@ -121,7 +121,7 @@ const Navbar = () => {
                 }}
                 className={`text-sm py-2 px-2 rounded transition-colors ${
                   isActive('/etfs') 
-                    ? 'text-primary bg-primary/10 font-semibold' 
+                    ? 'text-foreground bg-primary/20 font-semibold border border-primary/30' 
                     : 'text-muted-foreground hover:text-primary hover:bg-accent'
                 }`}
               >
@@ -136,7 +136,7 @@ const Navbar = () => {
                 }}
                 className={`text-sm py-2 px-2 rounded transition-colors ${
                   isActive('/debt') 
-                    ? 'text-primary bg-primary/10 font-semibold' 
+                    ? 'text-foreground bg-primary/20 font-semibold border border-primary/30' 
                     : 'text-muted-foreground hover:text-primary hover:bg-accent'
                 }`}
               >
@@ -151,7 +151,7 @@ const Navbar = () => {
                 }}
                 className={`text-sm py-2 px-2 rounded transition-colors ${
                   location.pathname === '/psychology' 
-                    ? 'text-primary bg-primary/10 font-semibold' 
+                    ? 'text-foreground bg-primary/20 font-semibold border border-primary/30' 
                     : 'text-muted-foreground hover:text-primary hover:bg-accent'
                 }`}
               >
@@ -166,7 +166,7 @@ const Navbar = () => {
                 }}
                 className={`text-sm py-2 px-2 rounded transition-colors ${
                   location.pathname === '/etfs/screener' 
-                    ? 'text-primary bg-primary/10 font-semibold' 
+                    ? 'text-foreground bg-primary/20 font-semibold border border-primary/30' 
                     : 'text-muted-foreground hover:text-primary hover:bg-accent'
                 }`}
               >

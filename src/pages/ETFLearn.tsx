@@ -1,3 +1,4 @@
+
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import MainLayout from '@/components/layout/MainLayout';
@@ -186,9 +187,9 @@ const ETFLearn = () => {
                 <CardHeader className="pb-4">
                   <div className="flex items-center justify-between mb-3">
                     <Badge variant="outline" className={`text-xs ${
-                      article.category === 'Beginner' ? 'bg-primary/10 border-primary/20 text-primary dark:bg-primary/20 dark:border-primary/30 dark:text-primary' :
-                      article.category === 'Intermediate' ? 'bg-blue-50 border-blue-200 text-blue-700 dark:bg-blue-900/20 dark:border-blue-800 dark:text-blue-300' :
-                      'bg-purple-50 border-purple-200 text-purple-700 dark:bg-purple-900/20 dark:border-purple-800 dark:text-purple-300'
+                      article.category === 'Beginner' ? 'bg-primary/20 text-foreground border-primary/30 dark:bg-primary/25 dark:text-foreground dark:border-primary/40' :
+                      article.category === 'Intermediate' ? 'bg-primary/20 text-foreground border-primary/30 dark:bg-primary/25 dark:text-foreground dark:border-primary/40' :
+                      'bg-primary/20 text-foreground border-primary/30 dark:bg-primary/25 dark:text-foreground dark:border-primary/40'
                     }`}>
                       {article.category}
                     </Badge>
@@ -220,12 +221,12 @@ const ETFLearn = () => {
                   {!isMobile && (
                     <div className="flex flex-wrap gap-2 mb-4">
                       {article.tags.slice(0, 3).map((tag) => (
-                        <Badge key={tag} variant="secondary" className="text-xs bg-secondary/50 hover:bg-secondary/70 transition-colors dark:bg-secondary/30 dark:text-secondary-foreground">
+                        <Badge key={tag} variant="secondary" className="text-xs bg-primary/20 text-foreground border-primary/30 dark:bg-primary/25 dark:text-foreground dark:border-primary/40">
                           {tag}
                         </Badge>
                       ))}
                       {article.tags.length > 3 && (
-                        <Badge variant="secondary" className="text-xs bg-secondary/50 dark:bg-secondary/30 dark:text-secondary-foreground">
+                        <Badge variant="secondary" className="text-xs bg-primary/20 text-foreground border-primary/30 dark:bg-primary/25 dark:text-foreground dark:border-primary/40">
                           +{article.tags.length - 3}
                         </Badge>
                       )}
