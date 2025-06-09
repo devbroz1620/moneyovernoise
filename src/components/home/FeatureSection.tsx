@@ -4,10 +4,10 @@ const FeatureSection = () => {
   const handleScrollToTop = () => {
     window.scrollTo(0, 0);
   };
-  return <section className="container md:py-16 py-0 rounded-none bg-transparent">
+  return <section className="container md:py-16 rounded-none bg-transparent py-0 my-0">
       
       
-      <div className="grid gap-8 md:grid-cols-3">
+      <div className="grid gap-8 md:grid-cols-3 py-0">
         <div className="bg-card rounded-lg p-6 shadow-sm border">
           <div className="rounded-full bg-primary/10 w-12 h-12 flex items-center justify-center mb-4">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-primary">
