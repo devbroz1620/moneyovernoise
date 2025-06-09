@@ -1,199 +1,195 @@
 
 import MainLayout from '@/components/layout/MainLayout';
-import { useState } from 'react';
-import SubscriptionModal from '@/components/shared/SubscriptionModal';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
+import AnimatedHeroText from '@/components/shared/AnimatedHeroText';
 import { Link } from 'react-router-dom';
-import { TrendingUp, CreditCard, Brain, Eye, Heart, MapPin, Award, Mail } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { ChevronRight, TrendingUp, Brain, CreditCard, Mail, Eye, Heart, MapPin, Award } from 'lucide-react';
+import { useIsMobile } from '@/hooks/use-mobile';
+import SubscriptionModal from '@/components/shared/SubscriptionModal';
+import { useState } from 'react';
 
 const Index = () => {
   const [isSubscriptionModalOpen, setIsSubscriptionModalOpen] = useState(false);
+  const isMobile = useIsMobile();
 
-  const handleLinkClick = () => {
+  const handleScrollToTop = () => {
     window.scrollTo(0, 0);
   };
+
+  const whyChooseUs = [
+    {
+      icon: Eye,
+      title: "Clarity First",
+      description: "No jargon, no confusion."
+    },
+    {
+      icon: Heart,
+      title: "No Hype",
+      description: "Just honest, unbiased guidance."
+    },
+    {
+      icon: MapPin,
+      title: "For India",
+      description: "Tailored for Indian investors."
+    },
+    {
+      icon: Award,
+      title: "Trustworthy",
+      description: "Research-backed. Explained for everyone."
+    }
+  ];
 
   return (
     <MainLayout>
       {/* Hero Section */}
-      <section className="py-20 px-4 md:px-6 lg:px-8 bg-background text-center">
-        <div className="container max-w-4xl mx-auto">
-          <h1 className="text-5xl md:text-6xl font-bold mb-6">
-            Simplifying <span className="text-primary">Money</span> for You
-          </h1>
-          <p className="text-xl md:text-2xl text-muted-foreground mb-12">
-            No jargon, no overwhelm.
-          </p>
-        </div>
-      </section>
-
-      {/* What Would You Like to Learn Section */}
-      <section className="py-16 px-4 md:px-6 lg:px-8 bg-background">
-        <div className="container max-w-6xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
-            What Would You Like to Learn?
-          </h2>
-          
-          <div className="grid md:grid-cols-3 gap-8">
-            {/* ETFs Card */}
-            <Card className="bg-card/50 border-border hover:bg-card/80 transition-colors">
-              <CardContent className="p-8 text-center">
-                <div className="rounded-full bg-primary/10 w-16 h-16 flex items-center justify-center mx-auto mb-6">
-                  <TrendingUp className="h-8 w-8 text-primary" />
-                </div>
-                <h3 className="text-2xl font-bold mb-4">ETFs</h3>
-                <p className="text-muted-foreground mb-6 leading-relaxed">
-                  Master ETF investing with comprehensive guides and tools
-                </p>
-                <Button asChild variant="link" className="text-primary font-medium">
-                  <Link to="/etfs/learn" onClick={handleLinkClick}>
-                    Explore ETF Guides →
-                  </Link>
-                </Button>
-              </CardContent>
-            </Card>
-
-            {/* Debt Card */}
-            <Card className="bg-card/50 border-border hover:bg-card/80 transition-colors">
-              <CardContent className="p-8 text-center">
-                <div className="rounded-full bg-primary/10 w-16 h-16 flex items-center justify-center mx-auto mb-6">
-                  <CreditCard className="h-8 w-8 text-primary" />
-                </div>
-                <h3 className="text-2xl font-bold mb-4">Debt</h3>
-                <p className="text-muted-foreground mb-6 leading-relaxed">
-                  Learn debt investing strategies and fixed income instruments
-                </p>
-                <Button asChild variant="link" className="text-primary font-medium">
-                  <Link to="/debt" onClick={handleLinkClick}>
-                    Explore Debt Investing →
-                  </Link>
-                </Button>
-              </CardContent>
-            </Card>
-
-            {/* Mind Over Money Card */}
-            <Card className="bg-card/50 border-border hover:bg-card/80 transition-colors">
-              <CardContent className="p-8 text-center">
-                <div className="rounded-full bg-primary/10 w-16 h-16 flex items-center justify-center mx-auto mb-6">
-                  <Brain className="h-8 w-8 text-primary" />
-                </div>
-                <h3 className="text-2xl font-bold mb-4">Mind Over Money</h3>
-                <p className="text-muted-foreground mb-6 leading-relaxed">
-                  Understand how psychology affects your financial decisions
-                </p>
-                <Button asChild variant="link" className="text-primary font-medium">
-                  <Link to="/psychology" onClick={handleLinkClick}>
-                    Money Habits Decoded →
-                  </Link>
-                </Button>
-              </CardContent>
-            </Card>
+      <section className="py-8 md:py-12 px-4 md:px-6 lg:px-8">
+        <div className="container px-4 md:px-6">
+          <div className="text-center max-w-4xl mx-auto">
+            <AnimatedHeroText />
           </div>
         </div>
       </section>
 
-      {/* Why MoneyOverNoise Section */}
-      <section className="py-16 px-4 md:px-6 lg:px-8 bg-muted/30">
-        <div className="container max-w-6xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
-            Why <span className="text-primary">MoneyOverNoise</span>?
+      {/* Content Category Cards */}
+      <section className="container py-4 md:py-8">
+        <h2 className="text-xl md:text-2xl font-bold text-center mb-8">What Would You Like to Learn?</h2>
+        <div className="grid gap-8 md:grid-cols-3 max-w-5xl mx-auto">
+          <Card className="group hover:shadow-xl transition-all duration-300 cursor-pointer border-2 hover:border-primary/20">
+            <Link to="/etfs" onClick={handleScrollToTop}>
+              <CardHeader className="text-center pb-4">
+                <div className="rounded-full bg-blue-50 dark:bg-blue-950/30 w-16 h-16 flex items-center justify-center mx-auto mb-4 group-hover:bg-blue-100 dark:group-hover:bg-blue-900/40 transition-colors">
+                  <TrendingUp className="h-8 w-8 text-blue-600 dark:text-blue-400" />
+                </div>
+                <CardTitle className="text-xl">ETFs</CardTitle>
+              </CardHeader>
+              <CardContent className="text-center">
+                <p className="text-muted-foreground mb-4">
+                  Master ETF investing with comprehensive guides and tools
+                </p>
+                <span className="text-primary font-medium inline-flex items-center">
+                  Explore ETF Guides
+                  <ChevronRight className="ml-1 h-4 w-4" />
+                </span>
+              </CardContent>
+            </Link>
+          </Card>
+
+          <Card className="group hover:shadow-xl transition-all duration-300 cursor-pointer border-2 hover:border-primary/20">
+            <Link to="/debt" onClick={handleScrollToTop}>
+              <CardHeader className="text-center pb-4">
+                <div className="rounded-full bg-orange-50 dark:bg-orange-950/30 w-16 h-16 flex items-center justify-center mx-auto mb-4 group-hover:bg-orange-100 dark:group-hover:bg-orange-900/40 transition-colors">
+                  <CreditCard className="h-8 w-8 text-orange-600 dark:text-orange-400" />
+                </div>
+                <CardTitle className="text-xl">Debt</CardTitle>
+              </CardHeader>
+              <CardContent className="text-center">
+                <p className="text-muted-foreground mb-4">
+                  Learn debt investing strategies and fixed income instruments
+                </p>
+                <span className="text-primary font-medium inline-flex items-center">
+                  Explore Debt Investing
+                  <ChevronRight className="ml-1 h-4 w-4" />
+                </span>
+              </CardContent>
+            </Link>
+          </Card>
+
+          <Card className="group hover:shadow-xl transition-all duration-300 cursor-pointer border-2 hover:border-primary/20">
+            <Link to="/psychology" onClick={handleScrollToTop}>
+              <CardHeader className="text-center pb-4">
+                <div className="rounded-full bg-purple-50 dark:bg-purple-950/30 w-16 h-16 flex items-center justify-center mx-auto mb-4 group-hover:bg-purple-100 dark:group-hover:bg-purple-900/40 transition-colors">
+                  <Brain className="h-8 w-8 text-purple-600 dark:text-purple-400" />
+                </div>
+                <CardTitle className="text-xl">Mind Over Money</CardTitle>
+              </CardHeader>
+              <CardContent className="text-center">
+                <p className="text-muted-foreground mb-4">
+                  Understand how psychology affects your financial decisions
+                </p>
+                <span className="text-primary font-medium inline-flex items-center">
+                  Money Habits Decoded
+                  <ChevronRight className="ml-1 h-4 w-4" />
+                </span>
+              </CardContent>
+            </Link>
+          </Card>
+        </div>
+      </section>
+
+      {/* Why MoneyOverNoise */}
+      <section className="container py-6 md:py-8">
+        <div className="mb-8 md:mb-12">
+          <h2 className={`font-bold mb-8 text-center ${isMobile ? 'text-2xl' : 'text-3xl'}`}>
+            Why <span className="text-primary dark:text-primary">Money</span>OverNoise?
           </h2>
           
-          <div className="grid md:grid-cols-4 gap-8">
-            {/* Clarity First */}
-            <div className="text-center">
-              <div className="rounded-full bg-primary/10 w-16 h-16 flex items-center justify-center mx-auto mb-6">
-                <Eye className="h-8 w-8 text-primary" />
-              </div>
-              <h3 className="text-xl font-bold mb-4">Clarity First</h3>
-              <p className="text-muted-foreground">
-                No jargon, no confusion.
-              </p>
-            </div>
-
-            {/* No Hype */}
-            <div className="text-center">
-              <div className="rounded-full bg-primary/10 w-16 h-16 flex items-center justify-center mx-auto mb-6">
-                <Heart className="h-8 w-8 text-primary" />
-              </div>
-              <h3 className="text-xl font-bold mb-4">No Hype</h3>
-              <p className="text-muted-foreground">
-                Just honest, unbiased guidance.
-              </p>
-            </div>
-
-            {/* For India */}
-            <div className="text-center">
-              <div className="rounded-full bg-primary/10 w-16 h-16 flex items-center justify-center mx-auto mb-6">
-                <MapPin className="h-8 w-8 text-primary" />
-              </div>
-              <h3 className="text-xl font-bold mb-4">For India</h3>
-              <p className="text-muted-foreground">
-                Tailored for Indian investors.
-              </p>
-            </div>
-
-            {/* Trustworthy */}
-            <div className="text-center">
-              <div className="rounded-full bg-primary/10 w-16 h-16 flex items-center justify-center mx-auto mb-6">
-                <Award className="h-8 w-8 text-primary" />
-              </div>
-              <h3 className="text-xl font-bold mb-4">Trustworthy</h3>
-              <p className="text-muted-foreground">
-                Research-backed. Explained for everyone.
-              </p>
-            </div>
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+            {whyChooseUs.map((item, index) => {
+              const IconComponent = item.icon;
+              return (
+                <div key={index} className="text-center p-6 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors">
+                  <div className="rounded-full bg-primary/10 w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                    <IconComponent className="h-8 w-8 text-primary" />
+                  </div>
+                  <h3 className={`font-semibold mb-3 ${isMobile ? 'text-lg' : 'text-xl'}`}>
+                    {item.title}
+                  </h3>
+                  <p className="text-muted-foreground leading-relaxed">
+                    {item.description}
+                  </p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
 
       {/* ETF Statistics Section */}
-      <section className="py-16 px-4 md:px-6 lg:px-8 bg-background">
-        <div className="container max-w-4xl mx-auto">
-          <Card className="bg-card/50 border-border p-8 md:p-12 text-center">
-            <CardContent>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                <span className="text-4xl md:text-5xl">80%</span> of active mutual funds in India underperformed their benchmark over the last 5 years.
-              </h2>
-              <p className="text-lg md:text-xl text-muted-foreground mb-8">
-                In contrast, <span className="font-semibold">ETFs</span> — the passive investing alternative — have quietly gained trust, transparency, and traction.
-              </p>
-              <Button asChild size="lg" className="font-medium">
-                <Link to="/etfs/learn" onClick={handleLinkClick}>
-                  Learn about ETFs
-                </Link>
-              </Button>
-            </CardContent>
-          </Card>
+      <section className="container py-6 md:py-8">
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="bg-gradient-to-br from-primary/5 to-primary/10 rounded-lg p-8 md:p-12 border border-primary/20">
+            <p className="text-lg md:text-xl text-foreground leading-relaxed mb-2">
+              <span className="font-bold text-2xl md:text-3xl text-primary">80%</span> of active mutual funds in India underperformed their benchmark over the last 5 years.
+            </p>
+            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-8">
+              In contrast, <span className="font-semibold text-foreground">ETFs</span> — the passive investing alternative — have quietly gained trust, transparency, and traction.
+            </p>
+            <Button asChild size="lg" className="font-medium">
+              <Link to="/etfs/learn" onClick={handleScrollToTop}>
+                Learn about ETFs
+                <ChevronRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
+          </div>
         </div>
       </section>
 
-      {/* Newsletter Section */}
-      <section className="py-20 px-4 md:px-6 lg:px-8 bg-background">
-        <div className="container max-w-2xl mx-auto text-center">
-          <div className="rounded-full bg-primary/10 w-16 h-16 flex items-center justify-center mx-auto mb-8">
-            <Mail className="h-8 w-8 text-primary" />
+      {/* Newsletter Block - Increased top padding for more gap */}
+      <section className="bg-primary/5 border-t border-b py-16 md:py-24 mt-12">
+        <div className="container">
+          <div className="max-w-3xl mx-auto text-center">
+            <Mail className="h-12 w-12 mx-auto mb-6 text-primary" />
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">
+              Stay Ahead of the Noise
+            </h2>
+            <p className="text-lg text-muted-foreground mb-8">
+              Join thousands of Indians who prefer clarity over chaos when it comes to their money.
+            </p>
+            <Button 
+              size="lg" 
+              className="font-medium"
+              onClick={() => setIsSubscriptionModalOpen(true)}
+            >
+              Get Weekly Money Insights
+            </Button>
+            <p className="text-sm text-muted-foreground mt-4">
+              No spam, just valuable insights delivered to your inbox every week.
+            </p>
           </div>
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">
-            Stay Ahead of the Noise
-          </h2>
-          <p className="text-lg text-muted-foreground mb-8">
-            Join thousands of Indians who prefer clarity over chaos when it comes to their money.
-          </p>
-          <Button 
-            size="lg" 
-            onClick={() => setIsSubscriptionModalOpen(true)}
-            className="font-medium mb-4"
-          >
-            Get Weekly Money Insights
-          </Button>
-          <p className="text-sm text-muted-foreground">
-            No spam, just valuable insights delivered to your inbox every week.
-          </p>
         </div>
       </section>
-      
+
       <SubscriptionModal 
         isOpen={isSubscriptionModalOpen}
         onClose={() => setIsSubscriptionModalOpen(false)}

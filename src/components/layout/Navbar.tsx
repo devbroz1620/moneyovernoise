@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -25,20 +26,18 @@ const Navbar = () => {
         {/* Logo */}
         <div className="flex items-center">
           <Link to="/" onClick={handleLogoClick} className="flex items-center">
-            <span className="text-xl font-bold text-primary dark:text-primary">
-              <span className="text-primary dark:text-primary">Money</span>
-            </span>
+            <span className="text-xl font-bold text-primary dark:text-primary">Money</span>
             <span className="text-xl font-semibold text-foreground">OverNoise</span>
           </Link>
         </div>
 
         {/* Desktop Navigation - positioned more to the right */}
-        <nav className="hidden md:flex items-center space-x-6 ml-auto mr-4">
+        <nav className="hidden md:flex items-center space-x-8 ml-auto mr-4">
           <Link
             to="/etfs"
             onClick={() => window.scrollTo(0, 0)}
             className={`font-medium transition-colors hover:text-primary ${
-              isActive('/etfs') ? 'text-primary font-semibold' : 'text-foreground dark:text-foreground'
+              isActive('/etfs') ? 'text-primary font-semibold' : 'text-muted-foreground'
             }`}
           >
             ETFs
@@ -48,7 +47,7 @@ const Navbar = () => {
             to="/debt"
             onClick={() => window.scrollTo(0, 0)}
             className={`font-medium transition-colors hover:text-primary ${
-              isActive('/debt') ? 'text-primary font-semibold' : 'text-foreground dark:text-foreground'
+              isActive('/debt') ? 'text-primary font-semibold' : 'text-muted-foreground'
             }`}
           >
             Debt
@@ -58,7 +57,7 @@ const Navbar = () => {
             to="/psychology"
             onClick={() => window.scrollTo(0, 0)}
             className={`font-medium transition-colors hover:text-primary ${
-              location.pathname === '/psychology' ? 'text-primary font-semibold' : 'text-foreground dark:text-foreground'
+              location.pathname === '/psychology' ? 'text-primary font-semibold' : 'text-muted-foreground'
             }`}
           >
             Mind Over Money
@@ -68,7 +67,7 @@ const Navbar = () => {
             to="/etfs/screener"
             onClick={() => window.scrollTo(0, 0)}
             className={`font-medium transition-colors hover:text-primary ${
-              location.pathname === '/etfs/screener' ? 'text-primary font-semibold' : 'text-foreground dark:text-foreground'
+              location.pathname === '/etfs/screener' ? 'text-primary font-semibold' : 'text-muted-foreground'
             }`}
           >
             Tools
@@ -76,7 +75,7 @@ const Navbar = () => {
 
           <Button
             variant="ghost"
-            className="font-medium text-foreground dark:text-foreground hover:text-primary transition-colors"
+            className="font-medium text-muted-foreground hover:text-primary"
             onClick={() => setIsSubscriptionModalOpen(true)}
           >
             Subscribe
@@ -120,10 +119,10 @@ const Navbar = () => {
                   setIsMenuOpen(false);
                   window.scrollTo(0, 0);
                 }}
-                className={`text-sm py-3 px-3 rounded transition-colors ${
+                className={`text-sm py-2 px-2 rounded transition-colors ${
                   isActive('/etfs') 
                     ? 'text-primary bg-primary/10 font-semibold' 
-                    : 'text-foreground dark:text-foreground hover:text-primary hover:bg-accent'
+                    : 'text-muted-foreground hover:text-primary hover:bg-accent'
                 }`}
               >
                 ETFs
@@ -135,10 +134,10 @@ const Navbar = () => {
                   setIsMenuOpen(false);
                   window.scrollTo(0, 0);
                 }}
-                className={`text-sm py-3 px-3 rounded transition-colors ${
+                className={`text-sm py-2 px-2 rounded transition-colors ${
                   isActive('/debt') 
                     ? 'text-primary bg-primary/10 font-semibold' 
-                    : 'text-foreground dark:text-foreground hover:text-primary hover:bg-accent'
+                    : 'text-muted-foreground hover:text-primary hover:bg-accent'
                 }`}
               >
                 Debt
@@ -150,10 +149,10 @@ const Navbar = () => {
                   setIsMenuOpen(false);
                   window.scrollTo(0, 0);
                 }}
-                className={`text-sm py-3 px-3 rounded transition-colors ${
+                className={`text-sm py-2 px-2 rounded transition-colors ${
                   location.pathname === '/psychology' 
                     ? 'text-primary bg-primary/10 font-semibold' 
-                    : 'text-foreground dark:text-foreground hover:text-primary hover:bg-accent'
+                    : 'text-muted-foreground hover:text-primary hover:bg-accent'
                 }`}
               >
                 Mind Over Money
@@ -165,10 +164,10 @@ const Navbar = () => {
                   setIsMenuOpen(false);
                   window.scrollTo(0, 0);
                 }}
-                className={`text-sm py-3 px-3 rounded transition-colors ${
+                className={`text-sm py-2 px-2 rounded transition-colors ${
                   location.pathname === '/etfs/screener' 
                     ? 'text-primary bg-primary/10 font-semibold' 
-                    : 'text-foreground dark:text-foreground hover:text-primary hover:bg-accent'
+                    : 'text-muted-foreground hover:text-primary hover:bg-accent'
                 }`}
               >
                 Tools
@@ -176,7 +175,7 @@ const Navbar = () => {
 
               <Button
                 variant="ghost"
-                className="text-sm py-3 text-foreground dark:text-foreground hover:text-primary transition-colors justify-start px-3"
+                className="text-sm py-2 text-muted-foreground hover:text-primary transition-colors justify-start px-2"
                 onClick={() => {
                   setIsMenuOpen(false);
                   setIsSubscriptionModalOpen(true);

@@ -13,7 +13,7 @@ const ETFLearn = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  // ETF articles data with all 23 articles
+  // ETF articles data with all 14 articles
   const etfArticles = [
     {
       id: 'what-is-etf',
@@ -140,87 +140,6 @@ const ETFLearn = () => {
       readingTime: '5 min read',
       category: 'Intermediate',
       tags: ['Gold ETFs', 'Physical Gold', 'Gold Mutual Funds', 'Investment Comparison']
-    },
-    {
-      id: 'debt-etfs-india',
-      slug: 'debt-etfs-india',
-      title: 'Debt ETFs in India: Government Securities, Corporate Bonds, and Duration Strategies',
-      description: 'Explore fixed-income ETF options available in India, including Gilt, Bharat Bond, and corporate bond ETFs. Understand how duration and credit risk play a role in returns and how debt ETFs can stabilize your portfolio.',
-      readingTime: '5 min read',
-      category: 'Intermediate',
-      tags: ['Debt ETFs', 'Government Securities', 'Corporate Bonds', 'Duration Risk']
-    },
-    {
-      id: 'currency-hedged-vs-unhedged-etfs',
-      slug: 'currency-hedged-vs-unhedged-etfs',
-      title: 'Currency Hedged vs Unhedged International ETFs: Managing Forex Risk',
-      description: 'Learn the key difference between currency-hedged and unhedged ETFs. Understand how currency movements impact your international ETF returns and when you should consider hedging.',
-      readingTime: '5 min read',
-      category: 'Advanced',
-      tags: ['International ETFs', 'Currency Risk', 'Forex Hedging', 'Global Investing']
-    },
-    {
-      id: 'etf-rebalancing-strategies',
-      slug: 'etf-rebalancing-strategies',
-      title: 'ETF Rebalancing Strategies: When and How to Optimize Your Portfolio',
-      description: 'Learn why and how to rebalance your ETF portfolio to stay aligned with your goals. Simple rebalancing rules explained for Indian investors.',
-      readingTime: '5 min read',
-      category: 'Intermediate',
-      tags: ['Portfolio Rebalancing', 'Asset Allocation', 'Risk Management', 'Strategy']
-    },
-    {
-      id: 'esg-etfs-india',
-      slug: 'esg-etfs-india',
-      title: 'ESG ETFs in India: Investing in Sustainable and Responsible Companies',
-      description: 'Understand ESG ETFs — what they are, why they matter, and how Indian investors can invest in sustainable and ethical companies through ETFs.',
-      readingTime: '5 min read',
-      category: 'Advanced',
-      tags: ['ESG Investing', 'Sustainable Finance', 'Ethical Investing', 'Environmental']
-    },
-    {
-      id: 'international-etfs-indian-investors',
-      slug: 'international-etfs-indian-investors',
-      title: '5 Most Interesting International ETFs for Indian Investors',
-      description: 'A curated list of high-quality global ETFs that provide Indian investors with exposure to the US, China, tech, and more — all via NSE or BSE.',
-      readingTime: '5 min read',
-      category: 'Intermediate',
-      tags: ['International ETFs', 'Global Diversification', 'US ETFs', 'Technology ETFs']
-    },
-    {
-      id: 'why-mutual-fund-managers-cant-beat-etfs-india-performance-data',
-      slug: 'why-mutual-fund-managers-cant-beat-etfs-india-performance-data',
-      title: 'The Shocking Truth About Why 90% of Mutual Fund Managers Can\'t Beat Simple ETFs',
-      description: 'Discover the surprising performance data that reveals why passive ETF investing consistently outperforms active mutual fund management in Indian markets. Learn the mathematical reasons behind this phenomenon and how you can benefit from this knowledge.',
-      readingTime: '8 min read',
-      category: 'Beginner',
-      tags: ['ETF vs Mutual Funds', 'Performance Data', 'Passive Investing', 'Active Management']
-    },
-    {
-      id: '5-minute-etf-investing-busy-professionals-wealth-building',
-      slug: '5-minute-etf-investing-busy-professionals-wealth-building',
-      title: '5-Minute ETF Investing: How Busy Professionals Can Build Wealth Without Time',
-      description: 'A simple ETF investment strategy that takes just 5 minutes to set up and manage, perfect for busy professionals who want to build wealth without constant monitoring.',
-      readingTime: '5 min read',
-      category: 'Beginner',
-      tags: ['Time-efficient Investing', 'Professional Investors', 'Automation', 'Simple Strategy']
-    },
-    {
-      id: 'etf-investing-students-500-rupees-wealth-journey-guide',
-      slug: 'etf-investing-students-500-rupees-wealth-journey-guide',
-      title: 'ETF Investing for Students: Starting Your Wealth Journey with Just ₹500',
-      description: 'Learn how students can begin their investment journey with minimal money using ETFs. Simple strategies, platforms, and tips for building wealth while studying.',
-      readingTime: '4 min read',
-      category: 'Beginner',
-      tags: ['Student Investing', 'Low Budget Investing', 'Young Investors', 'Wealth Building']
-    },
-    {
-      id: 'etf-investing-senior-citizens-retirement-income-safe-strategies',
-      slug: 'etf-investing-senior-citizens-retirement-income-safe-strategies',
-      title: 'ETF Investing for Senior Citizens: Safe Strategies for Retirement Income',
-      description: 'Conservative ETF investment strategies designed specifically for senior citizens focused on capital preservation, regular income, and low-risk wealth management during retirement years.',
-      readingTime: '5 min read',
-      category: 'Intermediate',
-      tags: ['Senior Citizens', 'Retirement Planning', 'Conservative Investing', 'Income Generation']
     }
   ];
 
