@@ -4,7 +4,7 @@ const FeatureSection = () => {
   const handleScrollToTop = () => {
     window.scrollTo(0, 0);
   };
-  return <section className="container md:py-16 py-0 rounded-none bg-sky-200">
+  return <section className="container md:py-16 py-0 rounded-none bg-transparent">
       
       
       <div className="grid gap-8 md:grid-cols-3">
