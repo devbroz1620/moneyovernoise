@@ -39,7 +39,7 @@ const About = () => {
       </section>
 
       {/* Main Content */}
-      <section className="container py-8 md:py-12">
+      <section className="container md:py-12 py-[3px]">
         <div className="max-w-4xl mx-auto">
           {/* Mission Statement */}
           <div className="mb-8 md:mb-12 prose prose-lg max-w-none">
