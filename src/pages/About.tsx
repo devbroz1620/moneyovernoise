@@ -1,45 +1,34 @@
-
 import MainLayout from '@/components/layout/MainLayout';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Eye, Heart, MapPin, Award } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useEffect } from 'react';
-
 const About = () => {
   const isMobile = useIsMobile();
-
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
-  const whyChooseUs = [
-    {
-      icon: Eye,
-      title: "Clarity First",
-      description: "No jargon, no confusion."
-    },
-    {
-      icon: Heart,
-      title: "No Hype",
-      description: "Just honest, unbiased guidance."
-    },
-    {
-      icon: MapPin,
-      title: "For India",
-      description: "Tailored for Indian investors."
-    },
-    {
-      icon: Award,
-      title: "Trustworthy",
-      description: "Research-backed. Explained for everyone."
-    }
-  ];
-
-  return (
-    <MainLayout>
+  const whyChooseUs = [{
+    icon: Eye,
+    title: "Clarity First",
+    description: "No jargon, no confusion."
+  }, {
+    icon: Heart,
+    title: "No Hype",
+    description: "Just honest, unbiased guidance."
+  }, {
+    icon: MapPin,
+    title: "For India",
+    description: "Tailored for Indian investors."
+  }, {
+    icon: Award,
+    title: "Trustworthy",
+    description: "Research-backed. Explained for everyone."
+  }];
+  return <MainLayout>
       {/* Hero Section */}
-      <section className="bg-gradient-to-b from-primary/5 to-background py-8 md:py-12">
+      <section className="bg-gradient-to-b from-primary/5 to-background py-8 md:py-[20px]">
         <div className="container text-center">
           <div className="max-w-4xl mx-auto">
             <h1 className={`font-bold mb-8 ${isMobile ? 'text-3xl' : 'text-5xl'}`}>
@@ -111,9 +100,8 @@ const About = () => {
             
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
               {whyChooseUs.map((item, index) => {
-                const IconComponent = item.icon;
-                return (
-                  <div key={index} className="text-center p-6 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors">
+              const IconComponent = item.icon;
+              return <div key={index} className="text-center p-6 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors">
                     <div className="rounded-full bg-primary/10 w-16 h-16 flex items-center justify-center mx-auto mb-4">
                       <IconComponent className="h-8 w-8 text-primary" />
                     </div>
@@ -123,9 +111,8 @@ const About = () => {
                     <p className="text-muted-foreground leading-relaxed">
                       {item.description}
                     </p>
-                  </div>
-                );
-              })}
+                  </div>;
+            })}
             </div>
           </div>
 
@@ -146,8 +133,6 @@ const About = () => {
           </div>
         </div>
       </section>
-    </MainLayout>
-  );
+    </MainLayout>;
 };
-
 export default About;
