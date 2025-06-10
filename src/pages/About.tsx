@@ -28,7 +28,7 @@ const About = () => {
   }];
   return <MainLayout>
       {/* Hero Section */}
-      <section className="bg-gradient-to-b from-primary/5 to-background py-8 md:py-[20px]">
+      <section className="bg-gradient-to-b from-primary/5 to-background md:py-[20px] py-[18px]">
         <div className="container text-center">
           <div className="max-w-4xl mx-auto">
             <h1 className={`font-bold mb-8 ${isMobile ? 'text-3xl' : 'text-5xl'}`}>
