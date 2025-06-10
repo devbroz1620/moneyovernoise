@@ -1,47 +1,36 @@
-
 import MainLayout from '@/components/layout/MainLayout';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Eye, Heart, MapPin, Award } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useEffect } from 'react';
-
 const About = () => {
   const isMobile = useIsMobile();
-  
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
-  const whyChooseUs = [
-    {
-      icon: Eye,
-      title: "Clarity First",
-      description: "No jargon, no confusion."
-    },
-    {
-      icon: Heart,
-      title: "No Hype",
-      description: "Just honest, unbiased guidance."
-    },
-    {
-      icon: MapPin,
-      title: "For India",
-      description: "Tailored for Indian investors."
-    },
-    {
-      icon: Award,
-      title: "Trustworthy",
-      description: "Research-backed. Explained for everyone."
-    }
-  ];
-
-  return (
-    <MainLayout>
+  const whyChooseUs = [{
+    icon: Eye,
+    title: "Clarity First",
+    description: "No jargon, no confusion."
+  }, {
+    icon: Heart,
+    title: "No Hype",
+    description: "Just honest, unbiased guidance."
+  }, {
+    icon: MapPin,
+    title: "For India",
+    description: "Tailored for Indian investors."
+  }, {
+    icon: Award,
+    title: "Trustworthy",
+    description: "Research-backed. Explained for everyone."
+  }];
+  return <MainLayout>
       {/* Hero Section */}
-      <section className="bg-gradient-to-b from-primary/5 to-background md:py-[20px] py-[18px]">
+      <section className="bg-gradient-to-b from-primary/5 to-background md:py-[20px] py-[15px]">
         <div className="container text-center">
-          <div className="max-w-4xl mx-auto">
+          <div className="max-w-4xl mx-auto py-0 px-0 my-[12px]">
             <h1 className={`font-bold mb-8 ${isMobile ? 'text-3xl' : 'text-5xl'}`}>
               About Us
             </h1>
@@ -107,17 +96,15 @@ const About = () => {
           <div className="mb-8 md:mb-12">
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
               {whyChooseUs.map((item, index) => {
-                const IconComponent = item.icon;
-                return (
-                  <div key={index} className="text-center p-4">
+              const IconComponent = item.icon;
+              return <div key={index} className="text-center p-4">
                     <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center">
                       <IconComponent className="w-6 h-6 text-primary" />
                     </div>
                     <h3 className="font-semibold mb-2">{item.title}</h3>
                     <p className="text-muted-foreground text-sm">{item.description}</p>
-                  </div>
-                );
-              })}
+                  </div>;
+            })}
             </div>
           </div>
 
@@ -138,8 +125,6 @@ const About = () => {
           </div>
         </div>
       </section>
-    </MainLayout>
-  );
+    </MainLayout>;
 };
-
 export default About;
