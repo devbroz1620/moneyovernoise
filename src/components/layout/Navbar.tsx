@@ -36,8 +36,8 @@ const Navbar = () => {
           <Link
             to="/etfs"
             onClick={() => window.scrollTo(0, 0)}
-            className={`font-medium transition-colors hover:text-primary ${
-              isActive('/etfs') ? 'text-primary font-semibold' : 'text-muted-foreground'
+            className={`font-medium transition-colors hover:text-primary hover:bg-accent/50 px-3 py-2 rounded-md ${
+              isActive('/etfs') ? 'text-primary font-semibold bg-accent/30' : 'text-muted-foreground'
             }`}
           >
             ETFs
@@ -45,8 +45,8 @@ const Navbar = () => {
           <Link
             to="/debt"
             onClick={() => window.scrollTo(0, 0)}
-            className={`font-medium transition-colors hover:text-primary ${
-              isActive('/debt') ? 'text-primary font-semibold' : 'text-muted-foreground'
+            className={`font-medium transition-colors hover:text-primary hover:bg-accent/50 px-3 py-2 rounded-md ${
+              isActive('/debt') ? 'text-primary font-semibold bg-accent/30' : 'text-muted-foreground'
             }`}
           >
             Debt
@@ -54,8 +54,8 @@ const Navbar = () => {
           <Link
             to="/psychology"
             onClick={() => window.scrollTo(0, 0)}
-            className={`font-medium transition-colors hover:text-primary ${
-              location.pathname === '/psychology' ? 'text-primary font-semibold' : 'text-muted-foreground'
+            className={`font-medium transition-colors hover:text-primary hover:bg-accent/50 px-3 py-2 rounded-md ${
+              location.pathname === '/psychology' ? 'text-primary font-semibold bg-accent/30' : 'text-muted-foreground'
             }`}
           >
             Mind Over Money
@@ -63,15 +63,15 @@ const Navbar = () => {
           <Link
             to="/money-basics"
             onClick={() => window.scrollTo(0, 0)}
-            className={`font-medium transition-colors hover:text-primary ${
-              location.pathname === '/money-basics' ? 'text-primary font-semibold' : 'text-muted-foreground'
+            className={`font-medium transition-colors hover:text-primary hover:bg-accent/50 px-3 py-2 rounded-md ${
+              location.pathname === '/money-basics' ? 'text-primary font-semibold bg-accent/30' : 'text-muted-foreground'
             }`}
           >
             Money Basics
           </Link>
           <Button
             variant="ghost"
-            className="font-medium text-muted-foreground hover:text-primary"
+            className="font-medium text-muted-foreground hover:text-primary hover:bg-accent/50"
             onClick={() => setIsSubscriptionModalOpen(true)}
           >
             Subscribe
