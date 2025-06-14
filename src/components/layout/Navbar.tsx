@@ -69,15 +69,6 @@ const Navbar = () => {
           >
             Money Basics
           </Link>
-          <Link
-            to="/etfs/screener"
-            onClick={() => window.scrollTo(0, 0)}
-            className={`font-medium transition-colors hover:text-primary ${
-              location.pathname === '/etfs/screener' ? 'text-primary font-semibold' : 'text-muted-foreground'
-            }`}
-          >
-            Tools
-          </Link>
           <Button
             variant="ghost"
             className="font-medium text-muted-foreground hover:text-primary"
@@ -173,20 +164,6 @@ const Navbar = () => {
                 }`}
               >
                 Money Basics
-              </Link>
-              <Link
-                to="/etfs/screener"
-                onClick={() => {
-                  setIsMenuOpen(false);
-                  window.scrollTo(0, 0);
-                }}
-                className={`text-sm py-2 px-2 rounded transition-colors ${
-                  location.pathname === '/etfs/screener' 
-                    ? 'text-foreground bg-primary/20 font-semibold border border-primary/30' 
-                    : 'text-muted-foreground hover:text-primary hover:bg-accent'
-                }`}
-              >
-                Tools
               </Link>
               <Button
                 variant="ghost"
