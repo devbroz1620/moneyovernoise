@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { 
@@ -23,8 +22,8 @@ export const ShareButton = ({ title, url, isMobile }: ShareButtonProps) => {
     {
       name: 'WhatsApp',
       icon: MessageCircle,
-      color: 'text-green-600',
-      bgColor: 'bg-green-50',
+      color: 'text-green-600 dark:text-green-400',
+      bgColor: 'bg-green-50 dark:bg-green-900',
       action: () => {
         const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(`${title} - ${url}`)}`;
         window.open(whatsappUrl, '_blank');
@@ -61,8 +60,8 @@ export const ShareButton = ({ title, url, isMobile }: ShareButtonProps) => {
     {
       name: 'Email',
       icon: Mail,
-      color: 'text-gray-600',
-      bgColor: 'bg-gray-50',
+      color: 'text-gray-700 dark:text-gray-300',
+      bgColor: 'bg-gray-100 dark:bg-gray-800',
       action: () => {
         const emailUrl = `mailto:?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(`Check out this article: ${title}\n\n${url}`)}`;
         window.location.href = emailUrl;

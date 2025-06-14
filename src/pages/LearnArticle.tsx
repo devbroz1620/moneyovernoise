@@ -1,4 +1,3 @@
-
 import { useParams, Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import MainLayout from '@/components/layout/MainLayout';
@@ -77,6 +76,29 @@ const LearnArticle = () => {
               {article.description}
             </p>
           </header>
+
+          {/* Footer Navigation */}
+          <footer className={`mt-12 pt-8 border-t ${isMobile ? 'mt-8 pt-6' : 'mt-12 pt-8'}`}>
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+              <Button asChild variant="outline">
+                <Link to="/learn" onClick={() => window.scrollTo(0, 0)}>
+                  <ArrowLeft className="h-4 w-4 mr-2" />
+                  More Articles
+                </Link>
+              </Button>
+              
+              <div className="flex items-center gap-3">
+                <span className={`text-muted-foreground ${isMobile ? 'text-sm' : ''}`}>
+                  Found this helpful?
+                </span>
+                <ShareButton 
+                  title={article.title}
+                  url={`${window.location.origin}/learn/etfs/${article.slug}`}
+                  isMobile={isMobile}
+                />
+              </div>
+            </div>
+          </footer>
 
           {/* Content */}
           <div className={`prose max-w-none ${isMobile ? 'prose-sm' : 'prose-lg'}`}>
@@ -199,28 +221,9 @@ const LearnArticle = () => {
             />
           </div>
 
-          {/* Footer Navigation */}
-          <footer className={`mt-12 pt-8 border-t ${isMobile ? 'mt-8 pt-6' : 'mt-12 pt-8'}`}>
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-              <Button asChild variant="outline">
-                <Link to="/learn" onClick={() => window.scrollTo(0, 0)}>
-                  <ArrowLeft className="h-4 w-4 mr-2" />
-                  More Articles
-                </Link>
-              </Button>
-              
-              <div className="flex items-center gap-3">
-                <span className={`text-muted-foreground ${isMobile ? 'text-sm' : ''}`}>
-                  Found this helpful?
-                </span>
-                <ShareButton 
-                  title={article.title}
-                  url={`${window.location.origin}/learn/etfs/${article.slug}`}
-                  isMobile={isMobile}
-                />
-              </div>
-            </div>
-          </footer>
+          {/* Comments section now BELOW navigation/footer */}
+          {/* If there is a Comments component normally rendered here, it would be below */}
+          {/* Example: <Comments articleId={article.slug} /> */}
         </article>
       </div>
     </MainLayout>
