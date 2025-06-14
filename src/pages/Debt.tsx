@@ -87,9 +87,9 @@ const Debt = () => {
       </section>
       
       {/* Content Categories Section */}
-      <section className="container py-5 md:py-7">
+      <section className="container py-4 md:py-6">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-2xl font-bold text-center mb-4">Debt Investment Categories</h2>
+          <h2 className="text-lg font-bold text-center mb-2">Debt Investment Categories</h2>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
             {debtCategories.map((category, index) => {
