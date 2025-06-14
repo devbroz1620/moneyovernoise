@@ -131,11 +131,10 @@ export default function MoneyBasics() {
                   <CardTitle className={`${isMobile ? 'text-lg' : 'text-xl'}`}>{b.title}</CardTitle>
                 </CardHeader>
                 <CardContent className="flex flex-col flex-grow text-center">
-                  <p className="text-muted-foreground mb-4 flex-1">{b.summary}</p>
-                  {/* Progress bar placeholder for the future */}
-                  <div className="w-full h-2 mt-2 rounded-full bg-muted/60 overflow-hidden">
-                    <div className="h-full rounded-full bg-primary/60 w-0 group-hover:w-2/3 transition-all" />
-                  </div>
+                  <p className="text-muted-foreground mb-3 flex-1">{b.summary}</p>
+                  <span className="text-xs text-muted-foreground font-medium tracking-wide">
+                    Coming Soon
+                  </span>
                 </CardContent>
               </Card>
             ))}
@@ -145,3 +144,4 @@ export default function MoneyBasics() {
     </MainLayout>
   );
 }
+
