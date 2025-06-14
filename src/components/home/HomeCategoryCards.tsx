@@ -76,8 +76,8 @@ const HomeCategoryCards = ({ handleScrollToTop }: HomeCategoryCardsProps) => (
       <Card className="group hover:shadow-xl transition-all duration-300 cursor-pointer border-2 hover:border-primary/20">
         <Link to="/money-basics" onClick={handleScrollToTop}>
           <CardHeader className="text-center pb-4">
-            <div className="rounded-full bg-green-50 dark:bg-green-950/30 w-16 h-16 flex items-center justify-center mx-auto mb-4 group-hover:bg-green-100 dark:group-hover:bg-green-900/40 transition-colors">
-              <PiggyBank className="h-8 w-8 text-green-600 dark:text-green-400" />
+            <div className="rounded-full bg-primary/10 dark:bg-primary/10 w-16 h-16 flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 dark:group-hover:bg-primary/20 transition-colors">
+              <PiggyBank className="h-8 w-8 text-primary" />
             </div>
             <CardTitle className="text-xl">Money Basics</CardTitle>
           </CardHeader>
