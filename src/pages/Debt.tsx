@@ -89,7 +89,7 @@ const Debt = () => {
       {/* Content Categories Section */}
       <section className="container py-4 md:py-6">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-2xl md:text-3xl font-bold text-center mb-2 max-w-[600px] mx-auto whitespace-nowrap">
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 max-w-[600px] mx-auto whitespace-nowrap">
             Debt Investment Categories
           </h2>
           
