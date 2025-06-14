@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -21,6 +20,7 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
+import MoneyBasics from "./pages/MoneyBasics";
 
 const queryClient = new QueryClient();
 
@@ -32,6 +32,7 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/money-basics" element={<MoneyBasics />} />
           <Route path="/etfs" element={<ETFs />} />
           <Route path="/etfs/list" element={<ETFList />} />
           <Route path="/etfs/screener" element={<ETFList />} />

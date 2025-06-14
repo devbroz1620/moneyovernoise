@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -34,6 +33,15 @@ const Navbar = () => {
         {/* Desktop Navigation - positioned more to the right */}
         <nav className="hidden md:flex items-center space-x-8 ml-auto mr-4">
           <Link
+            to="/money-basics"
+            onClick={() => window.scrollTo(0, 0)}
+            className={`font-medium transition-colors hover:text-primary ${
+              location.pathname === '/money-basics' ? 'text-primary font-semibold' : 'text-muted-foreground'
+            }`}
+          >
+            Money Basics
+          </Link>
+          <Link
             to="/etfs"
             onClick={() => window.scrollTo(0, 0)}
             className={`font-medium transition-colors hover:text-primary ${
@@ -42,7 +50,6 @@ const Navbar = () => {
           >
             ETFs
           </Link>
-          
           <Link
             to="/debt"
             onClick={() => window.scrollTo(0, 0)}
@@ -52,7 +59,6 @@ const Navbar = () => {
           >
             Debt
           </Link>
-
           <Link
             to="/psychology"
             onClick={() => window.scrollTo(0, 0)}
@@ -62,7 +68,6 @@ const Navbar = () => {
           >
             Mind Over Money
           </Link>
-
           <Link
             to="/etfs/screener"
             onClick={() => window.scrollTo(0, 0)}
@@ -72,7 +77,6 @@ const Navbar = () => {
           >
             Tools
           </Link>
-
           <Button
             variant="ghost"
             className="font-medium text-muted-foreground hover:text-primary"
@@ -114,20 +118,33 @@ const Navbar = () => {
             {/* Mobile Navigation Links */}
             <nav className="flex flex-col space-y-2">
               <Link
+                to="/money-basics"
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  window.scrollTo(0, 0);
+                }}
+                className={`text-sm py-2 px-2 rounded transition-colors ${
+                  location.pathname === '/money-basics'
+                    ? 'text-foreground bg-primary/20 font-semibold border border-primary/30'
+                    : 'text-muted-foreground hover:text-primary hover:bg-accent'
+                }`}
+              >
+                Money Basics
+              </Link>
+              <Link
                 to="/etfs"
                 onClick={() => {
                   setIsMenuOpen(false);
                   window.scrollTo(0, 0);
                 }}
                 className={`text-sm py-2 px-2 rounded transition-colors ${
-                  isActive('/etfs') 
-                    ? 'text-foreground bg-primary/20 font-semibold border border-primary/30' 
+                  isActive('/etfs')
+                    ? 'text-foreground bg-primary/20 font-semibold border border-primary/30'
                     : 'text-muted-foreground hover:text-primary hover:bg-accent'
                 }`}
               >
                 ETFs
               </Link>
-
               <Link
                 to="/debt"
                 onClick={() => {
@@ -142,7 +159,6 @@ const Navbar = () => {
               >
                 Debt
               </Link>
-
               <Link
                 to="/psychology"
                 onClick={() => {
@@ -157,7 +173,6 @@ const Navbar = () => {
               >
                 Mind Over Money
               </Link>
-
               <Link
                 to="/etfs/screener"
                 onClick={() => {
@@ -172,7 +187,6 @@ const Navbar = () => {
               >
                 Tools
               </Link>
-
               <Button
                 variant="ghost"
                 className="text-sm py-2 text-muted-foreground hover:text-primary transition-colors justify-start px-2"
