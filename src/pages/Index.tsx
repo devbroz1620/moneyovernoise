@@ -1,4 +1,3 @@
-
 import MainLayout from '@/components/layout/MainLayout';
 import AnimatedHeroText from '@/components/shared/AnimatedHeroText';
 import { Link } from 'react-router-dom';
@@ -59,6 +58,7 @@ const Index = () => {
             <Link to="/etfs" onClick={handleScrollToTop}>
               <CardHeader className="text-center pb-4">
                 <div className="rounded-full bg-blue-50 dark:bg-blue-950/30 w-16 h-16 flex items-center justify-center mx-auto mb-4 group-hover:bg-blue-100 dark:group-hover:bg-blue-900/40 transition-colors">
+                  {/* ETFs Icon - Blue */}
                   <TrendingUp className="h-8 w-8 text-blue-600 dark:text-blue-400" />
                 </div>
                 <CardTitle className="text-xl">ETFs</CardTitle>
@@ -79,6 +79,7 @@ const Index = () => {
             <Link to="/debt" onClick={handleScrollToTop}>
               <CardHeader className="text-center pb-4">
                 <div className="rounded-full bg-orange-50 dark:bg-orange-950/30 w-16 h-16 flex items-center justify-center mx-auto mb-4 group-hover:bg-orange-100 dark:group-hover:bg-orange-900/40 transition-colors">
+                  {/* Debt Icon - Orange */}
                   <CreditCard className="h-8 w-8 text-orange-600 dark:text-orange-400" />
                 </div>
                 <CardTitle className="text-xl">Debt</CardTitle>
@@ -99,6 +100,7 @@ const Index = () => {
             <Link to="/psychology" onClick={handleScrollToTop}>
               <CardHeader className="text-center pb-4">
                 <div className="rounded-full bg-purple-50 dark:bg-purple-950/30 w-16 h-16 flex items-center justify-center mx-auto mb-4 group-hover:bg-purple-100 dark:group-hover:bg-purple-900/40 transition-colors">
+                  {/* Mind Over Money Icon - Purple */}
                   <Brain className="h-8 w-8 text-purple-600 dark:text-purple-400" />
                 </div>
                 <CardTitle className="text-xl">Mind Over Money</CardTitle>
