@@ -1,4 +1,3 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -140,6 +139,7 @@
     color: hsl(var(--foreground)) !important;
   }
 
+  /* Enhanced dark mode navigation hover effects */
   .dark .hover\:bg-accent:hover {
     background-color: hsl(var(--accent));
     color: hsl(var(--accent-foreground)) !important;
@@ -147,6 +147,19 @@
 
   .dark .hover\:text-accent-foreground:hover {
     color: hsl(var(--accent-foreground)) !important;
+  }
+
+  .dark .hover\:bg-accent\/50:hover {
+    background-color: hsl(var(--accent) / 0.5);
+    color: hsl(var(--primary)) !important;
+  }
+
+  .dark .hover\:text-primary:hover {
+    color: hsl(var(--primary)) !important;
+  }
+
+  .dark .bg-accent\/30 {
+    background-color: hsl(var(--accent) / 0.3);
   }
 
   /* Enhanced dark mode card styling - lifted appearance */
