@@ -1,4 +1,5 @@
 
+import MainLayout from '@/components/layout/MainLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { PiggyBank, Shield, GraduationCap, BadgeIndianRupee } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -93,36 +94,54 @@ const basics = [
 export default function MoneyBasics() {
   const isMobile = useIsMobile();
   return (
-    <div className="min-h-[60vh] bg-background">
-      <section className="container py-12 md:py-20">
-        <h1 className="text-3xl md:text-5xl font-bold mb-4 text-center">Money Basics</h1>
-        <p className="text-lg md:text-xl text-muted-foreground text-center mb-10 max-w-2xl mx-auto">
-          Foundational guides for everyone—start your journey to financial confidence.
-        </p>
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">
-          {basics.map((b, i) => (
-            <Card
-              key={b.title}
-              className="hover:shadow-xl border-2 border-transparent hover:border-primary/30 transition-all cursor-pointer group animate-fade-in bg-card"
-              tabIndex={0}
-            >
-              <CardHeader className="flex flex-col gap-3 items-center text-center">
-                <div className={`rounded-full w-14 h-14 flex items-center justify-center mb-2 transition-colors ${b.iconBg}`}>
-                  <b.icon className={`h-7 w-7 ${b.iconColor}`} />
-                </div>
-                <CardTitle className={isMobile ? 'text-lg' : 'text-xl'}>{b.title}</CardTitle>
-              </CardHeader>
-              <CardContent className="text-center">
-                <p className="text-muted-foreground">{b.summary}</p>
-                {/* Progress bar placeholder for the future */}
-                <div className="w-full h-2 mt-5 rounded-full bg-muted/60 overflow-hidden">
-                  <div className="h-full rounded-full bg-primary/60 w-0 group-hover:w-2/3 transition-all" />
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+    <MainLayout>
+      {/* Hero Section for Money Basics */}
+      <section className="bg-gradient-to-b from-primary/5 to-background py-8 md:py-12">
+        <div className="container text-center">
+          <div className="max-w-3xl mx-auto">
+            <div className="flex justify-center mb-6">
+              <div className="rounded-full bg-primary/10 p-4 w-16 h-16 flex items-center justify-center">
+                <PiggyBank className="h-8 w-8 text-primary" />
+              </div>
+            </div>
+            <h1 className={`font-bold mb-4 ${isMobile ? 'text-3xl' : 'text-5xl'}`}>
+              Money Basics
+            </h1>
+            <p className={`text-muted-foreground ${isMobile ? 'text-base' : 'text-lg'}`}>
+              Foundational guides for everyone—start your journey to financial confidence.
+            </p>
+          </div>
         </div>
       </section>
-    </div>
+
+      {/* Cards Section */}
+      <section className="container py-10 md:py-14">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            {basics.map((b, i) => (
+              <Card
+                key={b.title}
+                className="flex flex-col h-full hover:shadow-xl border-2 border-transparent hover:border-primary/30 transition-all cursor-pointer group animate-fade-in bg-card"
+                tabIndex={0}
+              >
+                <CardHeader className="flex flex-col gap-3 items-center text-center">
+                  <div className={`rounded-full w-14 h-14 flex items-center justify-center mb-2 transition-colors ${b.iconBg}`}>
+                    <b.icon className={`h-7 w-7 ${b.iconColor}`} />
+                  </div>
+                  <CardTitle className={`${isMobile ? 'text-lg' : 'text-xl'}`}>{b.title}</CardTitle>
+                </CardHeader>
+                <CardContent className="flex flex-col flex-grow text-center">
+                  <p className="text-muted-foreground mb-4 flex-1">{b.summary}</p>
+                  {/* Progress bar placeholder for the future */}
+                  <div className="w-full h-2 mt-2 rounded-full bg-muted/60 overflow-hidden">
+                    <div className="h-full rounded-full bg-primary/60 w-0 group-hover:w-2/3 transition-all" />
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+    </MainLayout>
   );
 }
