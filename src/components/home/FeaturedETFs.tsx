@@ -1,4 +1,3 @@
-
 import { Link } from 'react-router-dom';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -139,7 +138,8 @@ const FeaturedETFs = () => {
         <Link 
           to="/list/etfs" 
           onClick={() => window.scrollTo(0, 0)}
-          className="inline-flex items-center text-primary font-medium hover:underline"
+          className="inline-flex items-center text-primary font-medium hover:underline text-sm px-2 py-1 rounded transition-colors"
+          style={{ lineHeight: 1.2 }}
         >
           View All ETFs
           <ArrowRight className="h-4 w-4 ml-1" />
