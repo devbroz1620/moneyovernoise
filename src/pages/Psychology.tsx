@@ -160,7 +160,7 @@ const Psychology = () => {
   const getCategoryColor = (category: string) => {
     switch (category) {
       case 'Behavioral Finance':
-        return 'bg-primary/10 text-primary border-primary/20 dark:bg-primary/20 dark:border-primary/30 dark:text-primary';
+        return 'bg-cyan-500/15 text-cyan-700 border-cyan-500/30 dark:bg-cyan-500/25 dark:border-cyan-400/40 dark:text-cyan-300';
       case 'Money Mindset':
         return 'bg-blue-500/10 text-blue-600 border-blue-500/20 dark:bg-blue-500/20 dark:border-blue-500/30 dark:text-blue-400';
       case 'Investment Psychology':
