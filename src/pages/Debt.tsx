@@ -1,4 +1,3 @@
-
 import { useEffect } from 'react';
 import MainLayout from '@/components/layout/MainLayout';
 import { CreditCard, Clock, TrendingUp, Shield, Calculator, FileText, Building, Landmark, PiggyBank, Receipt, Scale, BookOpen } from 'lucide-react';
@@ -81,8 +80,7 @@ const Debt = () => {
               Debt Investing
             </h1>
             <p className="text-xl text-muted-foreground leading-relaxed mb-6">
-              Master the art of fixed-income investing with clear, practical guides designed for Indian investors. 
-              From government bonds to corporate debt, we'll help you build a stable foundation for your portfolio.
+              Master the art of fixed-income investing with clear, practical guides designed for Indian investors.
             </p>
           </div>
         </div>
