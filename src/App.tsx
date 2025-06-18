@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -17,8 +16,6 @@ import LearnArticle from "./pages/LearnArticle";
 import Psychology from "./pages/Psychology";
 import PsychologyArticle from "./pages/PsychologyArticle";
 import Debt from "./pages/Debt";
-import DebtLearn from "./pages/DebtLearn";
-import DebtLearnArticle from "./pages/DebtLearnArticle";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Privacy from "./pages/Privacy";
@@ -47,8 +44,6 @@ const App = () => (
           <Route path="/psychology" element={<Psychology />} />
           <Route path="/psychology/:slug" element={<PsychologyArticle />} />
           <Route path="/debt" element={<Debt />} />
-          <Route path="/debt/learn" element={<DebtLearn />} />
-          <Route path="/debt/learn/:slug" element={<DebtLearnArticle />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/privacy" element={<Privacy />} />

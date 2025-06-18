@@ -1,4 +1,3 @@
-
 import { useEffect } from 'react';
 import MainLayout from '@/components/layout/MainLayout';
 import { CreditCard, Clock, TrendingUp, Shield, Calculator, FileText, Building, Landmark, PiggyBank, Receipt, Scale, BookOpen } from 'lucide-react';
@@ -22,8 +21,7 @@ const Debt = () => {
       description: "G-Secs (Government Securities), SDLs (State Development Loans), T-Bills (Treasury Bills), Sovereign Gold Bonds, RBI Bonds",
       color: "bg-green-50 dark:bg-green-900/20",
       iconColor: "text-green-600 dark:text-green-400",
-      borderColor: "border-l-green-500",
-      link: "/debt/learn"
+      borderColor: "border-l-green-500"
     },
     {
       icon: Building,
@@ -109,31 +107,12 @@ const Debt = () => {
                     </div>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-muted-foreground leading-relaxed text-sm mb-4">
+                    <p className="text-muted-foreground leading-relaxed text-sm">
                       {category.description}
                     </p>
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center text-sm font-medium">
-                        <Clock className="h-4 w-4 mr-2" />
-                        {category.link ? (
-                          <Link 
-                            to={category.link}
-                            onClick={handleScrollToTop}
-                            className="text-primary hover:text-primary/80"
-                          >
-                            Available Now
-                          </Link>
-                        ) : (
-                          <span className="text-orange-600 dark:text-orange-400">Coming Soon</span>
-                        )}
-                      </div>
-                      {category.link && (
-                        <Button asChild size="sm" variant="outline">
-                          <Link to={category.link} onClick={handleScrollToTop}>
-                            Learn More
-                          </Link>
-                        </Button>
-                      )}
+                    <div className="mt-4 flex items-center text-orange-600 dark:text-orange-400 text-sm font-medium">
+                      <Clock className="h-4 w-4 mr-2" />
+                      Coming Soon
                     </div>
                   </CardContent>
                 </Card>
@@ -172,18 +151,19 @@ const Debt = () => {
           {/* CTA Section */}
           <div className="text-center">
             <p className="text-muted-foreground mb-6">
-              Start with Government Securities - the safest fixed-income investments backed by the Government of India.
+              We're working hard to bring you comprehensive, easy-to-understand content on debt investing. 
+              In the meantime, explore our other sections to start your investment journey.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button asChild size="lg">
-                <Link to="/debt/learn" onClick={handleScrollToTop}>
-                  Learn Government Securities
+                <Link to="/etfs" onClick={handleScrollToTop}>
+                  Learn About ETFs
                 </Link>
               </Button>
               <Button asChild size="lg" variant="outline">
-                <Link to="/etfs" onClick={handleScrollToTop}>
-                  Explore ETFs
+                <Link to="/psychology" onClick={handleScrollToTop}>
+                  Mind Over Money
                 </Link>
               </Button>
             </div>
