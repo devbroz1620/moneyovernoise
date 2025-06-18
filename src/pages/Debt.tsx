@@ -1,3 +1,4 @@
+
 import { useEffect } from 'react';
 import MainLayout from '@/components/layout/MainLayout';
 import { CreditCard, Clock, TrendingUp, Shield, Calculator, FileText, Building, Landmark, PiggyBank, Receipt, Scale, BookOpen } from 'lucide-react';
@@ -97,7 +98,7 @@ const Debt = () => {
             {debtCategories.map((category, index) => {
               const IconComponent = category.icon;
               return (
-                <Card key={index} className={`group hover:shadow-lg transition-all duration-300 cursor-pointer border-l-4 ${category.borderColor}`}>
+                <Card key={index} className={`group hover:shadow-lg transition-all duration-300 cursor-pointer border-l-4 ${category.borderColor} h-full flex flex-col`}>
                   <CardHeader className="pb-4">
                     <div className="flex items-center gap-3 mb-3">
                       <div className={`rounded-lg ${category.color} p-3`}>
@@ -106,8 +107,8 @@ const Debt = () => {
                       <CardTitle className="text-lg leading-tight">{category.title}</CardTitle>
                     </div>
                   </CardHeader>
-                  <CardContent>
-                    <p className="text-muted-foreground leading-relaxed text-sm">
+                  <CardContent className="flex-1 flex flex-col">
+                    <p className="text-muted-foreground leading-relaxed text-sm flex-1">
                       {category.description}
                     </p>
                     <div className="mt-4 flex items-center text-orange-600 dark:text-orange-400 text-sm font-medium">

@@ -25,7 +25,12 @@ const Footer = () => {
             <ul className="space-y-2">
               <li>
                 <Link to="/etfs/learn" onClick={handleLinkClick} className="text-muted-foreground text-sm hover:text-primary transition-colors">
-                  ETF Guides
+                  ETFs
+                </Link>
+              </li>
+              <li>
+                <Link to="/debt" onClick={handleLinkClick} className="text-muted-foreground text-sm hover:text-primary transition-colors">
+                  Debt
                 </Link>
               </li>
               <li>
@@ -34,8 +39,8 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/debt" onClick={handleLinkClick} className="text-muted-foreground text-sm hover:text-primary transition-colors">
-                  Debt
+                <Link to="/money-basics" onClick={handleLinkClick} className="text-muted-foreground text-sm hover:text-primary transition-colors">
+                  Money Basics
                 </Link>
               </li>
             </ul>
