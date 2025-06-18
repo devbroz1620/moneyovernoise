@@ -21,7 +21,7 @@ const whyChooseUs = [
   {
     icon: Award,
     title: "Trustworthy",
-    description: "Research-backed. Explained for everyone."
+    description: "Research-backed."
   }
 ];
 
