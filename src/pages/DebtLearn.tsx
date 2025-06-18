@@ -24,7 +24,7 @@ const DebtLearn = () => {
           breadcrumbs={[
             { label: 'Home', href: '/' },
             { label: 'Debt', href: '/debt' },
-            { label: 'Learn' }
+            { label: 'Learn', href: undefined }
           ]}
         />
 

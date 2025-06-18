@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import { useParams, Navigate } from 'react-router-dom';
 import MainLayout from '@/components/layout/MainLayout';
@@ -6,7 +5,7 @@ import { getDebtArticleBySlug } from '@/data/debtData';
 import { ArticleHeader } from '@/components/learn/ArticleHeader';
 import { ArticleContent } from '@/components/learn/ArticleContent';
 import { ArticleFooter } from '@/components/learn/ArticleFooter';
-import { useMobile } from '@/hooks/use-mobile';
+import { useIsMobile } from '@/hooks/use-mobile';
 import SchemaMarkup from '@/components/shared/SchemaMarkup';
 import Breadcrumbs from '@/components/shared/Breadcrumbs';
 
@@ -14,7 +13,7 @@ const DebtLearnArticle = () => {
   const { slug } = useParams<{ slug: string }>();
   const [article, setArticle] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-  const isMobile = useMobile();
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     window.scrollTo(0, 0);
