@@ -1,166 +1,236 @@
-
 import { toast } from "sonner";
 
 export interface ETF {
-  name: string;
-  ticker: string;
-  amc: string;
-  category: string;
-  subcategory: string;
-  launchDate: string;
-  nav: number;
-  marketPrice: number;
-  returns1Y: number;
-  returns3Y: number;
-  returns5Y: number;
-  expenseRatio: number;
-  volume: number;
-  aum: number;
-  trackingError: number;
-  bidAskSpread: number;
-  risk: string;
-  useCase: string;
-  tags: string[];
-  amcLink: string;
-  factSheetLink: string;
-  topHoldings: string[];
-  sectorAllocation: Record<string, number>;
+  info: {
+    symbol: string;
+    companyName: string;
+    industry?: string;
+    activeSeries: string[];
+    debtSeries: any[]; // Assuming it can be various types based on context
+    isFNOSec: boolean;
+    isCASec: boolean;
+    isSLBSec: boolean;
+    isDebtSec: boolean;
+    isSuspended: boolean;
+    tempSuspendedSeries: any[];
+    isETFSec: boolean;
+    isDelisted: boolean;
+    isin: string;
+    slb_isin: string;
+    listingDate: string;
+    isMunicipalBond: boolean;
+    isHybridSymbol: boolean;
+    isTop10: boolean;
+    identifier: string;
+  };
+  metadata: {
+    series: string;
+    symbol: string;
+    isin: string;
+    status: string;
+    listingDate: string;
+    industry: string;
+    lastUpdateTime: string;
+    pdSectorPe: string;
+    pdSymbolPe: string;
+    pdSectorInd: string;
+    pdSectorIndAll: string;
+  };
+  securityInfo: {
+    boardStatus: string;
+    tradingStatus: string;
+    tradingSegment: string;
+    sessionNo: string;
+    slb: string;
+    classOfShare: string;
+    derivatives: string;
+    surveillance: {
+      surv: string | null;
+      desc: string | null;
+    };
+    faceValue: number;
+    issuedSize: number;
+  };
+  sddDetails: {
+    SDDAuditor: string;
+    SDDStatus: string;
+  };
+  currentMarketType: string;
+  priceInfo: {
+    lastPrice: number;
+    change: number;
+    pChange: number;
+    previousClose: number;
+    open: number;
+    close: number;
+    vwap: number;
+    stockIndClosePrice: number;
+    lowerCP: string;
+    upperCP: string;
+    pPriceBand: string;
+    basePrice: number;
+    intraDayHighLow: {
+      min: number;
+      max: number;
+      value: number;
+    };
+    weekHighLow: {
+      min: number;
+      minDate: string;
+      max: number;
+      maxDate: string;
+      value: number;
+    };
+    iNavValue?: string;
+    checkINAV: boolean;
+    tickSize: number;
+    ieq: string;
+  };
+  industryInfo: {
+    macro: string;
+    sector: string;
+    industry: string;
+    basicIndustry: string;
+  };
+  preOpenMarket: {
+    preopen: any[];
+    ato: {
+      buy: number;
+      sell: number;
+    };
+    IEP: number;
+    totalTradedVolume: number;
+    finalPrice: number;
+    finalQuantity: number;
+    lastUpdateTime: string | null;
+    totalBuyQuantity: number;
+    totalSellQuantity: number;
+    atoBuyQty: number;
+    atoSellQty: number;
+    Change: number;
+    perChange: number;
+    prevClose: number;
+  };
 }
 
-// Google Sheets ID
-const SPREADSHEET_ID = '1q2K-jlJHApVIGbc_FDiZsJfd0_78ZwpzUyn1KghbcJk';
-// Sheet name or GID
-const SHEET_NAME = 'ETFs';
+const API_BASE_URL = 'https://nse-server.vercel.app';
+const ITEMS_PER_PAGE = 20;
 
-export const fetchETFData = async (): Promise<ETF[]> => {
+export const fetchETFData = async (page: number = 1): Promise<{ etfs: ETF[]; total: number }> => {
   try {
-    // Using Google Sheets API v4 with public spreadsheet
-    const response = await fetch(
-      `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${SHEET_NAME}?key=AIzaSyBwGDKAMYtHg7dN9BgQPDfNvDY0x1PdGWw`
-    );
+    // Fetch list of all ETFs
+    const response = await fetch(`${API_BASE_URL}/api/etfs`);
     
     if (!response.ok) {
-      throw new Error('Failed to fetch ETF data');
+      throw new Error('Failed to fetch ETF list');
     }
     
-    const data = await response.json();
-    const rows = data.values;
+    const etfList = await response.json();
+    console.log('ETF List Response:', etfList);
+    const total = etfList.length;
     
-    if (!rows || rows.length === 0) {
-      return [];
-    }
+    // Calculate start and end indices for pagination
+    const startIndex = (page - 1) * ITEMS_PER_PAGE;
+    const endIndex = startIndex + ITEMS_PER_PAGE;
+    const paginatedList = etfList.slice(startIndex, endIndex);
+    console.log('Paginated List:', paginatedList);
     
-    // First row contains headers
-    const headers = rows[0];
-    
-    // Transform the data into ETF objects
-    const etfs: ETF[] = rows.slice(1).map((row: any[]) => {
-      const mapValue = (index: number): any => {
-        if (index >= row.length) return '';
-        return row[index];
-      };
+    // Fetch detailed data for paginated ETFs
+    const etfDetails = await Promise.all(
+      paginatedList.map(async (etf: { symbol: string; name: string }) => {
+        try {
+          // Skip invalid symbols
+          if (!etf.symbol || etf.symbol === '"') {
+            console.warn(`Skipping invalid symbol: ${etf.symbol}`);
+            return null;
+          }
 
-      const parseNumber = (value: string): number => {
-        if (!value || value === 'N/A' || value === '-') return 0;
-        // Remove any % signs and convert to number
-        return parseFloat(value.replace('%', ''));
-      };
+          const detailResponse = await fetch(`${API_BASE_URL}/api/equity/${etf.symbol}`);
+          if (!detailResponse.ok) {
+            console.error(`Failed to fetch details for ${etf.symbol}`);
+            return null;
+          }
+          const detail = await detailResponse.json();
+          console.log(`Details for ${etf.symbol}:`, detail);
+          
+          // Validate required fields
+          if (!detail?.info?.companyName) {
+            console.warn(`Missing company name for ${etf.symbol}`);
+            return null;
+          }
 
-      // Find indices for each field
-      const nameIndex = headers.findIndex((h: string) => h === 'ETF Name');
-      const tickerIndex = headers.findIndex((h: string) => h === 'Ticker');
-      const amcIndex = headers.findIndex((h: string) => h === 'AMC');
-      const categoryIndex = headers.findIndex((h: string) => h === 'Category');
-      const subcategoryIndex = headers.findIndex((h: string) => h === 'Subcategory');
-      const launchDateIndex = headers.findIndex((h: string) => h === 'Launch Date');
-      const navIndex = headers.findIndex((h: string) => h === 'NAV');
-      const marketPriceIndex = headers.findIndex((h: string) => h === 'Market Price');
-      const returns1YIndex = headers.findIndex((h: string) => h === '1Y Return');
-      const returns3YIndex = headers.findIndex((h: string) => h === '3Y Return');
-      const returns5YIndex = headers.findIndex((h: string) => h === '5Y Return');
-      const expenseRatioIndex = headers.findIndex((h: string) => h === 'Expense Ratio');
-      const volumeIndex = headers.findIndex((h: string) => h === 'Volume');
-      const aumIndex = headers.findIndex((h: string) => h === 'AUM');
-      const trackingErrorIndex = headers.findIndex((h: string) => h === 'Tracking Error');
-      const bidAskSpreadIndex = headers.findIndex((h: string) => h === 'Bid-Ask Spread');
-      const riskIndex = headers.findIndex((h: string) => h === 'Risk');
-      const useCaseIndex = headers.findIndex((h: string) => h === 'Suggested Use Case');
-      const tagsIndex = headers.findIndex((h: string) => h === 'Tags');
-      const amcLinkIndex = headers.findIndex((h: string) => h === 'AMC Link');
-      const factSheetLinkIndex = headers.findIndex((h: string) => h === 'Fact Sheet Link');
-      const topHoldingsIndex = headers.findIndex((h: string) => h === 'Top Holdings');
-      const sectorAllocationIndex = headers.findIndex((h: string) => h === 'Sector Allocation');
-      
-      // Parse tags from comma-separated string
-      const tags = mapValue(tagsIndex).split(',').map((tag: string) => tag.trim()).filter(Boolean);
-      
-      // Parse top holdings
-      const topHoldings = mapValue(topHoldingsIndex).split(',').map((holding: string) => holding.trim()).filter(Boolean);
-      
-      // Parse sector allocation (simplified for now)
-      let sectorAllocation: Record<string, number> = {};
-      try {
-        const sectorData = mapValue(sectorAllocationIndex);
-        if (sectorData && sectorData.includes(':')) {
-          const sectors = sectorData.split(',');
-          sectors.forEach((sector: string) => {
-            const [name, valueStr] = sector.split(':');
-            if (name && valueStr) {
-              sectorAllocation[name.trim()] = parseFloat(valueStr.trim());
-            }
-          });
+          return detail;
+        } catch (error) {
+          console.error(`Error fetching details for ${etf.symbol}:`, error);
+          return null;
         }
-      } catch (err) {
-        console.error('Error parsing sector allocation', err);
-      }
-      
-      return {
-        name: mapValue(nameIndex),
-        ticker: mapValue(tickerIndex),
-        amc: mapValue(amcIndex),
-        category: mapValue(categoryIndex),
-        subcategory: mapValue(subcategoryIndex),
-        launchDate: mapValue(launchDateIndex),
-        nav: parseNumber(mapValue(navIndex)),
-        marketPrice: parseNumber(mapValue(marketPriceIndex)),
-        returns1Y: parseNumber(mapValue(returns1YIndex)),
-        returns3Y: parseNumber(mapValue(returns3YIndex)),
-        returns5Y: parseNumber(mapValue(returns5YIndex)),
-        expenseRatio: parseNumber(mapValue(expenseRatioIndex)),
-        volume: parseNumber(mapValue(volumeIndex)),
-        aum: parseNumber(mapValue(aumIndex)),
-        trackingError: parseNumber(mapValue(trackingErrorIndex)),
-        bidAskSpread: parseNumber(mapValue(bidAskSpreadIndex)),
-        risk: mapValue(riskIndex),
-        useCase: mapValue(useCaseIndex),
-        tags,
-        amcLink: mapValue(amcLinkIndex),
-        factSheetLink: mapValue(factSheetLinkIndex),
-        topHoldings,
-        sectorAllocation,
-      };
-    });
+      })
+    );
     
-    return etfs;
+    // Filter out any failed fetches
+    const validEtfs = etfDetails.filter((etf): etf is ETF => etf !== null);
+    console.log('Final valid ETFs:', validEtfs);
+    
+    if (validEtfs.length === 0) {
+      toast.error("No valid ETF data found. Please try again later.");
+    }
+    
+    return { etfs: validEtfs, total };
   } catch (error) {
     console.error('Error fetching ETF data:', error);
     toast.error("Failed to load ETF data. Please try again later.");
-    return [];
+    return { etfs: [], total: 0 };
   }
 };
 
 export const getETFByTicker = async (ticker: string): Promise<ETF | undefined> => {
-  const etfs = await fetchETFData();
-  return etfs.find(etf => etf.ticker.toLowerCase() === ticker.toLowerCase());
+  try {
+    // Skip invalid symbols
+    if (!ticker || ticker === '"') {
+      console.warn(`Invalid ticker symbol: ${ticker}`);
+      return undefined;
+    }
+
+    const response = await fetch(`${API_BASE_URL}/api/etfs`);
+    if (!response.ok) {
+      throw new Error('Failed to fetch ETF list');
+    }
+    
+    const etfList = await response.json();
+    const etfInfo = etfList.find((etf: { symbol: string; name: string }) => etf.symbol === ticker);
+    
+    if (!etfInfo) {
+      console.warn(`ETF not found in list: ${ticker}`);
+      return undefined;
+    }
+
+    const detailResponse = await fetch(`${API_BASE_URL}/api/equity/${ticker}`);
+    if (!detailResponse.ok) {
+      throw new Error('Failed to fetch ETF details');
+    }
+    
+    const detail = await detailResponse.json();
+    
+    // Validate required fields
+    if (!detail?.info?.companyName) {
+      console.warn(`Missing company name for ${ticker}`);
+      return undefined;
+    }
+
+    return detail;
+  } catch (error) {
+    console.error('Error fetching ETF details:', error);
+    toast.error("Failed to load ETF details. Please try again later.");
+    return undefined;
+  }
 };
 
-export const getUniqueValues = (etfs: ETF[], field: keyof ETF): string[] => {
+export const getUniqueValues = (etfs: ETF[], path: string): string[] => {
   const valuesSet = new Set<string>();
   
   etfs.forEach(etf => {
-    let value = etf[field];
+    const value = path.split('.').reduce((obj, key) => obj?.[key], etf as any);
     
-    // Handle array fields differently
     if (Array.isArray(value)) {
       value.forEach(v => valuesSet.add(v));
     } else if (typeof value === 'string' && value) {

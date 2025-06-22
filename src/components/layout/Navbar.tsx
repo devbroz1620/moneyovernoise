@@ -43,19 +43,19 @@ const Navbar = () => {
             ETFs
           </Link>
           <Link
-            to="/debt"
+            to="/debts"
             onClick={() => window.scrollTo(0, 0)}
             className={`font-medium transition-colors hover:text-primary hover:bg-accent/50 px-3 py-2 rounded-md ${
-              isActive('/debt') ? 'text-primary font-semibold bg-accent/30' : 'text-muted-foreground'
+              isActive('/debts') ? 'text-primary font-semibold bg-accent/30' : 'text-muted-foreground'
             }`}
           >
             Debt
           </Link>
           <Link
-            to="/psychology"
+            to="/mind-over-money"
             onClick={() => window.scrollTo(0, 0)}
             className={`font-medium transition-colors hover:text-primary hover:bg-accent/50 px-3 py-2 rounded-md ${
-              location.pathname === '/psychology' ? 'text-primary font-semibold bg-accent/30' : 'text-muted-foreground'
+              location.pathname === '/mind-over-money' ? 'text-primary font-semibold bg-accent/30' : 'text-muted-foreground'
             }`}
           >
             Mind Over Money

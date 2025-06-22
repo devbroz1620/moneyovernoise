@@ -6,9 +6,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
-import ETFs from "./pages/ETFs";
 import ETFList from "./pages/ETFList";
-import ETFDetail from "./pages/ETFDetail";
+import ETFDetails from "./pages/ETFDetails";
 import ETFLearn from "./pages/ETFLearn";
 import ETFLearnArticle from "./pages/ETFLearnArticle";
 import Learn from "./pages/Learn";
@@ -21,6 +20,16 @@ import Contact from "./pages/Contact";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
 import MoneyBasics from "./pages/MoneyBasics";
+import MoneyBasicsCategoryPage from "./pages/MoneyBasicsCategoryPage";
+import MoneyBasicsPostPage from "./pages/MoneyBasicsPostPage";
+import Debts from "./pages/Debts";
+import DebtsCategoryPage from "./pages/DebtsCategoryPage";
+import DebtPostPage from "./pages/DebtPostPage";
+import Etfs from "./pages/ETFs";
+import EtfPostPage from "./pages/EtfPostPage";
+import MindOverMoney from "./pages/MindOverMoney";
+import MindOverMoneyPostPage from "./pages/MindOverMoneyPostPage";
+import PostDetailPage from "./pages/PostDetailPage";
 
 const queryClient = new QueryClient();
 
@@ -33,10 +42,13 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/money-basics" element={<MoneyBasics />} />
-          <Route path="/etfs" element={<ETFs />} />
+          <Route path="/money-basics/categories/:categoryName" element={<MoneyBasicsCategoryPage />} />
+          <Route path="/posts/:id" element={<MoneyBasicsPostPage />} />
+          <Route path="/etfs" element={<Etfs />} />
           <Route path="/etfs/list" element={<ETFList />} />
           <Route path="/etfs/screener" element={<ETFList />} />
-          <Route path="/etfs/:id" element={<ETFDetail />} />
+          <Route path="/etfs/screener/:symbol" element={<ETFDetails />} />
+          <Route path="/etfs/posts/:id" element={<EtfPostPage />} />
           <Route path="/etfs/learn" element={<ETFLearn />} />
           <Route path="/etfs/learn/:slug" element={<ETFLearnArticle />} />
           <Route path="/learn" element={<Learn />} />
@@ -48,6 +60,11 @@ const App = () => (
           <Route path="/contact" element={<Contact />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/terms" element={<Terms />} />
+          <Route path="/debts" element={<Debts />} />
+          <Route path="/debts/categories/:categoryName" element={<DebtsCategoryPage />} />
+          <Route path="/debts/posts/:id" element={<DebtPostPage />} />
+          <Route path="/mind-over-money" element={<MindOverMoney />} />
+          <Route path="/mind-over-money/:id" element={<MindOverMoneyPostPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

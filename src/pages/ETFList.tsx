@@ -1,5 +1,4 @@
-
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import MainLayout from '@/components/layout/MainLayout';
@@ -7,7 +6,7 @@ import { PageHeader } from '@/components/shared/PageHeader';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import { Card } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import {
   Table,
   TableBody,
@@ -26,56 +25,126 @@ import {
 import { Slider } from '@/components/ui/slider';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Filter, Search, ChevronDown, ChevronUp } from 'lucide-react';
-import { fetchETFData, ETF, getUniqueValues } from '@/services/etfService';
+import { fetchETFData, ETF, getUniqueValues, getETFByTicker } from '@/services/etfService';
 import { Skeleton } from '@/components/ui/skeleton';
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Check, ChevronsUpDown } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Label } from "@/components/ui/label";
 
-type SortField = 'name' | 'returns1Y' | 'returns3Y' | 'returns5Y' | 'expenseRatio' | 'aum';
+type SortField = 'name' | 'lastPrice' | 'pChange' | 'expenseRatio' | 'aum';
 type SortDirection = 'asc' | 'desc';
 
 const ETFList = () => {
-  // Fetch ETF data
-  const { data: etfs, isLoading, error } = useQuery({
-    queryKey: ['etfs'],
-    queryFn: fetchETFData,
+  // State for pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [open, setOpen] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
+  const [selectedETF, setSelectedETF] = useState<string | null>(null);
+  const API_BASE_URL = 'https://nse-server.vercel.app';
+  // Fetch all ETFs for search suggestions
+  const { data: allETFs } = useQuery({
+    queryKey: ['all-etfs'],
+    queryFn: async () => {
+      const response = await fetch(`${API_BASE_URL}/api/etfs`);
+      if (!response.ok) throw new Error('Failed to fetch ETFs');
+      const data = await response.json();
+      console.log('Fetched ETFs:', data); // Debug log
+      // Transform the data to match the expected format
+      const transformed = {
+        etfs: data.map((etf: { symbol: string; name: string }) => ({
+          ticker: etf.symbol,
+          name: etf.name,
+          searchText: `${etf.symbol} ${etf.name}`.toLowerCase() // Convert to lowercase once
+        }))
+      };
+      console.log('Transformed ETFs:', transformed); // Debug log
+      return transformed;
+    },
   });
+
+  // Fetch paginated ETF data
+  const { data, isLoading, error } = useQuery({
+    queryKey: ['etfs', currentPage],
+    queryFn: () => fetchETFData(currentPage),
+  });
+
+  // Fetch selected ETF details if one is selected
+  const { data: selectedETFData } = useQuery({
+    queryKey: ['etf', selectedETF],
+    queryFn: () => selectedETF ? getETFByTicker(selectedETF) : null,
+    enabled: !!selectedETF,
+  });
+
+  // Filter ETFs based on search
+  const filteredETFs = useMemo(() => {
+    if (!allETFs?.etfs) return [];
+    if (!searchValue) return [];
+    
+    const searchLower = searchValue.toLowerCase().trim();
+    console.log('Searching for:', searchLower); // Debug log
+    const filtered = allETFs.etfs.filter(etf => 
+      etf.searchText.includes(searchLower)
+    );
+    console.log('Filtered results:', filtered); // Debug log
+    return filtered;
+  }, [allETFs?.etfs, searchValue]);
+
+  // Update total pages when data is loaded
+  useEffect(() => {
+    if (data?.total) {
+      setTotalPages(Math.ceil(data.total / 20));
+    }
+  }, [data?.total]);
+
+  // Handle ETF selection
+  const handleETFSelect = (ticker: string) => {
+    setSelectedETF(ticker);
+    setSearchValue(ticker);
+    setOpen(false);
+  };
+
+  // Get the ETFs to display in the table
+  const displayETFs = useMemo(() => {
+    if (selectedETFData) {
+      return [selectedETFData];
+    }
+    return data?.etfs || [];
+  }, [selectedETFData, data?.etfs]);
 
   // State for filters and sorting
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedAMCs, setSelectedAMCs] = useState<string[]>([]);
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-  const [selectedRisks, setSelectedRisks] = useState<string[]>([]);
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  const [minExpenseRatio, setMinExpenseRatio] = useState(0);
-  const [maxExpenseRatio, setMaxExpenseRatio] = useState(2); // Reasonable maximum for India
-  const [minAUM, setMinAUM] = useState(0);
-  const [maxAUM, setMaxAUM] = useState(50000); // In crores, adjust if needed
+  const [selectedCompanies, setSelectedCompanies] = useState<string[]>([]);
+  const [selectedSectors, setSelectedSectors] = useState<string[]>([]);
+  const [selectedIndustries, setSelectedIndustries] = useState<string[]>([]);
   const [showFilters, setShowFilters] = useState(false);
-  const [sortField, setSortField] = useState<SortField>('returns1Y');
+  const [sortField, setSortField] = useState<SortField>('lastPrice');
   const [sortDirection, setSortDirection] = useState<SortDirection>('desc');
   
   // Derived values
-  const [uniqueAMCs, setUniqueAMCs] = useState<string[]>([]);
-  const [uniqueCategories, setUniqueCategories] = useState<string[]>([]);
-  const [uniqueTags, setUniqueTags] = useState<string[]>([]);
-  const [uniqueRisks, setUniqueRisks] = useState<string[]>([]);
+  const [uniqueCompanies, setUniqueCompanies] = useState<string[]>([]);
+  const [uniqueSectors, setUniqueSectors] = useState<string[]>([]);
+  const [uniqueIndustries, setUniqueIndustries] = useState<string[]>([]);
   
   // Initialize unique values when data is loaded
   useEffect(() => {
-    if (etfs?.length) {
-      setUniqueAMCs(getUniqueValues(etfs, 'amc'));
-      setUniqueCategories(getUniqueValues(etfs, 'category'));
-      setUniqueRisks(getUniqueValues(etfs, 'risk'));
-      
-      // For tags, we need to flatten the array
-      const tagSet = new Set<string>();
-      etfs.forEach(etf => {
-        if (etf.tags?.length) {
-          etf.tags.forEach(tag => tagSet.add(tag));
-        }
-      });
-      setUniqueTags(Array.from(tagSet).sort());
+    if (data?.etfs) {
+      setUniqueCompanies(getUniqueValues(data.etfs, 'info.companyName'));
+      setUniqueSectors(getUniqueValues(data.etfs, 'industryInfo.sector'));
+      setUniqueIndustries(getUniqueValues(data.etfs, 'info.industry'));
     }
-  }, [etfs]);
+  }, [data?.etfs]);
   
   // Helper function to toggle value in array
   const toggleArrayValue = (array: string[], value: string): string[] => {
@@ -85,53 +154,23 @@ const ETFList = () => {
   };
 
   // Apply filters and sorting to ETF data
-  const filteredETFs = etfs
-    ? etfs.filter(etf => {
-        // Search term filter
-        const matchesSearch = searchTerm === '' || 
-          etf.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          etf.ticker.toLowerCase().includes(searchTerm.toLowerCase());
-
-        // AMC filter
-        const matchesAMC = selectedAMCs.length === 0 || selectedAMCs.includes(etf.amc);
-
-        // Category filter
-        const matchesCategory = selectedCategories.length === 0 || selectedCategories.includes(etf.category);
-
-        // Risk filter
-        const matchesRisk = selectedRisks.length === 0 || selectedRisks.includes(etf.risk);
-
-        // Tags filter
-        const matchesTags = selectedTags.length === 0 || 
-          (etf.tags && selectedTags.some(tag => etf.tags.includes(tag)));
-
-        // Expense ratio filter
-        const matchesExpenseRatio = etf.expenseRatio >= minExpenseRatio && etf.expenseRatio <= maxExpenseRatio;
-
-        // AUM filter
-        const matchesAUM = etf.aum >= minAUM && etf.aum <= maxAUM;
-
-        return matchesSearch && matchesAMC && matchesCategory && matchesRisk && 
-               matchesTags && matchesExpenseRatio && matchesAUM;
-      })
-    : [];
-
-  // Apply sorting
-  const sortedETFs = [...filteredETFs].sort((a, b) => {
-    let comparison = 0;
-    
-    // Handle sort field
-    if (sortField === 'name') {
-      comparison = a.name.localeCompare(b.name);
-    } else {
-      const aValue = a[sortField] || 0;
-      const bValue = b[sortField] || 0;
-      comparison = aValue - bValue;
-    }
-    
-    // Apply direction
-    return sortDirection === 'asc' ? comparison : -comparison;
-  });
+  const sortedETFs = useMemo(() => {
+    return [...displayETFs].sort((a, b) => {
+      let comparison = 0;
+      
+      // Handle sort field
+      if (sortField === 'name') {
+        comparison = a.info.companyName.localeCompare(b.info.companyName);
+      } else {
+        const aValue = a.priceInfo[sortField] || 0;
+        const bValue = b.priceInfo[sortField] || 0;
+        comparison = aValue - bValue;
+      }
+      
+      // Apply direction
+      return sortDirection === 'asc' ? comparison : -comparison;
+    });
+  }, [displayETFs, sortField, sortDirection]);
   
   // Handle sort change
   const handleSort = (field: SortField) => {
@@ -227,230 +266,81 @@ const ETFList = () => {
         />
         
         <Card className="mb-6">
-          <div className="p-4 md:p-6">
-            {/* Search and filter controls */}
-            <div className="flex flex-col md:flex-row gap-4 mb-6">
-              <div className="relative flex-1">
-                <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                <Input
-                  placeholder="Search ETFs by name or ticker..."
-                  className="pl-10"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
+          <CardContent className="pt-6">
+            <div className="flex flex-col gap-4">
+              {/* Search with suggestions */}
+              <div className="flex flex-col gap-2">
+                <Label className="text-foreground">Search ETFs</Label>
+                <Popover open={open} onOpenChange={setOpen}>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      role="combobox"
+                      aria-expanded={open}
+                      className="w-full justify-between text-foreground"
+                    >
+                      {searchValue || "Search ETFs..."}
+                      <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-full p-0">
+                    <Command>
+                      <CommandInput 
+                        placeholder="Search by symbol or name..." 
+                        value={searchValue}
+                        onValueChange={(value) => {
+                          console.log('Search value:', value); // Debug log
+                          setSearchValue(value);
+                        }}
+                        className="text-foreground"
+                      />
+                      <CommandList>
+                        <CommandEmpty>No ETFs found.</CommandEmpty>
+                        <CommandGroup>
+                          {filteredETFs.map((etf) => (
+                            <CommandItem
+                              key={etf.ticker}
+                              value={etf.ticker}
+                              onSelect={handleETFSelect}
+                              className="text-foreground"
+                            >
+                              <Check
+                                className={cn(
+                                  "mr-2 h-4 w-4",
+                                  searchValue === etf.ticker ? "opacity-100" : "opacity-0"
+                                )}
+                              />
+                              <div className="flex flex-col">
+                                <span className="text-foreground">{etf.name}</span>
+                                <span className="text-sm text-muted-foreground">{etf.ticker}</span>
+                              </div>
+                            </CommandItem>
+                          ))}
+                        </CommandGroup>
+                      </CommandList>
+                    </Command>
+                  </PopoverContent>
+                </Popover>
               </div>
-              
-              <Button 
-                variant="outline" 
-                className="flex items-center gap-2"
-                onClick={() => setShowFilters(!showFilters)}
-              >
-                <Filter className="h-4 w-4" />
-                Filters
-                {(selectedAMCs.length > 0 || selectedCategories.length > 0 || 
-                  selectedRisks.length > 0 || selectedTags.length > 0 ||
-                  minExpenseRatio > 0 || maxExpenseRatio < 2 || 
-                  minAUM > 0 || maxAUM < 50000) && (
-                  <Badge className="ml-2 h-5 w-5 rounded-full p-0 flex items-center justify-center">
-                    {selectedAMCs.length + selectedCategories.length + selectedRisks.length + 
-                     selectedTags.length + (minExpenseRatio > 0 ? 1 : 0) + 
-                     (maxExpenseRatio < 2 ? 1 : 0) + (minAUM > 0 ? 1 : 0) + 
-                     (maxAUM < 50000 ? 1 : 0)}
-                  </Badge>
-                )}
-              </Button>
-              
-              <Select
-                value={sortField}
-                onValueChange={(value) => handleSort(value as SortField)}
-              >
-                <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder="Sort by" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="name">Name</SelectItem>
-                  <SelectItem value="returns1Y">1Y Return</SelectItem>
-                  <SelectItem value="returns3Y">3Y Return</SelectItem>
-                  <SelectItem value="returns5Y">5Y Return</SelectItem>
-                  <SelectItem value="expenseRatio">Expense Ratio</SelectItem>
-                  <SelectItem value="aum">AUM</SelectItem>
-                </SelectContent>
-              </Select>
-              
-              <Button 
-                variant="ghost" 
-                size="icon"
-                onClick={() => setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc')}
-              >
-                {sortDirection === 'asc' ? (
-                  <ChevronUp className="h-4 w-4" />
-                ) : (
-                  <ChevronDown className="h-4 w-4" />
-                )}
-              </Button>
+
+              {/* Commented out filters temporarily
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                ... existing filter controls ...
+              </div>
+              */}
             </div>
-            
-            {showFilters && (
-              <div className="space-y-6 pt-4 border-t">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                  {/* AMC Filter */}
-                  <div>
-                    <h4 className="text-sm font-medium mb-3">AMC</h4>
-                    <div className="space-y-2 max-h-[200px] overflow-y-auto">
-                      {uniqueAMCs.map((amc) => (
-                        <div key={amc} className="flex items-center space-x-2">
-                          <Checkbox
-                            id={`amc-${amc}`}
-                            checked={selectedAMCs.includes(amc)}
-                            onCheckedChange={() => setSelectedAMCs(toggleArrayValue(selectedAMCs, amc))}
-                          />
-                          <label
-                            htmlFor={`amc-${amc}`}
-                            className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                          >
-                            {amc}
-                          </label>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                  
-                  {/* Category Filter */}
-                  <div>
-                    <h4 className="text-sm font-medium mb-3">Category</h4>
-                    <div className="space-y-2 max-h-[200px] overflow-y-auto">
-                      {uniqueCategories.map((category) => (
-                        <div key={category} className="flex items-center space-x-2">
-                          <Checkbox
-                            id={`category-${category}`}
-                            checked={selectedCategories.includes(category)}
-                            onCheckedChange={() => setSelectedCategories(toggleArrayValue(selectedCategories, category))}
-                          />
-                          <label
-                            htmlFor={`category-${category}`}
-                            className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                          >
-                            {category}
-                          </label>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                  
-                  {/* Risk Filter */}
-                  <div>
-                    <h4 className="text-sm font-medium mb-3">Risk Level</h4>
-                    <div className="space-y-2">
-                      {uniqueRisks.map((risk) => (
-                        <div key={risk} className="flex items-center space-x-2">
-                          <Checkbox
-                            id={`risk-${risk}`}
-                            checked={selectedRisks.includes(risk)}
-                            onCheckedChange={() => setSelectedRisks(toggleArrayValue(selectedRisks, risk))}
-                          />
-                          <label
-                            htmlFor={`risk-${risk}`}
-                            className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                          >
-                            {risk}
-                          </label>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                  
-                  {/* Tags Filter */}
-                  <div>
-                    <h4 className="text-sm font-medium mb-3">Tags</h4>
-                    <div className="space-y-2 max-h-[200px] overflow-y-auto">
-                      {uniqueTags.map((tag) => (
-                        <div key={tag} className="flex items-center space-x-2">
-                          <Checkbox
-                            id={`tag-${tag}`}
-                            checked={selectedTags.includes(tag)}
-                            onCheckedChange={() => setSelectedTags(toggleArrayValue(selectedTags, tag))}
-                          />
-                          <label
-                            htmlFor={`tag-${tag}`}
-                            className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                          >
-                            {tag}
-                          </label>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {/* Expense Ratio Slider */}
-                  <div>
-                    <div className="flex justify-between mb-2">
-                      <h4 className="text-sm font-medium">Expense Ratio</h4>
-                      <span className="text-sm text-muted-foreground">
-                        {minExpenseRatio.toFixed(2)}% - {maxExpenseRatio.toFixed(2)}%
-                      </span>
-                    </div>
-                    <Slider
-                      min={0}
-                      max={2}
-                      step={0.01}
-                      value={[minExpenseRatio, maxExpenseRatio]}
-                      onValueChange={([min, max]) => {
-                        setMinExpenseRatio(min);
-                        setMaxExpenseRatio(max);
-                      }}
-                      className="my-6"
-                    />
-                  </div>
-                  
-                  {/* AUM Slider */}
-                  <div>
-                    <div className="flex justify-between mb-2">
-                      <h4 className="text-sm font-medium">AUM (in Crores)</h4>
-                      <span className="text-sm text-muted-foreground">
-                        ₹{minAUM} Cr - ₹{maxAUM} Cr
-                      </span>
-                    </div>
-                    <Slider
-                      min={0}
-                      max={50000}
-                      step={100}
-                      value={[minAUM, maxAUM]}
-                      onValueChange={([min, max]) => {
-                        setMinAUM(min);
-                        setMaxAUM(max);
-                      }}
-                      className="my-6"
-                    />
-                  </div>
-                </div>
-                
-                <div className="flex justify-end">
-                  <Button
-                    variant="outline"
-                    onClick={() => {
-                      setSelectedAMCs([]);
-                      setSelectedCategories([]);
-                      setSelectedRisks([]);
-                      setSelectedTags([]);
-                      setMinExpenseRatio(0);
-                      setMaxExpenseRatio(2);
-                      setMinAUM(0);
-                      setMaxAUM(50000);
-                    }}
-                  >
-                    Reset Filters
-                  </Button>
-                </div>
-              </div>
-            )}
-          </div>
+          </CardContent>
         </Card>
         
         {/* Results count and table */}
         <div className="mb-4 text-sm text-muted-foreground">
-          Showing {sortedETFs.length} of {etfs?.length || 0} ETFs
+          {isLoading ? (
+            "Loading ETFs..."
+          ) : error ? (
+            "Error loading ETFs. Please try again."
+          ) : (
+            `Showing ${displayETFs.length} of ${selectedETF ? 1 : data?.total || 0} ETFs`
+          )}
         </div>
         
         <div className="rounded-md border overflow-hidden">
@@ -458,45 +348,32 @@ const ETFList = () => {
             <Table>
               <TableHeader className="bg-muted/50">
                 <TableRow>
-                  <TableHead className="w-[250px]">
-                    <button 
-                      className="flex items-center font-medium"
-                      onClick={() => handleSort('name')}
-                    >
-                      ETF Name {getSortIcon('name')}
-                    </button>
-                  </TableHead>
-                  <TableHead>AMC</TableHead>
-                  <TableHead>Category</TableHead>
-                  <TableHead className="text-right">
-                    <button 
-                      className="flex items-center font-medium ml-auto"
-                      onClick={() => handleSort('returns1Y')}
-                    >
-                      1Y Return {getSortIcon('returns1Y')}
-                    </button>
-                  </TableHead>
-                  <TableHead className="text-right">
-                    <button 
-                      className="flex items-center font-medium ml-auto"
-                      onClick={() => handleSort('expenseRatio')}
-                    >
-                      Expense Ratio {getSortIcon('expenseRatio')}
-                    </button>
-                  </TableHead>
-                  <TableHead className="text-right">
-                    <button 
-                      className="flex items-center font-medium ml-auto"
-                      onClick={() => handleSort('aum')}
-                    >
-                      AUM {getSortIcon('aum')}
-                    </button>
-                  </TableHead>
-                  <TableHead>Risk</TableHead>
+                  <TableHead className="text-foreground">Name</TableHead>
+                  <TableHead className="text-foreground">Company</TableHead>
+                  <TableHead className="text-foreground">Sector</TableHead>
+                  <TableHead className="text-right text-foreground">Last Price</TableHead>
+                  <TableHead className="text-right text-foreground">Change %</TableHead>
+                  <TableHead className="text-right text-foreground">Volume</TableHead>
+                  <TableHead className="text-foreground">Industry</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {sortedETFs.length === 0 ? (
+                {isLoading ? (
+                  <TableRow>
+                    <TableCell colSpan={7} className="text-center py-10">
+                      <div className="flex items-center justify-center space-x-2">
+                        <div className="h-4 w-4 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+                        <span>Loading ETFs...</span>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ) : error ? (
+                  <TableRow>
+                    <TableCell colSpan={7} className="text-center py-10 text-red-600">
+                      Error loading ETFs. Please try again.
+                    </TableCell>
+                  </TableRow>
+                ) : displayETFs.length === 0 ? (
                   <TableRow>
                     <TableCell colSpan={7} className="text-center py-10 text-muted-foreground">
                       No ETFs found matching your filters. Try adjusting your criteria.
@@ -504,31 +381,27 @@ const ETFList = () => {
                   </TableRow>
                 ) : (
                   sortedETFs.map((etf) => (
-                    <TableRow key={etf.ticker} className="hover:bg-muted/50">
+                    <TableRow key={etf.info.symbol} className="hover:bg-muted/50">
                       <TableCell className="font-medium">
-                        <Link to={`/list/etfs/${etf.ticker}`} className="hover:text-primary">
-                          <div>{etf.name}</div>
-                          <div className="text-xs text-muted-foreground">{etf.ticker}</div>
+                        <Link to={`/etfs/screener/${etf.info.symbol}`} className="hover:text-primary text-foreground">
+                          <div>{etf.info.companyName}</div>
+                          <div className="text-xs text-muted-foreground">{etf.info.symbol}</div>
                         </Link>
                       </TableCell>
-                      <TableCell>{etf.amc}</TableCell>
-                      <TableCell>{etf.category}</TableCell>
-                      <TableCell className={`text-right ${etf.returns1Y > 0 ? 'text-green-600' : etf.returns1Y < 0 ? 'text-red-600' : ''}`}>
-                        {formatPercent(etf.returns1Y)}
+                      <TableCell className="text-foreground">{etf.info.companyName}</TableCell>
+                      <TableCell className="text-foreground">{etf.industryInfo.sector}</TableCell>
+                      <TableCell className="text-right text-foreground">
+                        {formatCurrency(etf.priceInfo.lastPrice)}
                       </TableCell>
-                      <TableCell className="text-right">
-                        {formatPercent(etf.expenseRatio)}
+                      <TableCell className={`text-right ${etf.priceInfo.pChange > 0 ? 'text-green-600' : etf.priceInfo.pChange < 0 ? 'text-red-600' : 'text-foreground'}`}>
+                        {formatPercent(etf.priceInfo.pChange)}
                       </TableCell>
-                      <TableCell className="text-right">
-                        {formatCurrency(etf.aum)}
+                      <TableCell className="text-right text-foreground">
+                        {formatCurrency(etf.priceInfo.intraDayHighLow.value)}
                       </TableCell>
                       <TableCell>
-                        <Badge variant="outline" className={
-                          etf.risk === 'High' ? 'border-red-200 bg-red-50 text-red-700' :
-                          etf.risk === 'Moderate' ? 'border-yellow-200 bg-yellow-50 text-yellow-700' :
-                          'border-green-200 bg-green-50 text-green-700'
-                        }>
-                          {etf.risk}
+                        <Badge variant="outline" className="text-muted-foreground">
+                          {etf.info.industry || etf.metadata.industry || etf.industryInfo.industry}
                         </Badge>
                       </TableCell>
                     </TableRow>
@@ -538,6 +411,57 @@ const ETFList = () => {
             </Table>
           </div>
         </div>
+
+        {/* Pagination - Only show if not showing search results */}
+        {!selectedETF && !isLoading && !error && totalPages > 1 && (
+          <div className="mt-4 flex justify-center">
+            <Pagination>
+              <PaginationContent>
+                <PaginationItem>
+                  <PaginationPrevious 
+                    onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                    className={currentPage === 1 ? 'pointer-events-none opacity-50' : ''}
+                  />
+                </PaginationItem>
+                
+                {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                  const pageNum = i + 1;
+                  return (
+                    <PaginationItem key={pageNum}>
+                      <PaginationLink
+                        onClick={() => setCurrentPage(pageNum)}
+                        isActive={currentPage === pageNum}
+                      >
+                        {pageNum}
+                      </PaginationLink>
+                    </PaginationItem>
+                  );
+                })}
+                
+                {totalPages > 5 && (
+                  <>
+                    <PaginationEllipsis />
+                    <PaginationItem>
+                      <PaginationLink
+                        onClick={() => setCurrentPage(totalPages)}
+                        isActive={currentPage === totalPages}
+                      >
+                        {totalPages}
+                      </PaginationLink>
+                    </PaginationItem>
+                  </>
+                )}
+                
+                <PaginationItem>
+                  <PaginationNext 
+                    onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                    className={currentPage === totalPages ? 'pointer-events-none opacity-50' : ''}
+                  />
+                </PaginationItem>
+              </PaginationContent>
+            </Pagination>
+          </div>
+        )}
       </div>
     </MainLayout>
   );
