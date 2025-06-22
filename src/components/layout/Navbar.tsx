@@ -124,13 +124,13 @@ const Navbar = () => {
                 ETFs
               </Link>
               <Link
-                to="/debt"
+                to="/debts"
                 onClick={() => {
                   setIsMenuOpen(false);
                   window.scrollTo(0, 0);
                 }}
                 className={`text-sm py-2 px-2 rounded transition-colors ${
-                  isActive('/debt') 
+                  isActive('/debts') 
                     ? 'text-foreground bg-primary/20 font-semibold border border-primary/30' 
                     : 'text-muted-foreground hover:text-primary hover:bg-accent'
                 }`}
@@ -138,13 +138,13 @@ const Navbar = () => {
                 Debt
               </Link>
               <Link
-                to="/psychology"
+                to="/mind-over-money"
                 onClick={() => {
                   setIsMenuOpen(false);
                   window.scrollTo(0, 0);
                 }}
                 className={`text-sm py-2 px-2 rounded transition-colors ${
-                  location.pathname === '/psychology' 
+                  location.pathname === '/mind-over-money' 
                     ? 'text-foreground bg-primary/20 font-semibold border border-primary/30' 
                     : 'text-muted-foreground hover:text-primary hover:bg-accent'
                 }`}
