@@ -31,6 +31,7 @@ export default function DebtsCategoryPage() {
   const navigate = useNavigate();
   const [articles, setArticles] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [categoryDescription, setCategoryDescription] = useState<string>("");
   const displayName = categoryName?.replace(/_/g, ' ') || 'Category';
 
   useEffect(() => {
@@ -46,6 +47,14 @@ export default function DebtsCategoryPage() {
       .then(data => {
         const publishedArticles = (data || []).filter((article: any) => article.published);
         setArticles(publishedArticles);
+        // Try to get the description from the first article in the category
+        if (publishedArticles.length > 0 && publishedArticles[0].categoryDescription) {
+          setCategoryDescription(publishedArticles[0].categoryDescription);
+        } else if (publishedArticles.length > 0 && publishedArticles[0].description) {
+          setCategoryDescription(publishedArticles[0].description);
+        } else {
+          setCategoryDescription("");
+        }
         setLoading(false);
       })
       .catch(error => {
@@ -56,6 +65,13 @@ export default function DebtsCategoryPage() {
           .then(data => {
             const filtered = data.filter((d: any) => d.category.replace(/ /g, '_') === categoryName && d.published);
             setArticles(filtered);
+            if (filtered.length > 0 && filtered[0].categoryDescription) {
+              setCategoryDescription(filtered[0].categoryDescription);
+            } else if (filtered.length > 0 && filtered[0].description) {
+              setCategoryDescription(filtered[0].description);
+            } else {
+              setCategoryDescription("");
+            }
           })
           .finally(() => setLoading(false));
       });
@@ -73,6 +89,9 @@ export default function DebtsCategoryPage() {
               &larr; Back to Categories
             </button>
             <h1 className="text-4xl font-bold mb-2">{displayName}</h1>
+            {categoryDescription && (
+              <p className="text-muted-foreground mb-4">{categoryDescription}</p>
+            )}
             <p className="text-muted-foreground">Browse all published articles in this category.</p>
           </header>
 

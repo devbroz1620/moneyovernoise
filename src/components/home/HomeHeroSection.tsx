@@ -1,4 +1,3 @@
-
 import AnimatedHeroText from '@/components/shared/AnimatedHeroText';
 
 const HomeHeroSection = () => (

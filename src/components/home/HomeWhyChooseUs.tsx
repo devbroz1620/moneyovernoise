@@ -1,27 +1,31 @@
-
 import { Eye, Heart, MapPin, Award } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { Link } from 'react-router-dom';
 
 const whyChooseUs = [
   {
+    icon: Award,
+    title: "Trustworthy",
+    description: "Research-backed.",
+    to: "https://www.notion.so/Why-MoneyOverNoise-21c2f5df76a7801db88fe4d29958e4cc?source=copy_link"
+  },
+  {
     icon: Eye,
     title: "Clarity First",
-    description: "No jargon, no confusion."
+    description: "No jargon, no confusion.",
+    to: "https://www.notion.so/Why-MoneyOverNoise-21c2f5df76a7801db88fe4d29958e4cc?source=copy_link"
   },
   {
     icon: Heart,
     title: "No Hype",
-    description: "Just honest, unbiased guidance."
+    description: "Just honest, unbiased guidance.",
+    to: "https://www.notion.so/Why-MoneyOverNoise-21c2f5df76a7801db88fe4d29958e4cc?source=copy_link"
   },
   {
     icon: MapPin,
     title: "For India",
-    description: "Tailored for Indian investors."
-  },
-  {
-    icon: Award,
-    title: "Trustworthy",
-    description: "Research-backed."
+    description: "Tailored for Indian investors.",
+    to: "https://www.notion.so/Why-MoneyOverNoise-21c2f5df76a7801db88fe4d29958e4cc?source=copy_link"
   }
 ];
 
@@ -37,7 +41,13 @@ const HomeWhyChooseUs = () => {
           {whyChooseUs.map((item, index) => {
             const IconComponent = item.icon;
             return (
-              <div key={index} className="text-center p-6 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors">
+              <a
+                key={index}
+                href={item.to}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-center p-6 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors block"
+              >
                 <div className="rounded-full bg-primary/10 w-16 h-16 flex items-center justify-center mx-auto mb-4">
                   <IconComponent className="h-8 w-8 text-primary" />
                 </div>
@@ -47,7 +57,7 @@ const HomeWhyChooseUs = () => {
                 <p className="text-muted-foreground leading-relaxed">
                   {item.description}
                 </p>
-              </div>
+              </a>
             );
           })}
         </div>

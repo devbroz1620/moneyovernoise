@@ -67,7 +67,7 @@ const ETFDetail = () => {
     <MainLayout>
       <div className="container py-8">
         {/* Header */}
-        <div className="mb-8 rounded-lg bg-primary text-primary-foreground p-6 flex flex-col items-center justify-center">
+        <div className="mb-8 rounded-lg bg-zinc-900 text-primary-foreground p-6 flex flex-col items-center justify-center max-w-3xl mx-auto">
           <div className="w-full flex justify-between items-center mb-4">
             <Button variant="ghost" asChild className="text-primary-foreground">
               <Link to="/etfs/screener">
@@ -76,12 +76,11 @@ const ETFDetail = () => {
               </Link>
             </Button>
             <div className="text-right">
-              <h1 className="text-3xl font-bold mb-1">{etf.info.companyName}</h1>
-              <Badge variant="secondary" className="font-mono">{etf.info.symbol}</Badge>
+              <Badge variant="secondary" className="font-mono text-2xl py-2 px-4">{etf.info.symbol}</Badge>
             </div>
           </div>
           
-          <div className="grid grid-cols-4 md:grid-cols-8 gap-4 w-full text-center">
+          <div className="grid grid-cols-4 gap-4 w-full text-center">
             <div className="flex flex-col items-center">
               <span className="text-lg font-bold">{etf.priceInfo.lastPrice.toFixed(2)}</span>
               <span className="text-xs opacity-80">LAST PRICE</span>
@@ -95,22 +94,6 @@ const ETFDetail = () => {
             <div className="flex flex-col items-center">
               <span className="text-lg font-bold">{etf.priceInfo.previousClose?.toFixed(2) || 'N/A'}</span>
               <span className="text-xs opacity-80">PREV. CLOSE</span>
-            </div>
-            <div className="flex flex-col items-center">
-              <span className="text-lg font-bold">{etf.priceInfo.open?.toFixed(2) || 'N/A'}</span>
-              <span className="text-xs opacity-80">OPEN</span>
-            </div>
-            <div className="flex flex-col items-center">
-              <span className="text-lg font-bold">{etf.priceInfo.weekHighLow.max?.toFixed(2) || 'N/A'}</span>
-              <span className="text-xs opacity-80">HIGH</span>
-            </div>
-            <div className="flex flex-col items-center">
-              <span className="text-lg font-bold">{etf.priceInfo.weekHighLow.min?.toFixed(2) || 'N/A'}</span>
-              <span className="text-xs opacity-80">LOW</span>
-            </div>
-            <div className="flex flex-col items-center">
-              <span className="text-lg font-bold">{etf.priceInfo.vwap?.toFixed(2) || 'N/A'}</span>
-              <span className="text-xs opacity-80">VWAP</span>
             </div>
             <div className="flex flex-col items-center">
               <span className="text-lg font-bold">{etf.priceInfo.iNavValue ? parseFloat(etf.priceInfo.iNavValue).toFixed(2) : 'N/A'}</span>
@@ -127,130 +110,57 @@ const ETFDetail = () => {
           </TabsList>
           
           <TabsContent value="overview">
-            <div className="grid gap-6 lg:grid-cols-3 mt-6">
+            <div className="grid gap-6 lg:grid-cols-3 md:grid-cols-1 sm:grid-cols-1 mt-6">
               {/* ETF Information */}
-              <Card className="lg:col-span-1">
+              <Card className="flex-1 min-w-0">
                 <CardHeader>
                   <CardTitle>ETF Information</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">
                   <div className="flex justify-between items-center">
                     <span className="text-sm text-muted-foreground">Category</span>
-                    <span className="font-semibold">{etf.industryInfo.basicIndustry}</span>
+                    <span className="font-semibold text-right">{etf.industryInfo.basicIndustry}</span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-sm text-muted-foreground">Asset Class</span>
-                    <span className="font-semibold">{etf.industryInfo.basicIndustry}</span>
+                    <span className="font-semibold text-right">{etf.industryInfo.basicIndustry}</span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-sm text-muted-foreground">Expense Ratio</span>
-                    <span className="font-semibold">N/A</span>
+                    <span className="font-semibold text-right">N/A</span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-sm text-muted-foreground">AUM</span>
-                    <span className="font-semibold">{formatCurrency(etf.securityInfo.issuedSize, 'crores')}</span>
+                    <span className="font-semibold text-right">{formatCurrency(etf.securityInfo.issuedSize, 'crores')}</span>
                   </div>
                 </CardContent>
               </Card>
-
-              {/* Trading Information */}
-              <Card className="lg:col-span-1">
-                <CardHeader>
-                  <CardTitle>Trading Information</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-muted-foreground">Volume</span>
-                    <span className="font-semibold">{formatCurrency(etf.preOpenMarket.totalTradedVolume, 'lakhs')}</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-muted-foreground">Turnover</span>
-                    <span className="font-semibold">{formatCurrency(etf.preOpenMarket.finalPrice * etf.preOpenMarket.finalQuantity, 'crores')}</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-muted-foreground">Market Cap</span>
-                    <span className="font-semibold">{formatCurrency(etf.securityInfo.issuedSize * etf.priceInfo.lastPrice, 'crores')}</span>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Fund Details */}
-              <Card className="lg:col-span-1">
-                <CardHeader>
-                  <CardTitle>Fund Details</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-muted-foreground">Fund Manager</span>
-                    <span className="text-sm text-muted-foreground">Free Float Market Cap (₹ Cr.)</span>
-                    <span className="font-semibold">N/A</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-muted-foreground">Impact cost</span>
-                    <span className="font-semibold">N/A</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-muted-foreground">% of Deliverable / Traded Quantity</span>
-                    <span className="font-semibold">N/A</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-muted-foreground">Applicable Margin Rate</span>
-                    <span className="font-semibold">N/A</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-muted-foreground">Face Value</span>
-                    <span className="font-semibold">{etf.securityInfo.faceValue !== undefined ? etf.securityInfo.faceValue : 'N/A'}</span>
-                  </div>
-                </CardContent>
-              </Card>
-
               {/* Price Information */}
-              <Card className="lg:col-span-1">
+              <Card className="flex-1 min-w-0">
                 <CardHeader>
                   <CardTitle>Price Information</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">
                   <div className="flex justify-between items-center">
                     <span className="text-sm text-muted-foreground">52 Week High</span>
-                    <span className="font-semibold">{etf.priceInfo.weekHighLow.max ? etf.priceInfo.weekHighLow.max.toFixed(2) : 'N/A'}</span>
+                    <span className="font-semibold text-right">{etf.priceInfo.weekHighLow.max ? etf.priceInfo.weekHighLow.max.toFixed(2) : 'N/A'}</span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-sm text-muted-foreground">52 Week Low</span>
-                    <span className="font-semibold">{etf.priceInfo.weekHighLow.min ? etf.priceInfo.weekHighLow.min.toFixed(2) : 'N/A'}</span>
+                    <span className="font-semibold text-right">{etf.priceInfo.weekHighLow.min ? etf.priceInfo.weekHighLow.min.toFixed(2) : 'N/A'}</span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-sm text-muted-foreground">Upper Band</span>
-                    <span className="font-semibold">{etf.priceInfo.upperCP ? parseFloat(etf.priceInfo.upperCP).toFixed(2) : 'N/A'}</span>
+                    <span className="font-semibold text-right">{etf.priceInfo.upperCP ? parseFloat(etf.priceInfo.upperCP).toFixed(2) : 'N/A'}</span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-sm text-muted-foreground">Lower Band</span>
-                    <span className="font-semibold">{etf.priceInfo.lowerCP ? parseFloat(etf.priceInfo.lowerCP).toFixed(2) : 'N/A'}</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-muted-foreground">Price Band (%)</span>
-                    <span className="font-semibold">{etf.priceInfo.pPriceBand !== undefined ? parseFloat(etf.priceInfo.pPriceBand).toFixed(2) : 'N/A'}</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-muted-foreground">Daily Volatility</span>
-                    <span className="font-semibold">N/A</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-muted-foreground">Annualised Volatility</span>
-                    <span className="font-semibold">N/A</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-muted-foreground">i-NAV</span>
-                    <span className="font-semibold">{etf.priceInfo.iNavValue ? parseFloat(etf.priceInfo.iNavValue).toFixed(2) : 'N/A'}</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-muted-foreground">Tick Size</span>
-                    <span className="font-semibold">{etf.priceInfo.tickSize !== undefined ? etf.priceInfo.tickSize.toFixed(2) : 'N/A'}</span>
+                    <span className="font-semibold text-right">{etf.priceInfo.lowerCP ? parseFloat(etf.priceInfo.lowerCP).toFixed(2) : 'N/A'}</span>
                   </div>
                 </CardContent>
               </Card>
-
               {/* Securities Information */}
-              <Card className="lg:col-span-3">
+              <Card className="flex-1 min-w-0">
                 <CardHeader>
                   <CardTitle>Securities Information</CardTitle>
                 </CardHeader>
@@ -277,7 +187,7 @@ const ETFDetail = () => {
                   </div>
                   <div className="space-y-1">
                     <span className="text-sm text-muted-foreground">Index</span>
-                    <div className="font-semibold">N/A</div>{/* Data not available in provided JSON */}
+                    <div className="font-semibold">N/A</div>
                   </div>
                   <div className="space-y-1">
                     <span className="text-sm text-muted-foreground">Basic Industry</span>

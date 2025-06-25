@@ -5,6 +5,8 @@ import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
 import { components } from "@/components/markdown-components";
 import MainLayout from "@/components/layout/MainLayout";
+import { Button } from "@/components/ui/button";
+import { ShareButton } from "@/components/shared/ShareButton";
 
 export default function PostDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -28,6 +30,16 @@ export default function PostDetailPage() {
       });
   }, [id]);
 
+  function handleShare(title: string) {
+    const url = window.location.href;
+    if (navigator.share) {
+      navigator.share({ title, url });
+    } else {
+      navigator.clipboard.writeText(url);
+      alert("Link copied to clipboard!");
+    }
+  }
+
   if (loading) {
     return <MainLayout><div className="text-center py-10">Loading...</div></MainLayout>;
   }
@@ -45,6 +57,13 @@ export default function PostDetailPage() {
         >
           &larr; Back
         </button>
+        <div className="mb-4 flex items-center gap-2">
+          <span className="text-muted-foreground">Found this helpful?</span>
+          <ShareButton 
+            title={content ? 'Article' : ''}
+            url={window.location.href}
+          />
+        </div>
         <article className="prose dark:prose-invert max-w-none">
           <ReactMarkdown
             components={components}

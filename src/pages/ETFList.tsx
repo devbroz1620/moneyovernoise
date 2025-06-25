@@ -191,9 +191,9 @@ const ETFList = () => {
   
   const formatCurrency = (value: number): string => {
     if (value >= 1000) {
-      return `₹${(value / 1000).toFixed(2)}k Cr`;
+      return `₹${(value / 1000).toFixed(2)}k `;
     }
-    return `₹${value.toFixed(2)} Cr`;
+    return `₹${value.toFixed(2)} `;
   };
 
   // Get sort icon
@@ -348,19 +348,17 @@ const ETFList = () => {
             <Table>
               <TableHeader className="bg-muted/50">
                 <TableRow>
-                  <TableHead className="text-foreground">Name</TableHead>
-                  <TableHead className="text-foreground">Company</TableHead>
-                  <TableHead className="text-foreground">Sector</TableHead>
+                  <TableHead className="text-foreground">ETF</TableHead>
                   <TableHead className="text-right text-foreground">Last Price</TableHead>
+                  <TableHead className="text-right text-foreground">52 Week High</TableHead>
+                  <TableHead className="text-right text-foreground">52 Week Low</TableHead>
                   <TableHead className="text-right text-foreground">Change %</TableHead>
-                  <TableHead className="text-right text-foreground">Volume</TableHead>
-                  <TableHead className="text-foreground">Industry</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {isLoading ? (
                   <TableRow>
-                    <TableCell colSpan={7} className="text-center py-10">
+                    <TableCell colSpan={5} className="text-center py-10">
                       <div className="flex items-center justify-center space-x-2">
                         <div className="h-4 w-4 animate-spin rounded-full border-2 border-primary border-t-transparent" />
                         <span>Loading ETFs...</span>
@@ -369,13 +367,13 @@ const ETFList = () => {
                   </TableRow>
                 ) : error ? (
                   <TableRow>
-                    <TableCell colSpan={7} className="text-center py-10 text-red-600">
+                    <TableCell colSpan={5} className="text-center py-10 text-red-600">
                       Error loading ETFs. Please try again.
                     </TableCell>
                   </TableRow>
                 ) : displayETFs.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={7} className="text-center py-10 text-muted-foreground">
+                    <TableCell colSpan={5} className="text-center py-10 text-muted-foreground">
                       No ETFs found matching your filters. Try adjusting your criteria.
                     </TableCell>
                   </TableRow>
@@ -384,25 +382,20 @@ const ETFList = () => {
                     <TableRow key={etf.info.symbol} className="hover:bg-muted/50">
                       <TableCell className="font-medium">
                         <Link to={`/etfs/screener/${etf.info.symbol}`} className="hover:text-primary text-foreground">
-                          <div>{etf.info.companyName}</div>
-                          <div className="text-xs text-muted-foreground">{etf.info.symbol}</div>
+                          {etf.info.symbol}
                         </Link>
                       </TableCell>
-                      <TableCell className="text-foreground">{etf.info.companyName}</TableCell>
-                      <TableCell className="text-foreground">{etf.industryInfo.sector}</TableCell>
                       <TableCell className="text-right text-foreground">
                         {formatCurrency(etf.priceInfo.lastPrice)}
                       </TableCell>
-                      <TableCell className={`text-right ${etf.priceInfo.pChange > 0 ? 'text-green-600' : etf.priceInfo.pChange < 0 ? 'text-red-600' : 'text-foreground'}`}>
-                        {formatPercent(etf.priceInfo.pChange)}
+                      <TableCell className="text-right text-foreground">
+                        {etf.priceInfo.weekHighLow.max ? etf.priceInfo.weekHighLow.max.toFixed(2) : 'N/A'}
                       </TableCell>
                       <TableCell className="text-right text-foreground">
-                        {formatCurrency(etf.priceInfo.intraDayHighLow.value)}
+                        {etf.priceInfo.weekHighLow.min ? etf.priceInfo.weekHighLow.min.toFixed(2) : 'N/A'}
                       </TableCell>
-                      <TableCell>
-                        <Badge variant="outline" className="text-muted-foreground">
-                          {etf.info.industry || etf.metadata.industry || etf.industryInfo.industry}
-                        </Badge>
+                      <TableCell className={`text-right ${etf.priceInfo.pChange > 0 ? 'text-green-600' : etf.priceInfo.pChange < 0 ? 'text-red-600' : 'text-foreground'}`}> 
+                        {formatPercent(etf.priceInfo.pChange)}
                       </TableCell>
                     </TableRow>
                   ))

@@ -136,7 +136,7 @@ const FeaturedETFs = () => {
           <p className="text-muted-foreground">Discover top-performing ETFs across different categories</p>
         </div>
         <Link 
-          to="/list/etfs" 
+          to="/etfs/screener"
           onClick={() => window.scrollTo(0, 0)}
           className="inline-flex items-center text-primary font-medium hover:underline text-sm px-2 py-1 rounded transition-colors"
           style={{ lineHeight: 1.2 }}

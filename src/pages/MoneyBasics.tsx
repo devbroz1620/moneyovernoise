@@ -149,20 +149,18 @@ export default function MoneyBasics() {
 
                 return (
                   <Link to={`/money-basics/categories/${category}`} key={category} className="h-full block">
-                    <Card className={`group hover:shadow-lg transition-all duration-300 cursor-pointer border-l-4 ${details.borderColor} h-full flex flex-col`}>
-                      <CardHeader className="pb-4">
-                        <div className="flex items-center gap-4 mb-3">
-                          <div className={`rounded-lg ${details.color} p-3`}>
-                            <Icon className={`h-6 w-6 ${details.iconColor}`} />
-                          </div>
-                          <CardTitle className="text-lg leading-tight">{displayName}</CardTitle>
-                        </div>
-                      </CardHeader>
-                      <CardContent className="flex-1 flex flex-col pt-0">
-                        <p className="text-muted-foreground leading-relaxed text-sm flex-1">
-                          {details.summary}
-                        </p>
-                      </CardContent>
+                    <Card className="flex flex-col items-center text-center py-8 px-4 min-h-[200px]">
+                      <div className={`rounded-lg border ${details.borderColor.replace('border-l-', 'border-')} p-4 mb-4 flex items-center justify-center`}>
+                        <Icon className={`h-10 w-10 ${details.iconColor}`} />
+                      </div>
+                      <h2 className="text-2xl font-bold mb-2">{displayName}</h2>
+                      <p className="text-muted-foreground text-base mb-4">{details.summary}</p>
+                      <Link
+                        to={`/money-basics/categories/${category}`}
+                        className="text-teal-400 dark:text-cyan-300 font-semibold hover:underline text-base"
+                      >
+                        Read more <span className="ml-1">→</span>
+                      </Link>
                     </Card>
                   </Link>
                 );

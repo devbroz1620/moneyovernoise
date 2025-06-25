@@ -55,7 +55,7 @@ const ETFLearn = () => {
           {loading ? (
             <Loader text="Loading articles..." />
           ) : (
-            etfArticles.map((article, index) => (
+            [...etfArticles].reverse().map((article, index) => (
               <Link 
                 key={article.id} 
                 to={`/etfs/posts/${article.id}`} 
@@ -66,10 +66,15 @@ const ETFLearn = () => {
                   index % 2 === 0 ? 'border-l-primary' : 'border-l-blue-500'
                 } hover:border-l-primary`}>
                   <CardHeader className="pb-4">
-                    <div className="flex items-center justify-end mb-3">
+                    <div className="flex items-center justify-between mb-3">
+                      {article.tags && (
+                        <Badge variant="outline" className="text-xs mr-2">
+                          {article.tags}
+                        </Badge>
+                      )}
                       <div className="flex items-center text-muted-foreground text-sm">
                         <Clock className="h-3 w-3 mr-1" />
-                        {article.readingTime}
+                        {article.readingTime || '5 min'}
                       </div>
                     </div>
                     
