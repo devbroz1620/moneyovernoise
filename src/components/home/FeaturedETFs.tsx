@@ -43,7 +43,7 @@ const featuredETFs: FeaturedETF[] = [
   },
   {
     name: "HDFC Smallcap 250 ETF",
-    ticker: "HDFCSMALLCAP250",
+    ticker: "HDFCSML250",
     description: "Exposure to high-growth Indian smallcap companies via the Nifty Smallcap 250 index.",
     aum: "~₹1,500 Cr",
     expenseRatio: "0.30%",
@@ -119,7 +119,7 @@ const FeaturedETFs = () => {
             asChild 
             className="w-full group-hover:shadow-md transition-all mt-auto"
           >
-            <Link to={`/list/etfs/${etf.ticker}`} onClick={() => window.scrollTo(0, 0)}>
+            <Link to={`/etfs/screener/${etf.ticker}`} onClick={() => window.scrollTo(0, 0)}>
               Explore ETF
             </Link>
           </Button>

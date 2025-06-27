@@ -65,31 +65,35 @@ export default function MoneyBasicsCategoryPage() {
             <div className="flex flex-col gap-8">
               {articles.map((article) => (
                 <Link to={`/posts/${article.id}`} key={article.id} className="block">
-                  <Card className="group hover:shadow-lg transition-all duration-300 cursor-pointer border-l-4 border-l-primary/30 hover:border-l-primary h-full">
-                    <CardHeader>
-                      <div className="flex items-center justify-between mb-3">
-                         <Badge variant="outline" className={`text-xs ${getCategoryColor(article.category)}`}>
-                           {article.category}
-                         </Badge>
-                         <div className="flex items-center text-muted-foreground text-sm">
-                           <Clock className="h-3 w-3 mr-1" />
-                           <span>{article.readingTime}</span>
-                         </div>
-                       </div>
-                      <CardTitle className="group-hover:text-primary transition-colors leading-tight text-foreground text-2xl mb-3">
+                  <Card className="group hover:shadow-md transition-all duration-200 cursor-pointer border border-primary/10 hover:border-primary/30 rounded-xl px-4 py-3">
+                    <CardHeader className="p-0 mb-2">
+                      <div className="flex flex-wrap items-center gap-x-2 gap-y-1 mb-2 min-h-[28px]">
+                        <Badge variant="outline" className={`text-[12px] px-2 py-0.5 font-medium ${getCategoryColor(article.category)}`}>
+                          {article.category}
+                        </Badge>
+                        <div className="flex items-center text-muted-foreground text-xs ml-2">
+                          <Clock className="h-3 w-3 mr-1" />
+                          <span>{(() => {
+                            const match = article.readingTime.match(/(\d+)/);
+                            const mins = match ? Math.ceil(Number(match[1])) : '';
+                            return mins ? `${mins} mins` : '';
+                          })()}</span>
+                        </div>
+                      </div>
+                      <CardTitle className="group-hover:text-primary transition-colors text-[18px] font-semibold leading-snug mb-1">
                         {article.title}
                       </CardTitle>
                     </CardHeader>
-                    <CardContent>
+                    <CardContent className="p-0">
                       {article.description && (
-                         <p className="text-muted-foreground leading-relaxed mb-4 text-base">
-                           {article.description}
-                         </p>
-                       )}
-                       <div className="inline-flex items-center text-primary font-medium hover:underline">
-                         <span>Read Article</span>
-                         <ArrowRight className="ml-1 group-hover:translate-x-1 transition-transform h-4 w-4" />
-                       </div>
+                        <p className="text-muted-foreground text-[14px] leading-normal mb-3">
+                          {article.description}
+                        </p>
+                      )}
+                      <div className="inline-flex items-center text-primary text-sm font-medium hover:underline">
+                        <span>Read Article</span>
+                        <ArrowRight className="ml-1 group-hover:translate-x-1 transition-transform h-4 w-4" />
+                      </div>
                     </CardContent>
                   </Card>
                 </Link>

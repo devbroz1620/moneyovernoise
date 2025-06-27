@@ -71,31 +71,21 @@ export default function MoneyBasicsPostPage() {
           Back to Money Basics
         </button>
 
-        {article.title && (
-          <h1 className="text-3xl font-bold mb-2">{article.title}</h1>
-        )}
-        <div className="mb-4 flex items-center gap-2">
-          <span className="text-muted-foreground">Found this helpful?</span>
-          <ShareButton 
-            title={article.title}
-            url={window.location.href}
-          />
-        </div>
-        {article.description && (
-          <p className="text-muted-foreground mb-6">{article.description}</p>
-        )}
-
-        <header className="mb-8">
-          <div className="flex items-center gap-4 mb-4">
-            <Badge variant="outline">{article.category}</Badge>
-            <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
+        <header className="mb-4">
+          <div className="flex items-center gap-4 mb-2">
+            <Badge variant="outline" className="text-xs md:text-sm">{article.category}</Badge>
+            <div className="flex items-center gap-1.5 text-xs md:text-sm text-muted-foreground">
               <Clock className="h-4 w-4" />
-              <span>{article.readingTime}</span>
+              <span>{article.readingTime || '5 min read'}</span>
             </div>
           </div>
-          {/* The title is now expected to be part of the markdown content */}
         </header>
-
+        {article.title && (
+          <h1 className="text-2xl md:text-3xl font-bold mb-2">{article.title}</h1>
+        )}
+        {article.description && (
+          <p className="text-muted-foreground mb-6 text-base md:text-lg">{article.description}</p>
+        )}
         <article className="prose dark:prose-invert max-w-none">
           <ReactMarkdown
             components={components}
@@ -105,6 +95,13 @@ export default function MoneyBasicsPostPage() {
             {article.content}
           </ReactMarkdown>
         </article>
+        <div className="mt-8 mb-4 flex items-center gap-2">
+          <span className="text-muted-foreground text-sm">Found this helpful?</span>
+          <ShareButton 
+            title={article.title}
+            url={window.location.href}
+          />
+        </div>
       </div>
     </MainLayout>
   );
