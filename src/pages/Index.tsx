@@ -1,6 +1,5 @@
 import MainLayout from '@/components/layout/MainLayout';
 import { useIsMobile } from '@/hooks/use-mobile';
-import SubscriptionModal from '@/components/shared/SubscriptionModal';
 import { useState } from 'react';
 import { Route } from 'react-router-dom';
 
@@ -12,10 +11,12 @@ import HomeNewsletterBlock from '@/components/home/HomeNewsletterBlock';
 import WhyMoneyOverNoise from './WhyMoneyOverNoise';
 
 const Index = () => {
-  const [isSubscriptionModalOpen, setIsSubscriptionModalOpen] = useState(false);
-
   const handleScrollToTop = () => {
     window.scrollTo(0, 0);
+  };
+
+  const handleSubscribeRedirect = () => {
+    window.open('https://moneyovernoise-newsletter-ab7c12.beehiiv.com/subscribe', '_blank');
   };
 
   return (
@@ -24,11 +25,7 @@ const Index = () => {
       <HomeCategoryCards handleScrollToTop={handleScrollToTop} />
       <HomeWhyChooseUs />
       <HomeETFStatsSection handleScrollToTop={handleScrollToTop} />
-      <HomeNewsletterBlock onOpenSubscriptionModal={() => setIsSubscriptionModalOpen(true)} />
-      <SubscriptionModal 
-        isOpen={isSubscriptionModalOpen}
-        onClose={() => setIsSubscriptionModalOpen(false)}
-      />
+      <HomeNewsletterBlock onOpenSubscriptionModal={handleSubscribeRedirect} />
     </MainLayout>
   );
 };

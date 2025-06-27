@@ -1,14 +1,11 @@
-
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Menu, X, Moon, Sun } from 'lucide-react';
 import { useTheme } from '@/hooks/use-theme';
-import SubscriptionModal from '@/components/shared/SubscriptionModal';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isSubscriptionModalOpen, setIsSubscriptionModalOpen] = useState(false);
   const location = useLocation();
   const { theme, toggleTheme } = useTheme();
 
@@ -18,6 +15,10 @@ const Navbar = () => {
 
   const handleLogoClick = () => {
     window.scrollTo(0, 0);
+  };
+
+  const handleSubscribeRedirect = () => {
+    window.open('https://moneyovernoise-newsletter-ab7c12.beehiiv.com/subscribe', '_blank');
   };
 
   return (
@@ -72,7 +73,7 @@ const Navbar = () => {
           <Button
             variant="ghost"
             className="font-medium text-muted-foreground hover:text-primary hover:bg-accent/50"
-            onClick={() => setIsSubscriptionModalOpen(true)}
+            onClick={handleSubscribeRedirect}
           >
             Subscribe
           </Button>
@@ -170,7 +171,7 @@ const Navbar = () => {
                 className="text-sm py-2 text-muted-foreground hover:text-primary transition-colors justify-start px-2"
                 onClick={() => {
                   setIsMenuOpen(false);
-                  setIsSubscriptionModalOpen(true);
+                  handleSubscribeRedirect();
                 }}
               >
                 Subscribe
@@ -179,11 +180,6 @@ const Navbar = () => {
           </div>
         </div>
       )}
-
-      <SubscriptionModal 
-        isOpen={isSubscriptionModalOpen}
-        onClose={() => setIsSubscriptionModalOpen(false)}
-      />
     </header>
   );
 };
