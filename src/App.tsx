@@ -30,6 +30,7 @@ import EtfPostPage from "./pages/EtfPostPage";
 import MindOverMoney from "./pages/MindOverMoney";
 import MindOverMoneyPostPage from "./pages/MindOverMoneyPostPage";
 import PostDetailPage from "./pages/PostDetailPage";
+import WhyMoneyOverNoise from "./pages/WhyMoneyOverNoise";
 
 const queryClient = new QueryClient();
 
@@ -65,6 +66,7 @@ const App = () => (
           <Route path="/debts/posts/:id" element={<DebtPostPage />} />
           <Route path="/mind-over-money" element={<MindOverMoney />} />
           <Route path="/mind-over-money/:id" element={<MindOverMoneyPostPage />} />
+          <Route path="/why-moneyovernoise" element={<WhyMoneyOverNoise />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

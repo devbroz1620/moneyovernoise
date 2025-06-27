@@ -41,11 +41,9 @@ const HomeWhyChooseUs = () => {
           {whyChooseUs.map((item, index) => {
             const IconComponent = item.icon;
             return (
-              <a
+              <Link
                 key={index}
-                href={item.to}
-                target="_blank"
-                rel="noopener noreferrer"
+                to="/why-moneyovernoise"
                 className="text-center p-6 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors block"
               >
                 <div className="rounded-full bg-primary/10 w-16 h-16 flex items-center justify-center mx-auto mb-4">
@@ -57,7 +55,7 @@ const HomeWhyChooseUs = () => {
                 <p className="text-muted-foreground leading-relaxed">
                   {item.description}
                 </p>
-              </a>
+              </Link>
             );
           })}
         </div>
