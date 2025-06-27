@@ -17,7 +17,7 @@ const getCategoryColor = (category: string) => {
       case 'Saving Strategies':
           return 'bg-blue-500/10 text-blue-600 border-blue-500/20 dark:bg-blue-500/20 dark:border-blue-500/30 dark:text-blue-400';
       default:
-        return 'bg-primary/10 text-primary border-primary/20 dark:bg-primary/20 dark:border-primary/30 dark:text-primary';
+        return 'bg-cyan-500/15 text-cyan-700 border-cyan-500/30 dark:bg-cyan-500/25 dark:border-cyan-400/40 dark:text-cyan-300';
     }
   };
 
@@ -69,17 +69,17 @@ export default function MoneyBasicsCategoryPage() {
                     <CardHeader className="p-0 mb-2">
                       <div className="flex flex-wrap items-center gap-x-2 gap-y-1 mb-2 min-h-[28px]">
                         <Badge variant="outline" className={`text-[12px] px-2 py-0.5 font-medium ${getCategoryColor(article.category)}`}>
-                          {article.category}
-                        </Badge>
-                        <div className="flex items-center text-muted-foreground text-xs ml-2">
-                          <Clock className="h-3 w-3 mr-1" />
+                           {article.category}
+                         </Badge>
+                        <div className="hidden sm:flex items-center text-muted-foreground text-xs ml-2">
+                           <Clock className="h-3 w-3 mr-1" />
                           <span>{(() => {
                             const match = article.readingTime.match(/(\d+)/);
                             const mins = match ? Math.ceil(Number(match[1])) : '';
                             return mins ? `${mins} mins` : '';
                           })()}</span>
-                        </div>
-                      </div>
+                         </div>
+                       </div>
                       <CardTitle className="group-hover:text-primary transition-colors text-[18px] font-semibold leading-snug mb-1">
                         {article.title}
                       </CardTitle>
@@ -87,13 +87,13 @@ export default function MoneyBasicsCategoryPage() {
                     <CardContent className="p-0">
                       {article.description && (
                         <p className="text-muted-foreground text-[14px] leading-normal mb-3">
-                          {article.description}
-                        </p>
-                      )}
+                           {article.description}
+                         </p>
+                       )}
                       <div className="inline-flex items-center text-primary text-sm font-medium hover:underline">
-                        <span>Read Article</span>
-                        <ArrowRight className="ml-1 group-hover:translate-x-1 transition-transform h-4 w-4" />
-                      </div>
+                         <span>Read Article</span>
+                         <ArrowRight className="ml-1 group-hover:translate-x-1 transition-transform h-4 w-4" />
+                       </div>
                     </CardContent>
                   </Card>
                 </Link>

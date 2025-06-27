@@ -70,10 +70,13 @@ const ETFDetail = () => {
         <Card className="mb-8 relative rounded-2xl bg-zinc-900 text-primary-foreground p-6 flex flex-col items-center justify-center max-w-3xl mx-auto border-0 shadow-none">
           {/* Overlapping Symbol Badge */}
           <div className="absolute top-6 right-4 z-10 sm:static sm:self-center sm:mb-4 sm:mt-0">
-            <span className="bg-[#F4F7FA] text-[#111827] font-extrabold text-lg sm:text-2xl px-6 sm:px-8 py-2 rounded-full shadow-md border-2 border-white" style={{letterSpacing: '2px'}}>
-              {etf.info.symbol}
-            </span>
-          </div>
+          <span
+            className="bg-[#F4F7FA] text-[#111827] dark:bg-[#111827] dark:text-[#F4F7FA] font-extrabold text-lg sm:text-2xl px-6 sm:px-8 py-2 rounded-full shadow-md border-2 border-white"
+            style={{ letterSpacing: '2px' }}
+          >
+            {etf.info.symbol}
+          </span>
+        </div>
           <div className="w-full flex justify-between items-center mb-4">
             <Button variant="ghost" asChild className="text-primary-foreground">
               <Link to="/etfs/screener">
@@ -85,24 +88,27 @@ const ETFDetail = () => {
             <div className="w-32" />
           </div>
           {/* Responsive price info layout */}
-          <div className="w-full grid grid-cols-1 sm:grid-cols-4 gap-3 sm:gap-4 text-center">
-            <div className="flex flex-col items-center">
-              <span className="text-xl sm:text-2xl font-extrabold">{etf.priceInfo.lastPrice.toFixed(2)}</span>
-              <span className="text-xs opacity-80 font-semibold tracking-wide">LAST PRICE</span>
-            </div>
-            <div className="flex flex-col items-center">
-              <span className={`text-xl sm:text-2xl font-extrabold ${absoluteChange > 0 ? 'text-green-400' : absoluteChange < 0 ? 'text-red-400' : ''}`}>{absoluteChange > 0 ? '+' : ''}{absoluteChange.toFixed(2)} <span className="block">({formatPercent(etf.priceInfo.pChange)})</span></span>
-              <span className="text-xs opacity-80 font-semibold tracking-wide">CHANGE</span>
-            </div>
-            <div className="flex flex-col items-center">
-              <span className="text-xl sm:text-2xl font-extrabold">{etf.priceInfo.previousClose?.toFixed(2) || 'N/A'}</span>
-              <span className="text-xs opacity-80 font-semibold tracking-wide">PREV. CLOSE</span>
-            </div>
-            <div className="flex flex-col items-center">
-              <span className="text-xl sm:text-2xl font-extrabold">{etf.priceInfo.iNavValue ? parseFloat(etf.priceInfo.iNavValue).toFixed(2) : 'N/A'}</span>
-              <span className="text-xs opacity-80 font-semibold tracking-wide">NAV</span>
-            </div>
+          <div className="w-full grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 text-center">
+          <div className="flex flex-col items-center">
+            <span className="text-xl sm:text-2xl font-extrabold">{etf.priceInfo.lastPrice.toFixed(2)}</span>
+            <span className="text-xs opacity-80 font-semibold tracking-wide">LAST PRICE</span>
           </div>
+          <div className="flex flex-col items-center">
+            <span className={`text-xl sm:text-2xl font-extrabold ${absoluteChange > 0 ? 'text-green-400' : absoluteChange < 0 ? 'text-red-400' : ''}`}>
+              {absoluteChange > 0 ? '+' : ''}{absoluteChange.toFixed(2)}
+              <span className="block">({formatPercent(etf.priceInfo.pChange)})</span>
+            </span>
+            <span className="text-xs opacity-80 font-semibold tracking-wide">CHANGE</span>
+          </div>
+          <div className="flex flex-col items-center">
+            <span className="text-xl sm:text-2xl font-extrabold">{etf.priceInfo.previousClose?.toFixed(2) || 'N/A'}</span>
+            <span className="text-xs opacity-80 font-semibold tracking-wide">PREV. CLOSE</span>
+          </div>
+          <div className="flex flex-col items-center">
+            <span className="text-xl sm:text-2xl font-extrabold">{etf.priceInfo.iNavValue ? parseFloat(etf.priceInfo.iNavValue).toFixed(2) : 'N/A'}</span>
+            <span className="text-xs opacity-80 font-semibold tracking-wide">NAV</span>
+          </div>
+        </div>
         </Card>
 
         {/* Remove Tabs, show all content directly */}

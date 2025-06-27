@@ -60,8 +60,8 @@ const SubscriptionModal = ({ isOpen, onClose }: SubscriptionModalProps) => {
               display: 'block'
             }}
             title="Subscribe to MoneyOverNoise"
-          />
-        </div>
+            />
+          </div>
       </DialogContent>
     </Dialog>
   );
