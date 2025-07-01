@@ -2,7 +2,7 @@
 import { ReactNode } from 'react';
 import Navbar from './Navbar';
 import Footer from './Footer';
-import AIChatbot from '@/components/shared/AIChatbot';
+// import AIChatbot from '@/components/shared/AIChatbot';
 
 interface MainLayoutProps {
   children: ReactNode;
@@ -14,7 +14,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
       <Navbar />
       <main className="flex-grow">{children}</main>
       <Footer />
-      <AIChatbot />
+      {/* <AIChatbot /> */}
     </div>
   );
 };
